@@ -1,141 +1,305 @@
-import type { MetaFunction } from "@remix-run/node";
-import { Link } from "@remix-run/react";
+import { MagnifyingGlassIcon, SparklesIcon } from "@heroicons/react/20/solid";
+import type { LoaderFunction, MetaArgs, MetaFunction } from "@remix-run/node";
+import { json } from "@remix-run/node";
+import { Form, useLoaderData } from "@remix-run/react";
+import { getStoryblokApi, useStoryblokState } from "@storyblok/react";
+import { useState } from "react";
 
-import { useOptionalUser } from "~/utils";
+import AsteriskDividerShadow from "~/components/Assets/Dividers/AsteriskDividerShadow";
+import PresentesGrid from "~/components/Guias/PresentesGrid";
+import PromocoesGrid from "~/components/Promocoes/PromocoesGrid";
+import RouteError from "~/components/RouteError";
+import FeaturedPromocoesThree from "~/components/Sections/FeaturedPromocoesThree";
+import IdeiasCarouselLarge from "~/components/Sections/IdeiasCarouselLarge";
+import StaticCategories from "~/components/StaticCategories";
+import StaticCategoriesIcons from "~/components/StaticCategoriesIcons";
+import listings from "~/config/listings";
+import generateMetadata from "~/helpers/metadata";
+import generateStructureddata from "~/helpers/structureddata";
+import styles from "~/styles";
+import type { Promocao } from "~/types/promocao";
 
-export const meta: MetaFunction = () => [{ title: "Remix Notes" }];
+import { prisma } from "../db.server";
 
-export default function Index() {
-  const user = useOptionalUser();
+export function ErrorBoundary() {
+  return <RouteError />;
+}
+
+const storyblokBaseListParams = {
+  sort_by: "published_at:desc",
+  is_startpage: false,
+  per_page: listings.defaultPerPage,
+};
+
+export const loader: LoaderFunction = async () => {
+  const cacheRecord = await prisma.cdn.findUnique({
+    where: {
+      name: "storyblok",
+    },
+  });
+
+  const storyStoryblokParams = {
+    version: ENV.STORYBLOK_EXPLORE,
+    cv: Number(cacheRecord?.timestamp),
+  };
+
+  const { data } = await getStoryblokApi().get(`cdn/stories/home`, {
+    ...storyStoryblokParams,
+    resolve_relations: [
+      "page.featuredGuias",
+      "page.featuredPromocoes",
+      "page.Categorias",
+    ],
+  });
+
+  const listStoryblokParams = {
+    ...storyStoryblokParams,
+    ...storyblokBaseListParams,
+  };
+
+  const guiasInitialState = await getStoryblokApi().get(`cdn/stories`, {
+    ...listStoryblokParams,
+    starts_with: "guias-de-presentes",
+  });
+
+  const promocoesInitialState = await getStoryblokApi().get(`cdn/stories`, {
+    ...listStoryblokParams,
+    starts_with: "promocoes",
+    resolve_relations: ["Promocao.Loja"],
+  });
+
+  return json({
+    data,
+    guiasInitialState,
+    promocoesInitialState,
+  });
+};
+
+const metadata = {
+  title: "Presentes e Prendas: a inspiração perfeita para oferecer 🎁",
+  description: `Começa a oferecer melhores presentes e prendas. De aniversários ao Natal, todas as ocasiões se vão tornar mais fáceis com a nossa ajuda.`,
+};
+
+export const meta: MetaFunction<typeof loader> = ({
+  data: { data },
+}: MetaArgs) => {
+  return [
+    ...generateMetadata("", metadata),
+    generateStructureddata({
+      breadcrumbs: [],
+      organization: true,
+      website: true,
+      collection: {
+        url: "",
+        name: "Presentes e Prendas",
+        description: data.story.content.SeoDescription,
+        stories: [
+          ...data.story.content.featuredGuias,
+          ...data.story.content.featuredPromocoes,
+        ],
+      },
+    }),
+  ];
+};
+
+function Guias({ guiasInitialState }) {
+  const [guias, setGuias] = useState({
+    page: 1,
+    slices: [guiasInitialState.data.stories],
+    total: guiasInitialState.total,
+  });
+
+  const loadMoreGuias = async (page: number) => {
+    const { data: newGuias } = await getStoryblokApi().get(`cdn/stories`, {
+      version: ENV.STORYBLOK_EXPLORE,
+      cv: ENV.CV,
+      ...storyblokBaseListParams,
+      page,
+      per_page: listings.defaultPerPage,
+    });
+
+    setGuias({
+      page,
+      slices: [...guias.slices, newGuias.stories],
+      total: guias.total,
+    });
+  };
+
   return (
-    <main className="relative min-h-screen bg-white sm:flex sm:items-center sm:justify-center">
-      <div className="relative sm:pb-16 sm:pt-8">
-        <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-          <div className="relative shadow-xl sm:overflow-hidden sm:rounded-2xl">
-            <div className="absolute inset-0">
-              <img
-                className="h-full w-full object-cover"
-                src="https://user-images.githubusercontent.com/1500684/158276320-c46b661b-8eff-4a4d-82c6-cf296c987a12.jpg"
-                alt="BB King playing blues on his Gibson 'Lucille' guitar"
-              />
-              <div className="absolute inset-0 bg-[color:rgba(27,167,254,0.5)] mix-blend-multiply" />
-            </div>
-            <div className="relative px-4 pb-8 pt-16 sm:px-6 sm:pb-14 sm:pt-24 lg:px-8 lg:pb-20 lg:pt-32">
-              <h1 className="text-center text-6xl font-extrabold tracking-tight sm:text-8xl lg:text-9xl">
-                <span className="block uppercase text-blue-500 drop-shadow-md">
-                  Blues Stack
-                </span>
-              </h1>
-              <p className="mx-auto mt-6 max-w-lg text-center text-xl text-white sm:max-w-3xl">
-                Check the README.md file for instructions on how to get this
-                project deployed.
-              </p>
-              <div className="mx-auto mt-10 max-w-sm sm:flex sm:max-w-none sm:justify-center">
-                {user ? (
-                  <Link
-                    to="/notes"
-                    className="flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-3 text-base font-medium text-blue-700 shadow-sm hover:bg-blue-50 sm:px-8"
-                  >
-                    View Notes for {user.email}
-                  </Link>
-                ) : (
-                  <div className="space-y-4 sm:mx-auto sm:inline-grid sm:grid-cols-2 sm:gap-5 sm:space-y-0">
-                    <Link
-                      to="/join"
-                      className="flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-3 text-base font-medium text-blue-700 shadow-sm hover:bg-blue-50 sm:px-8"
-                    >
-                      Sign up
-                    </Link>
-                    <Link
-                      to="/login"
-                      className="flex items-center justify-center rounded-md bg-blue-500 px-4 py-3 font-medium text-white hover:bg-blue-600"
-                    >
-                      Log In
-                    </Link>
-                  </div>
-                )}
-              </div>
-              <a href="https://remix.run">
-                <img
-                  src="https://user-images.githubusercontent.com/1500684/158298926-e45dafff-3544-4b69-96d6-d3bcc33fc76a.svg"
-                  alt="Remix"
-                  className="mx-auto mt-16 w-full max-w-[12rem] md:max-w-[16rem]"
-                />
-              </a>
-            </div>
-          </div>
-        </div>
+    <section
+      aria-labelledby="recent-ideias-heading"
+      className="mx-auto my-16 max-w-7xl px-8 text-center"
+    >
+      <h2 className={`${styles.largeHeading} pt-0`} id="recent-ideias-heading">
+        Guias de Presentes mais Recentes
+      </h2>
 
-        <div className="mx-auto max-w-7xl px-4 py-2 sm:px-6 lg:px-8">
-          <div className="mt-6 flex flex-wrap justify-center gap-8">
-            {[
-              {
-                src: "https://user-images.githubusercontent.com/1500684/157764397-ccd8ea10-b8aa-4772-a99b-35de937319e1.svg",
-                alt: "Fly.io",
-                href: "https://fly.io",
-              },
-              {
-                src: "https://user-images.githubusercontent.com/1500684/158238105-e7279a0c-1640-40db-86b0-3d3a10aab824.svg",
-                alt: "PostgreSQL",
-                href: "https://www.postgresql.org/",
-              },
-              {
-                src: "https://user-images.githubusercontent.com/1500684/157764484-ad64a21a-d7fb-47e3-8669-ec046da20c1f.svg",
-                alt: "Prisma",
-                href: "https://prisma.io",
-              },
-              {
-                src: "https://user-images.githubusercontent.com/1500684/157764276-a516a239-e377-4a20-b44a-0ac7b65c8c14.svg",
-                alt: "Tailwind",
-                href: "https://tailwindcss.com",
-              },
-              {
-                src: "https://user-images.githubusercontent.com/1500684/157764454-48ac8c71-a2a9-4b5e-b19c-edef8b8953d6.svg",
-                alt: "Cypress",
-                href: "https://www.cypress.io",
-              },
-              {
-                src: "https://user-images.githubusercontent.com/1500684/157772386-75444196-0604-4340-af28-53b236faa182.svg",
-                alt: "MSW",
-                href: "https://mswjs.io",
-              },
-              {
-                src: "https://user-images.githubusercontent.com/1500684/157772447-00fccdce-9d12-46a3-8bb4-fac612cdc949.svg",
-                alt: "Vitest",
-                href: "https://vitest.dev",
-              },
-              {
-                src: "https://user-images.githubusercontent.com/1500684/157772662-92b0dd3a-453f-4d18-b8be-9fa6efde52cf.png",
-                alt: "Testing Library",
-                href: "https://testing-library.com",
-              },
-              {
-                src: "https://user-images.githubusercontent.com/1500684/157772934-ce0a943d-e9d0-40f8-97f3-f464c0811643.svg",
-                alt: "Prettier",
-                href: "https://prettier.io",
-              },
-              {
-                src: "https://user-images.githubusercontent.com/1500684/157772990-3968ff7c-b551-4c55-a25c-046a32709a8e.svg",
-                alt: "ESLint",
-                href: "https://eslint.org",
-              },
-              {
-                src: "https://user-images.githubusercontent.com/1500684/157773063-20a0ed64-b9f8-4e0b-9d1e-0b65a3d4a6db.svg",
-                alt: "TypeScript",
-                href: "https://typescriptlang.org",
-              },
-            ].map((img) => (
-              <a
-                key={img.href}
-                href={img.href}
-                className="flex h-16 w-32 justify-center p-1 grayscale transition hover:grayscale-0 focus:grayscale-0"
-              >
-                <img alt={img.alt} src={img.src} className="object-contain" />
-              </a>
-            ))}
+      {guias.slices.map((slice, index) => {
+        return (
+          <div key={`promocoes-grid-${index}`}>
+            {index > 0 ? (
+              <AsteriskDividerShadow className="mx-auto my-16 h-8 w-auto fill-warm" />
+            ) : null}
+            <PresentesGrid ideias={slice} />
           </div>
+        );
+      })}
+
+      {guias.total / listings.defaultPerPage > guias.page ? (
+        <button
+          className={`${styles.largeButton} ${styles.verMaisButton} mt-16 bg-warm text-white hover:bg-warmer`}
+          onClick={() => {
+            loadMoreGuias(guias.page + 1);
+          }}
+        >
+          Ver mais
+        </button>
+      ) : null}
+    </section>
+  );
+}
+
+function Promocoes({ promocoesInitialState }) {
+  const [promocoes, setPromocoes] = useState({
+    page: 1,
+    slices: [promocoesInitialState.data.stories],
+    total: promocoesInitialState.total,
+  });
+
+  const loadMorePromocoes = async (page: number) => {
+    const { data: newpromocoes } = await getStoryblokApi().get(`cdn/stories`, {
+      version: ENV.STORYBLOK_EXPLORE,
+      cv: ENV.CV,
+      ...storyblokBaseListParams,
+      page,
+      per_page: listings.defaultPerPage,
+      resolve_relations: ["Promocao.Loja"],
+    });
+    setPromocoes({
+      page,
+      slices: [...promocoes.slices, newpromocoes.stories],
+      total: promocoes.total,
+    });
+  };
+
+  return (
+    <section
+      aria-labelledby="recent-promocoes-heading"
+      className="mx-auto mb-16 max-w-7xl px-8"
+    >
+      <h2 className={`${styles.largeHeading}`}>Promoções mais recentes</h2>
+
+      {promocoes.slices.map((list, index) => {
+        return (
+          <div key={`promocoes-grid-${index}`}>
+            {index > 0 ? (
+              <AsteriskDividerShadow className="mx-auto my-16 h-8 w-auto fill-warm" />
+            ) : null}
+            <PromocoesGrid promocoes={list} />
+          </div>
+        );
+      })}
+
+      {promocoes.total / listings.defaultPerPage > promocoes.page ? (
+        <div className="text-center">
+          <button
+            className={`${styles.largeButton} ${styles.verMaisButton} mt-16 bg-warm text-white hover:bg-warmer`}
+            onClick={() => {
+              loadMorePromocoes(promocoes.page + 1);
+            }}
+          >
+            Ver mais
+          </button>
         </div>
-      </div>
+      ) : null}
+    </section>
+  );
+}
+
+export default function Slug() {
+  const { data, guiasInitialState, promocoesInitialState } =
+    useLoaderData<typeof loader>();
+
+  const story = useStoryblokState(data.story);
+
+  const { featuredPromocoes, featuredGuias, Categorias } = story?.content;
+
+  return (
+    <main className="min-h-screen">
+      <section aria-labelledby="category-heading" className="relative bg-warm">
+        <div className="absolute inset-x-0 bottom-0">
+          <svg
+            className="-mb-1 w-full text-background"
+            fill="currentColor"
+            preserveAspectRatio="none"
+            viewBox="0 0 224 12"
+          >
+            <path
+              d={`M0,0 C48.8902582,6.27314026 86.2235915,9.40971039 112,9.40971039 C137.776408,
+            9.40971039 175.109742,6.27314026 224,0 L224,12.0441132 L0,12.0441132 L0,0 Z`}
+            />
+          </svg>
+        </div>
+        <div className="mx-auto px-4 pb-20 sm:max-w-xl md:max-w-full md:px-24 lg:max-w-screen-xl lg:px-8">
+          <div className="mx-auto max-w-sm py-12 text-center uppercase sm:max-w-2xl sm:pb-16 sm:pt-12">
+            <h1 className="font-serif text-white sm:text-4xl lg:text-5xl">
+              A inspiração perfeita para oferecer.
+            </h1>
+          </div>
+          <Form action="pesquisa" method="get">
+            <div className="relative max-w-xl sm:mx-auto sm:max-w-xl sm:text-center md:max-w-2xl">
+              <label className="sr-only" htmlFor="pesquisa">
+                Pesquisa no Presentes e Prendas
+              </label>
+              <div className="flex rounded-md focus-within:shadow-lg">
+                <div className="relative flex flex-grow items-stretch">
+                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                    <SparklesIcon
+                      aria-hidden="true"
+                      className="h-5 w-5 text-cold"
+                      height="1.25rem"
+                      width="1.25rem"
+                    />
+                  </div>
+                  <input
+                    className="block w-full rounded-none rounded-l-md border-0 py-4 pl-10 text-text-light 
+                        placeholder:text-text-lighter focus:ring-0 focus:ring-offset-0 sm:text-sm sm:leading-6"
+                    id="pesquisa"
+                    name="pesquisa"
+                    placeholder="Pesquisa aqui..."
+                    type="text"
+                  />
+                </div>
+                <button
+                  aria-label="Iniciar pesquisa"
+                  className="text-md relative -ml-px inline-flex items-center gap-x-1.5 rounded-r-md bg-cold px-6 
+                  font-serif font-light uppercase tracking-wide text-white hover:bg-colder sm:px-6"
+                  type="submit"
+                >
+                  <span className="hidden sm:block">Pesquisar</span>
+                  <MagnifyingGlassIcon
+                    aria-hidden="true"
+                    className="-ml-1 h-7 w-auto sm:hidden sm:h-4"
+                  />
+                </button>
+              </div>
+            </div>
+          </Form>
+          {/* <StaticCategoriesIcons categorias={Categorias} /> */}
+        </div>
+        <div className="mx-auto mt-16 max-w-3xl"></div>
+      </section>
+      <IdeiasCarouselLarge
+        ariaId="featured-ideias-heading"
+        containerClasses="pb-16 px-16 overflow-hidden"
+        heading="Guias de ideias em Destaque"
+        ideias={featuredGuias}
+      />
+      <AsteriskDividerShadow className="mx-auto mb-16 h-8 w-auto fill-warm" />
+      <FeaturedPromocoesThree promocoes={featuredPromocoes} />
+      <StaticCategories categorias={Categorias} />
+      <Promocoes promocoesInitialState={promocoesInitialState} />
+      <Guias guiasInitialState={guiasInitialState} />
     </main>
   );
 }

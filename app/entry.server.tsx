@@ -12,6 +12,11 @@ import { RemixServer } from "@remix-run/react";
 import isbot from "isbot";
 import { renderToPipeableStream } from "react-dom/server";
 
+import { getEnv } from "./env.server";
+import { IsBotProvider } from "./isBot";
+
+global.ENV = getEnv(undefined);
+
 const ABORT_DELAY = 5_000;
 
 export default function handleRequest(
@@ -43,22 +48,39 @@ function handleBotRequest(
 ) {
   return new Promise((resolve, reject) => {
     const { abort, pipe } = renderToPipeableStream(
-      <RemixServer
-        context={remixContext}
-        url={request.url}
-        abortDelay={ABORT_DELAY}
-      />,
+      <IsBotProvider isBot={true}>
+        <RemixServer
+          context={remixContext}
+          url={request.url}
+          abortDelay={ABORT_DELAY}
+        />
+      </IsBotProvider>,
       {
         onAllReady() {
           const body = new PassThrough();
 
           responseHeaders.set("Content-Type", "text/html");
 
+          let responseOptions = {
+            headers: responseHeaders,
+            status: responseStatusCode,
+          };
+
+          if (request.url.indexOf("www.") > -1) {
+            responseOptions = {
+              headers: {
+                ...responseHeaders,
+                Location: request.url.replace("www.", ""),
+              },
+              status: 301,
+            };
+          }
+
           resolve(
-            new Response(createReadableStreamFromReadable(body), {
-              headers: responseHeaders,
-              status: responseStatusCode,
-            }),
+            new Response(
+              createReadableStreamFromReadable(body),
+              responseOptions,
+            ),
           );
 
           pipe(body);
@@ -85,22 +107,39 @@ function handleBrowserRequest(
 ) {
   return new Promise((resolve, reject) => {
     const { abort, pipe } = renderToPipeableStream(
-      <RemixServer
-        context={remixContext}
-        url={request.url}
-        abortDelay={ABORT_DELAY}
-      />,
+      <IsBotProvider isBot={false}>
+        <RemixServer
+          context={remixContext}
+          url={request.url}
+          abortDelay={ABORT_DELAY}
+        />
+      </IsBotProvider>,
       {
         onShellReady() {
           const body = new PassThrough();
 
           responseHeaders.set("Content-Type", "text/html");
 
+          let responseOptions = {
+            headers: responseHeaders,
+            status: responseStatusCode,
+          };
+
+          if (request.url.indexOf("www.") > -1) {
+            responseOptions = {
+              headers: {
+                ...responseHeaders,
+                Location: request.url.replace("www.", ""),
+              },
+              status: 301,
+            };
+          }
+
           resolve(
-            new Response(createReadableStreamFromReadable(body), {
-              headers: responseHeaders,
-              status: responseStatusCode,
-            }),
+            new Response(
+              createReadableStreamFromReadable(body),
+              responseOptions,
+            ),
           );
 
           pipe(body);
