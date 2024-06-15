@@ -1,0 +1,45 @@
+import {
+	json,
+	type LoaderFunctionArgs,
+	type ActionFunctionArgs,
+} from '@remix-run/node'
+import { useFetcher } from '@remix-run/react'
+import { requireRecentVerification } from '#app/routes/_auth+/verify.server.ts'
+import { requireUserId } from '#app/utils/auth.server.ts'
+import { prisma } from '#app/utils/db.server.ts'
+// import { useDoubleCheck } from '#app/utils/misc.tsx'
+import { redirectWithToast } from '#app/utils/toast.server.ts'
+import { twoFAVerificationType } from './profile.two-factor.tsx'
+
+export async function loader({ request }: LoaderFunctionArgs) {
+	await requireRecentVerification(request)
+	return json({})
+}
+
+export async function action({ request }: ActionFunctionArgs) {
+	await requireRecentVerification(request)
+	const userId = await requireUserId(request)
+	await prisma.verification.delete({
+		where: { target_type: { target: userId, type: twoFAVerificationType } },
+	})
+	return redirectWithToast('/settings/profile/two-factor', {
+		title: '2FA Disabled',
+		description: 'Two factor authentication has been disabled.',
+	})
+}
+
+export default function TwoFactorDisableRoute() {
+	const disable2FAFetcher = useFetcher<typeof action>()
+	// const dc = useDoubleCheck()
+
+	return (
+		<div className="mx-auto max-w-sm">
+			<disable2FAFetcher.Form method="POST">
+				<p>
+					Disabling two factor authentication is not recommended. However, if
+					you would like to do so, click here:
+				</p>
+			</disable2FAFetcher.Form>
+		</div>
+	)
+}

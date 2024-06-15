@@ -1,0 +1,65 @@
+app = "presenteseprendas"
+primary_region = "mad"
+kill_signal = "SIGINT"
+kill_timeout = 5
+processes = [ ]
+swap_size_mb = 512
+
+[deploy]
+release_command = "bash ./prisma/migrate.sh"
+
+[env]
+PORT = "8080"
+METRICS_PORT = "8081"
+
+[experimental]
+allowed_public_ports = [ ]
+auto_rollback = true
+
+[mounts]
+source = "data"
+destination = "/data"
+
+[[statics]]
+guest_path = "/app/public/build"
+url_prefix = "/build"
+
+[[statics]]
+guest_path = "/app/public/fonts"
+url_prefix = "/fonts"
+
+[[services]]
+internal_port = 8_080
+processes = [ "app" ]
+protocol = "tcp"
+script_checks = [ ]
+
+  [services.concurrency]
+  hard_limit = 100
+  soft_limit = 80
+  type = "requests"
+
+  [[services.ports]]
+  handlers = [ "http" ]
+  port = 80
+  force_https = true
+
+  [[services.ports]]
+  handlers = [ "tls", "http" ]
+  port = 443
+
+  [[services.tcp_checks]]
+  grace_period = "1s"
+  interval = "15s"
+  restart_limit = 0
+  timeout = "2s"
+
+  [[services.http_checks]]
+  interval = "1m"
+  grace_period = "5s"
+  method = "get"
+  path = "/resources/healthcheck"
+  protocol = "http"
+  timeout = "2s"
+  tls_skip_verify = false
+  headers = { }
