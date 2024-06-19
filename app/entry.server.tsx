@@ -51,9 +51,9 @@ export default async function handleRequest(...args: DocRequestArgs) {
 
 	global.ENV.CV = await getCv()
 
-	const callbackName = isbot(request.headers.get('user-agent'))
-		? 'onAllReady'
-		: 'onShellReady'
+	const isBot = isbot(request.headers.get('user-agent'))
+
+	const callbackName = isBot ? 'onAllReady' : 'onShellReady'
 
 	const nonce = String(loadContext.cspNonce) ?? undefined
 	return new Promise(async (resolve, reject) => {
@@ -64,7 +64,7 @@ export default async function handleRequest(...args: DocRequestArgs) {
 
 		const { pipe, abort } = renderToPipeableStream(
 			<NonceProvider value={nonce}>
-				<IsBotProvider isBot={!!isbot}>
+				<IsBotProvider isBot={isBot}>
 					<RemixServer context={remixContext} url={request.url} />
 				</IsBotProvider>
 			</NonceProvider>,

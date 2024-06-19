@@ -225,6 +225,7 @@ function Document({
 	allowIndexing?: boolean
 }) {
 	let isBot = useIsBot()
+
 	return (
 		<html lang="pt">
 			<head>
