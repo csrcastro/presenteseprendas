@@ -41,7 +41,9 @@ import 'dayjs/locale/pt'
 
 dayjs.locale('pt')
 
-const UnexpectedError = lazy(() => import('#app/components/Errors/Unexpected.tsx'))
+const UnexpectedError = lazy(
+	() => import('#app/components/Errors/Unexpected.tsx'),
+)
 
 export const links: LinksFunction = () => {
 	return [
@@ -257,6 +259,7 @@ function Document({
 						<ScrollRestoration nonce={nonce} />
 						<Scripts nonce={nonce} />
 						<script
+							nonce={nonce}
 							dangerouslySetInnerHTML={{
 								__html: `window.onload = function (){
 								if(window.location.hostname === "presenteseprendas.pt" ){
