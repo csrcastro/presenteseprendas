@@ -41,7 +41,7 @@ import 'dayjs/locale/pt'
 
 dayjs.locale('pt')
 
-const UnexpectedError = lazy(() => import('./components/Errors/Unexpected.tsx'))
+const UnexpectedError = lazy(() => import('#app/components/Errors/Unexpected.tsx'))
 
 export const links: LinksFunction = () => {
 	return [
