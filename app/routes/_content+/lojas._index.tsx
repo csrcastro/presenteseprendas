@@ -28,7 +28,7 @@ const metadata = {
 }
 
 export const meta: MetaFunction<typeof loader> = ({ data: loaderData }) => {
-	const { stories } = loaderData as { stories: ISbStoryData[] }
+	const stories = loaderData as ISbStoryData[]
 	return [
 		...generateMetadata('lojas', metadata),
 		generateStructureddata(

@@ -204,7 +204,7 @@ export default function Slug() {
 					</h1>
 					{}
 
-					{story?.content.Content.map((blok: IBlok) => {
+					{story?.content.Content && story?.content.Content.map((blok: IBlok) => {
 						if (blok.component === 'Content--Text') {
 							return <Text key={blok.id} blok={blok} />
 						}

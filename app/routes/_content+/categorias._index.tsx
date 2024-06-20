@@ -32,10 +32,9 @@ const metadata = {
 	description: `Usa as nossas categorias para descobrir novas ideias de presentes e ficar a par das últimas promoções`,
 }
 
-export const meta: MetaFunction<typeof loader> = ({ data }) => {
-	const { stories } = data as {
-		stories: ISbStoryData[]
-	}
+export const meta: MetaFunction<typeof loader> = ({ data: loaderData }) => {
+	const stories = loaderData as ISbStoryData[]
+
 	return [
 		...generateMetadata('categorias', metadata),
 		generateStructureddata(
