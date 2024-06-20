@@ -17,6 +17,8 @@ import {
 import { withSentry } from '@sentry/remix'
 import { getStoryblokApi } from '@storyblok/react'
 import dayjs from 'dayjs'
+import timezone from 'dayjs/plugin/timezone'
+import utc from 'dayjs/plugin/utc'
 import { Suspense, lazy } from 'react'
 import { HoneypotProvider } from 'remix-utils/honeypot/react'
 import { GeneralErrorBoundary } from './components/error-boundary.tsx'
@@ -39,6 +41,8 @@ import { makeTimings, time } from './utils/timing.server.ts'
 import { getToast } from './utils/toast.server.ts'
 import 'dayjs/locale/pt'
 
+dayjs.extend(utc)
+dayjs.extend(timezone)
 dayjs.locale('pt')
 
 const UnexpectedError = lazy(

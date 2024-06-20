@@ -67,7 +67,7 @@ export default function FeaturedPromocoesThree({
 										dateTime={dayjs(promocao.published_at).toISOString()}
 									>
 										Publicado a{' '}
-										{dayjs(promocao.published_at).format('DD.MM.YYYY')}
+										{dayjs(promocao.published_at).tz("Europe/Lisbon").format('DD.MM.YYYY')}
 									</time>
 								</figcaption>
 

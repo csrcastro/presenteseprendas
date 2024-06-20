@@ -49,11 +49,11 @@ export default function Guia({
 				{publishedAt ? (
 					<footer className="mb-4 text-sm text-text-light">
 						<time dateTime={dayjs(firstPublishedAt).toISOString()}>
-							{dayjs(firstPublishedAt).format('DD')} de{' '}
+							{dayjs(firstPublishedAt).tz("Europe/Lisbon").format('DD')} de{' '}
 							<span className="capitalize">
-								{dayjs(firstPublishedAt).format('MMM')}
+								{dayjs(firstPublishedAt).tz("Europe/Lisbon").format('MMM')}
 							</span>{' '}
-							{dayjs(firstPublishedAt).format('YYYY')}
+							{dayjs(firstPublishedAt).tz("Europe/Lisbon").format('YYYY')}
 						</time>{' '}
 						por{' '}
 						<address className="inline">
@@ -66,11 +66,11 @@ export default function Guia({
 						</address>
 						{', atualizado a '}
 						<time dateTime={dayjs(publishedAt).toISOString()}>
-							{dayjs(publishedAt).format('DD')} de{' '}
+							{dayjs(publishedAt).tz("Europe/Lisbon").format('DD')} de{' '}
 							<span className="capitalize">
-								{dayjs(publishedAt).format('MMM')}
+								{dayjs(publishedAt).tz("Europe/Lisbon").format('MMM')}
 							</span>{' '}
-							{dayjs(publishedAt).format('YYYY')}
+							{dayjs(publishedAt).tz("Europe/Lisbon").format('YYYY')}
 						</time>{' '}
 					</footer>
 				) : null}
