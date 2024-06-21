@@ -19,7 +19,7 @@ import { GeneralErrorBoundary } from '#app/components/error-boundary.tsx'
 import generateMetadata from '#app/helpers/metadata'
 
 interface IBlok extends IBlokImage, IBlokText, IBlokGuias {
-	id: string
+	_uid: string
 }
 
 const Error = lazy(() => import('#app/components/Errors/Route404Error'))
@@ -112,16 +112,16 @@ export default function Pagina() {
 					</h1>
 					{story?.content.Content.map((blok: IBlok) => {
 						if (blok.component === 'Content--Text') {
-							return <Text key={blok.id} blok={blok} />
+							return <Text key={blok._uid} blok={blok} />
 						}
 						if (blok.component === 'Content--Image') {
-							return <Image key={blok.id} blok={blok} />
+							return <Image key={blok._uid} blok={blok} />
 						}
 						if (blok.component === 'Content--Guias') {
-							return <Guias key={blok.id} blok={blok} />
+							return <Guias key={blok._uid} blok={blok} />
 						}
 						return (
-							<div key={blok.id}>
+							<div key={blok._uid}>
 								<p>{blok.component}</p>
 								{JSON.stringify(blok)}
 								<br />

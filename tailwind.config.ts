@@ -1,6 +1,6 @@
 import aspectRatio from '@tailwindcss/aspect-ratio'
 import forms from '@tailwindcss/forms'
-import  { type Config } from 'tailwindcss'
+import { type Config } from 'tailwindcss'
 
 export default {
 	content: ['./app/**/*.{js,jsx,ts,tsx}'],
@@ -35,12 +35,14 @@ export default {
 			'background-darker': '#F1DACC',
 			'background-lighter': '#fefbfa',
 			text: '#212121',
+			'text-mid': '#505050',
 			'text-light': '#757575',
 			'text-lighter': '#BDBDBD',
 			black: '#222222',
 			white: '#FFFFFF',
 			cold: '#0094fe',
 			colder: '#005089',
+			mid: '#efe7bc',
 			warm: '#ff4314',
 			warmer: '#e60023',
 			contrast: '#7c4dff',

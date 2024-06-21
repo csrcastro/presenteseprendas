@@ -69,8 +69,7 @@ function RichText({ document }: { document: StoryblokRichtext }) {
 						textSize = '3xl mb-12 mt-12'
 						break
 					case 2:
-						textSize =
-							'2xl mb-8 mt-8 text-transparent bg-bottom bg-2x bg-gradient-to-r from-warm to-cold bg-clip-text'
+						textSize = '3xl text-center mb-8 mt-16 text-warm'
 						break
 					case 3:
 						textSize = 'xl mb-8 mt-8'

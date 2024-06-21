@@ -2,40 +2,42 @@ import {
 	type LoaderFunction,
 	type MetaArgs,
 	type MetaFunction,
-	json,
+	defer,
 } from '@remix-run/node'
-import { useLoaderData, useLocation } from '@remix-run/react'
+import { Await, useLoaderData, useLocation } from '@remix-run/react'
 import {
 	type ISbStories,
 	type ISbStory,
-	type ISbStoryData,
 	getStoryblokApi,
 	useStoryblokState,
 	type ISbStoriesParams,
 } from '@storyblok/react'
-import { Suspense, lazy, useState } from 'react'
-import AsteriskDividerShadow from '#app/components/Assets/Dividers/AsteriskDividerShadow'
+import { Suspense, lazy } from 'react'
 import Image, { type IBlok as IBlokImage } from '#app/components/Content/Image'
 import Text, { type IBlok as IBlokText } from '#app/components/Content/Text'
 import { GeneralErrorBoundary } from '#app/components/error-boundary.js'
 import config from '#app/config'
 import generateMetadata from '#app/helpers/metadata'
 import generateStructureddata from '#app/helpers/structureddata'
-
-interface IBlok extends IBlokImage, IBlokText {
-	id: string
-}
+import RichText from '#app/components/Helpers/RichText.js'
 
 const {
+	sb: { listParams },
 	img: { format },
 } = config
+
+interface IBlok extends IBlokImage, IBlokText {
+	_uid: string
+}
 
 const sbParams: ISbStoriesParams = {
 	version: ENV.STORYBLOK_EXPLORE,
 }
-const PromocoesGrid = lazy(
-	() => import('#app/components/Promocoes/PromocoesGrid'),
+
+const Promocoes = lazy(
+	() => import('#app/components/Promocoes/PromocoesDynamicList'),
 )
+const Guias = lazy(() => import('#app/components/Guias/GuiasDynamicList'))
 const Error = lazy(() => import('#app/components/Errors/Route404Error'))
 
 export function ErrorBoundary() {
@@ -53,20 +55,22 @@ export function ErrorBoundary() {
 	)
 }
 
-async function fetchPromocoes(filter: string, page = 1) {
-	return await getStoryblokApi().get(`cdn/stories`, {
-		...sbParams,
-		starts_with: 'promocoes',
-		is_startpage: false,
-		page,
-		filter_query: {
-			Loja: { in: filter },
-		},
-		resolve_relations: ['Promocao.Loja'],
-	})
-}
-
 export const loader: LoaderFunction = async ({ params: { slug } }) => {
+	const storyStoryblokParams = {
+		version: ENV.STORYBLOK_EXPLORE,
+		cv: ENV.CV,
+	}
+
+	const listStoryblokParams = {
+		...storyStoryblokParams,
+		...listParams,
+	}
+
+	const guiasInitialState = getStoryblokApi().get(`cdn/stories`, {
+		...listStoryblokParams,
+		starts_with: 'guias-de-presentes',
+	})
+
 	const { data } = await getStoryblokApi()
 		.get(`cdn/stories/lojas/${slug}`, sbParams)
 		.catch(_ => {
@@ -77,15 +81,19 @@ export const loader: LoaderFunction = async ({ params: { slug } }) => {
 		throw new Response('Not Found', { status: 404 })
 	}
 
-	const { data: promocoesInitialState, total } = await fetchPromocoes(
-		data.story.uuid,
-		1,
-	)
+	const promocoesInitialState = getStoryblokApi().get(`cdn/stories`, {
+		...listStoryblokParams,
+		starts_with: 'promocoes',
+		filter_query: {
+			Loja: { in: data.story.uuid },
+		},
+		resolve_relations: ['Promocao.Loja'],
+	})
 
-	return json({
+	return defer({
 		data,
+		guiasInitialState,
 		promocoesInitialState,
-		total,
 	})
 }
 
@@ -102,7 +110,7 @@ export const meta: MetaFunction<typeof loader> = ({
 			`Loja: ${data.story.content.Title} - Presentes e Prendas`,
 		description:
 			data.story.content.SeoDescription || data.story.content.ShortBio,
-		image: data.story?.content?.Image?.filename,
+		image: data.story.content.Image?.filename,
 	}
 	return [
 		...generateMetadata(data.story.full_slug, metadata),
@@ -119,33 +127,18 @@ export const meta: MetaFunction<typeof loader> = ({
 	]
 }
 
-export default function Slug() {
-	const { data, promocoesInitialState, total } = useLoaderData<
+export default function Loja() {
+	const { data, guiasInitialState, promocoesInitialState } = useLoaderData<
 		typeof loader
 	>() as {
 		data: ISbStory['data']
-		promocoesInitialState: ISbStories['data']
-		total: number
+		guiasInitialState: Promise<ISbStories>
+		promocoesInitialState: Promise<ISbStories>
 	}
 	const story = useStoryblokState(data.story)
 
-	const [promocoes, setPromocoes] = useState({
-		page: 1,
-		slices: [promocoesInitialState.stories],
-		total,
-	})
-
 	if (!story) {
 		return null
-	}
-
-	const loadMorePromocoes = async (page: number) => {
-		const { data: promocoesSlice } = await fetchPromocoes(data.story.uuid, page)
-		setPromocoes({
-			page,
-			slices: [...promocoes.slices, promocoesSlice.stories],
-			total: promocoes.total,
-		})
 	}
 
 	return (
@@ -155,7 +148,7 @@ export default function Slug() {
 					<div
 						className="relative flex h-72 w-full flex-col items-center justify-center overflow-hidden bg-cover bg-top lg:h-96"
 						style={{
-							backgroundImage: `url("${story?.content?.BackgroundImage?.filename}/m/320x0${format})"`,
+							backgroundImage: `url("${story.content.BackgroundImage?.filename}/m/320x0${format})"`,
 						}}
 					>
 						<div
@@ -175,9 +168,6 @@ export default function Slug() {
 							/>
 						</div>
 						<div className="absi-0 z-10 bg-colder/25" />
-						<div className="relative z-20 mx-auto max-w-5xl text-center">
-							<h1 className="sr-only">{story?.content?.Title}</h1>
-						</div>
 					</div>
 					<div
 						aria-hidden="true"
@@ -192,65 +182,62 @@ export default function Slug() {
 						/>
 					</div>
 				</div>
-				<div className="relative z-20 mx-auto max-w-5xl p-6 pt-16 lg:p-12">
+				<div className="text-text-mid relative z-20 mx-auto max-w-2xl p-6 pt-16 text-lg lg:p-12">
 					<img
-						alt={story?.content?.Title}
+						alt={story.content.Title}
 						className="absolute left-1/2 h-32 w-32 -translate-x-1/2 -translate-y-full rounded-3xl"
-						src={`${story?.content?.Image?.filename}/m/128x128${format}`}
+						src={`${story.content.Image?.filename}/m/128x128${format}`}
 					/>
 
-					<h1 className="font-heading my-12 text-center text-4xl">
-						{story?.content?.Title}
+					<h1 className="font-heading my-12 text-center text-4xl text-warm">
+						{story.content.Title}
 					</h1>
-					{}
 
-					{story?.content.Content && story?.content.Content.map((blok: IBlok) => {
-						if (blok.component === 'Content--Text') {
-							return <Text key={blok.id} blok={blok} />
-						}
-						if (blok.component === 'Content--Image') {
-							return <Image key={blok.id} blok={blok} />
-						}
-						return null
-					})}
+					{story.content.Content &&
+						story.content.Content.map((blok: IBlok) => {
+							if (blok.component === 'Content--Text') {
+								return <Text key={blok._uid} blok={blok} />
+							}
+							if (blok.component === 'Content--Image') {
+								return <Image key={blok._uid} blok={blok} />
+							}
+							return null
+						})}
+				</div>
+				<div className="mb-12 p-8">
+					<div className="mx-auto max-w-4xl animate-grad overflow-hidden rounded-lg bg-gradient-to-tr from-warm via-[#efe7bc] to-cold bg-2x p-4 shadow-md lg:p-4">
+						<div className=" rounded-sm bg-white p-8 text-sm shadow">
+							<h4 className="font-heading mb-8 text-xl">{`Envios na ${story.content.Title}`}</h4>
+							<RichText document={story.content.ShippingInfo} />
+						</div>
+					</div>
 				</div>
 			</article>
-			<section className="-mt-12 bg-background pt-12">
-				<div className="mx-auto max-w-7xl px-8 py-16">
-					<h3 className="heading-large text-colder">
-						Promoções {story?.content?.Title}
-					</h3>
-					{promocoes.slices.map((list: ISbStoryData[], index) => {
-						return (
-							<div key={`promocoes-grid-${index}`}>
-								{index > 0 ? (
-									<AsteriskDividerShadow className="mx-auto my-16 h-8 fill-cold" />
-								) : null}
-								<Suspense
-									fallback={
-										<p className="pb-20 text-center">A carregar conteúdos</p>
-									}
-								>
-									<PromocoesGrid promocoes={list} />
-								</Suspense>
-							</div>
-						)
-					})}
 
-					{promocoes.page < promocoes.total ? (
-						<div className="text-center">
-							<button
-								className="btn-large btn-vermais mt-16 bg-cold text-white hover:bg-colder"
-								onClick={() => {
-									loadMorePromocoes(promocoes.page + 1)
-								}}
-							>
-								Ver mais
-							</button>
-						</div>
-					) : null}
-				</div>
-			</section>
+			<Suspense
+				fallback={<p className="pb-20 text-center">{'A carregar promoções'}</p>}
+			>
+				<Await resolve={promocoesInitialState}>
+					{state => (
+						<Promocoes
+							filterQuery={{
+								Loja: { in: data.story.uuid },
+							}}
+							promocoesInitialState={state}
+						/>
+					)}
+				</Await>
+			</Suspense>
+
+			<Suspense
+				fallback={
+					<p className="pb-20 text-center">{'A carregar guias de presentes'}</p>
+				}
+			>
+				<Await resolve={guiasInitialState}>
+					{state => <Guias guiasInitialState={state} />}
+				</Await>
+			</Suspense>
 		</main>
 	)
 }
