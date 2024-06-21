@@ -16,10 +16,6 @@ METRICS_PORT = "8081"
 allowed_public_ports = [ ]
 auto_rollback = true
 
-[mounts]
-source = "data"
-destination = "/data"
-
 [[statics]]
 guest_path = "/app/public/build"
 url_prefix = "/build"
