@@ -235,9 +235,9 @@ function Document({
 	return (
 		<html lang="pt">
 			<head>
+				<meta charSet="utf-8" />
 				<ClientHintCheck nonce={nonce} />
 				<Meta />
-				<meta charSet="utf-8" />
 				<meta name="viewport" content="width=device-width,initial-scale=1" />
 				<meta content="#fcf7f4" name="theme-color" />
 				{allowIndexing ? null : (
