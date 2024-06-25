@@ -14,7 +14,7 @@ export default function PerguntasFrequentes({
 	return (
 		<section className="mx-auto my-16 max-w-3xl px-8">
 			<h3 className="heading-large pb-8 pt-0 text-cold">
-				IBloks e respostas sobre
+				Perguntas e respostas sobre
 				<br />
 				presentes e prendas
 			</h3>

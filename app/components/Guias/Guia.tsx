@@ -49,11 +49,11 @@ export default function Guia({
 				{publishedAt ? (
 					<footer className="mb-4 text-sm text-text-light">
 						<time dateTime={dayjs(firstPublishedAt).toISOString()}>
-							{dayjs(firstPublishedAt).tz("Europe/Lisbon").format('DD')} de{' '}
+							{dayjs(firstPublishedAt).tz('Europe/Lisbon').format('DD')} de{' '}
 							<span className="capitalize">
-								{dayjs(firstPublishedAt).tz("Europe/Lisbon").format('MMM')}
+								{dayjs(firstPublishedAt).tz('Europe/Lisbon').format('MMM')}
 							</span>{' '}
-							{dayjs(firstPublishedAt).tz("Europe/Lisbon").format('YYYY')}
+							{dayjs(firstPublishedAt).tz('Europe/Lisbon').format('YYYY')}
 						</time>{' '}
 						por{' '}
 						<address className="inline">
@@ -66,11 +66,11 @@ export default function Guia({
 						</address>
 						{', atualizado a '}
 						<time dateTime={dayjs(publishedAt).toISOString()}>
-							{dayjs(publishedAt).tz("Europe/Lisbon").format('DD')} de{' '}
+							{dayjs(publishedAt).tz('Europe/Lisbon').format('DD')} de{' '}
 							<span className="capitalize">
-								{dayjs(publishedAt).tz("Europe/Lisbon").format('MMM')}
+								{dayjs(publishedAt).tz('Europe/Lisbon').format('MMM')}
 							</span>{' '}
-							{dayjs(publishedAt).tz("Europe/Lisbon").format('YYYY')}
+							{dayjs(publishedAt).tz('Europe/Lisbon').format('YYYY')}
 						</time>{' '}
 					</footer>
 				) : null}
@@ -114,11 +114,12 @@ export default function Guia({
 					<div>
 						<h2 className="sr-only">Vídeo:</h2>
 						<LiteYouTubeEmbed
-							id={blok.YoutubeID} // Default none, id of the video or playlist
-							adNetwork={true} // Default true, to preconnect or not to doubleclick addresses called by YouTube iframe (the adnetwork from Google)
-							poster="maxresdefault" // Defines the image size to call on first render as poster image. Possible values are "default","mqdefault",  "hqdefault", "sddefault" and "maxresdefault". Default value for this prop is "hqdefault". Please be aware that "sddefault" and "maxresdefault", high resolution images are not always avaialble for every video. See: https://stackoverflow.com/questions/2068344/how-do-i-get-a-youtube-video-thumbnail-from-the-youtube-api
-							title={blok.Title} // a11y, always provide a title for iFrames: https://dequeuniversity.com/tips/provide-iframe-titles Help the web be accessible ;)
-							noCookie={true} // Default false, connect to YouTube via the Privacy-Enhanced Mode using https://www.youtube-nocookie.com
+							containerElement="div"
+							id={blok.YoutubeID}
+							adNetwork={true}
+							poster="maxresdefault"
+							title={blok.Title}
+							noCookie={true}
 						/>
 					</div>
 				)}
