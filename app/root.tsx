@@ -123,12 +123,18 @@ export const links: LinksFunction = () => {
 			type: 'image/svg+xml',
 			fetchpriority: 'low',
 		},
+		{
+			href: '/sitemap.xml',
+			rel: 'sitemap',
+			title: 'Sitemap',
+			type: 'application/xml',
+		},
 	].filter(Boolean)
 }
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
 	return [
-		{ title: data ? 'Presentes e Prendas' : 'Erro Pensentes e Prendas' },
+		{ title: data ? 'Presentes e Prendas' : 'Erro Presentes e Prendas' },
 		{ name: 'description', content: `Descrição por defeito` },
 	]
 }

@@ -145,20 +145,20 @@ export default function generateMetadata(
       ...result,
       {
         property: "og:image",
-        content: "https://presenteseprendas.pt/fb-fallback.png",
+        content: "/fb-fallback.png",
       },
       {
         property: "og:image:secure_url",
-        content: "https://presenteseprendas.pt/fb-fallback.png",
+        content: "/fb-fallback.png",
       },
 
       {
         name: "twitter:image",
-        content: "https://presenteseprendas.pt/twitter-fallback.png",
+        content: "/twitter-fallback.png",
       },
       {
         property: "pin:media",
-        content: "https://presenteseprendas.pt/pin-fallback.png",
+        content: "/pin-fallback.png",
       },
     ];
   }
