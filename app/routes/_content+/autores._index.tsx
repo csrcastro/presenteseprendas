@@ -1,6 +1,10 @@
-import  { type LoaderFunction, type MetaFunction , json } from '@remix-run/node'
+import { type LoaderFunction, type MetaFunction, json } from '@remix-run/node'
 import { Link, useLoaderData } from '@remix-run/react'
-import  { type ISbStoriesParams, type ISbStoryData , getStoryblokApi } from '@storyblok/react'
+import {
+	type ISbStoriesParams,
+	type ISbStoryData,
+	getStoryblokApi,
+} from '@storyblok/react'
 import AsteriskDividerShadow from '#app/components/Assets/Dividers/AsteriskDividerShadow'
 import generateMetadata from '#app/helpers/metadata'
 import generateStructureddata from '#app/helpers/structureddata'
@@ -19,9 +23,8 @@ export const loader: LoaderFunction = async () => {
 }
 
 const metadata = {
-	title: `Presentes e Prendas: Conhece os nossos autores`,
-	description: `Esta é a equipa de autores do presenteseprendas.pt, incansáveis a 
-  proporcionar-te guias de presentes surpreendentes e promoções aliciantes`,
+	title: `Presentes e Prendas | Perfis pessoais dos nossos autores`,
+	description: `Esta é página da equipa da Presentes e Prendas, incansáveis a proporcionar-te guias de presentes surpreendentes e promoções aliciantes. Vem conhecê-los!`,
 }
 
 export const meta: MetaFunction<typeof loader> = () => [
@@ -54,13 +57,44 @@ export default function Page() {
 			</div>
 			<div className="mx-auto max-w-7xl px-6 lg:px-8">
 				<div className="mx-auto max-w-xl">
-					<h1 className="heading-large text-warm">Autores</h1>
+					<h1 className="heading-large text-warm">
+						<span className="sr-only">{`Vem conhecer os `}</span>Autores
+						<span className="sr-only">{` dão vida à Presentes e Prendas`}</span>
+					</h1>
+					<p className="mb-4">
+						{`Olá! Nós somos a equipa criativa por trás da "Presentes e Prendas",
+						um espaço dedicado inteiramente à arte de oferecer os presentes mais
+						adequados em qualquer ocasião. A nossa missão é disponibilizar-te
+						uma infinidade de ideias originais e inspiradoras, que se possam vir
+						a tornar em presentes especiais. Cada sugestão que partilhamos é
+						fruto de uma cuidadosa pesquisa e de um processo criativo
+						apaixonado, garantindo que cada proposta seja única e pensada
+						especialmente para surpreender, e acima de tudo, agradar. Quer
+						estejas à procura do presente perfeito para alguém especial ou até
+						mesmo algo para te mimares a ti próprio, temos opções para todas as
+						necessidades e gostos.`}
+					</p>
+					<p className="mb-4">
+						{`Para além das nossas sugestões de presentes, estamos sempre de olho
+						nas melhores promoções para te oferecer. Sabemos que qualidade e
+						preço acessível podem andar de mãos dadas, e é por isso que nos
+						dedicamos a encontrar as melhores ofertas. Queremos que tenhas
+						acesso a produtos incríveis sem comprometer o teu orçamento. Por
+						isso, ficar atento às nossas atualizações significa estar sempre um
+						passo à frente nas oportunidades de fazer um bom negócio, seja para
+						datas comemorativas, simples gestos de gratidão e carinho ou apenas
+						aproveitar uma pechincha.`}
+					</p>
 					<p>
-						Olá, nós somos os autores da Presentes e Prendas. É das nossas
-						cabeças e da nossa pesquisa que saem todas estas maravilhosas ideias
-						que te vão inspirar no processo de oferecer algo a alguém ou a ti
-						próprio. Temos montes de ideias para ti e ainda promoções que
-						queremos partilhar contigo!
+						{`Encorajamos-te a explorar as várias categorias de guias presentes
+						que disponibilizamos e a aproveitar as promoções exclusivas que a
+						nossa plataforma oferece. Estamos sempre a atualizar o nosso
+						conteúdo com novas promoções e ideias, assegurando que nunca te
+						faltem opções. A tua satisfação em encontrar o presente perfeito é a
+						nossa maior alegria, e esperamos que cada visita tua ao nosso site
+						seja uma nova descoberta de possibilidades. Vem encontrar aquele
+						presente que fala ao coração e deixa a magia dos pequenos gestos
+						fortalecer as tuas relações.`}
 					</p>
 				</div>
 				<AsteriskDividerShadow className="mx-auto my-8 h-8 fill-warm" />

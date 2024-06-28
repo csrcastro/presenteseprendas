@@ -104,7 +104,7 @@ export const meta: MetaFunction<typeof loader> = ({ data: loaderData }) => {
 	}
 
 	const metadata = {
-		title: `${data.story.content.Nome}: autor(a) na Presentes e Prendas`,
+		title: `Presentes e Prendas | Autores | Perfil de ${data.story.content.Nome}`,
 		description: data.story.content.ShortBio,
 	}
 	return [

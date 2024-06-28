@@ -24,12 +24,12 @@ export const meta: MetaFunction<typeof loader> = ({ data: loaderData }) => {
 	const metadata = {
 		title: `Promoções e descontos, partilhamos contigo as melhores${
 			parseInt(promocoesCurrentPage, 10) > 1
-				? ` - página ${promocoesCurrentPage}`
+				? ` | ${promocoesCurrentPage}`
 				: ''
 		}`,
 		description: `Todos gostamos de uma boa promoçāo, -20% aqui, -10% ali, e assim poupamos uns euros. Na Presentes e Prendas partilhamos contigo promoções que valem a pena${
 			parseInt(promocoesCurrentPage, 10) > 1
-				? ` - página ${promocoesCurrentPage}`
+				? ` | ${promocoesCurrentPage}`
 				: ''
 		}`,
 	}
