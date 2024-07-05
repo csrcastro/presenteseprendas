@@ -7,5 +7,5 @@ test('Search from home page', async ({ page }) => {
 	await page.getByRole('button', { name: 'pesquisar' }).click()
 
 	await page.goto(`/pesquisa?pesquisa=__nonexistent__`)
-	await expect(page.getByText('Guias de Presentes')).toBeVisible()
+	await expect(page.getByText('Resultados da pesquisa')).toBeVisible()
 })

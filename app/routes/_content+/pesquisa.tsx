@@ -1,5 +1,3 @@
-import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
-import { SparklesIcon } from '@heroicons/react/24/solid'
 import {
 	type LoaderFunctionArgs,
 	type MetaFunction,
@@ -13,31 +11,48 @@ import {
 } from '@storyblok/react'
 import { Suspense, lazy, useEffect, useState } from 'react'
 import AsteriskDividerShadow from '#app/components/Assets/Dividers/AsteriskDividerShadow'
+import config from '#app/config'
 import generateMetadata from '#app/helpers/metadata'
 import generateStructureddata from '#app/helpers/structureddata'
+import sprite from '#app/sprites/sprite.svg'
+
+const {
+	svg: { defaults },
+} = config
 
 const PresentesGrid = lazy(() => import('#app/components/Guias/PresentesGrid'))
 const PromocoesGrid = lazy(
 	() => import('#app/components/Promocoes/PromocoesGrid'),
 )
 
-async function fetchStories(start: string, term: string, page = 1) {
-	const { data }: ISbResult = await getStoryblokApi().get(`cdn/stories`, {
+async function fetchStories(start: string, term: string | null, page = 1) {
+	let params: {
+		version?: 'published' | 'draft'
+		starts_with: string
+		is_startpage: boolean
+		page: number
+		search_term?: string
+	} = {
 		version: ENV.STORYBLOK_EXPLORE,
 		starts_with: start,
 		is_startpage: false,
 		page,
-		search_term: term,
-	})
+	}
+
+	if (term) {
+		params.search_term = term
+	}
+
+	const { data }: ISbResult = await getStoryblokApi().get(`cdn/stories`, params)
 
 	return data
 }
 
-function fetchGuias(term: string, page = 1) {
+function fetchGuias(term: string | null, page = 1) {
 	return fetchStories('guias-de-presentes', term, page)
 }
 
-async function fetchPromocoes(term: string, page = 1) {
+async function fetchPromocoes(term: string | null, page = 1) {
 	return fetchStories('promocoes', term, page)
 }
 
@@ -47,15 +62,9 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
 	const pesquisa = search.get('pesquisa')
 
-	if (!pesquisa) {
-		return json({ guias: [], promocoes: [], term: '' })
-	}
-
-	const guias: ISbStories['data'] = await fetchGuias(pesquisa.toString())
-	const promocoes: ISbStories['data'] = await fetchPromocoes(
-		pesquisa.toString(),
-	)
-	const term: string = pesquisa.toString()
+	const guias: ISbStories['data'] = await fetchGuias(pesquisa)
+	const promocoes: ISbStories['data'] = await fetchPromocoes(pesquisa)
+	const term: string | null = pesquisa
 
 	return json({ guias, promocoes, term })
 }
@@ -108,97 +117,117 @@ export default function Pesquisa() {
 	return (
 		<main>
 			<section aria-labelledby="category-heading">
-				<h1 className="sr-only">
-					{'Pesquisa aqui pelos melhores Promocões, Presentes e Prendas'}
-				</h1>
 				<div className="relative bg-warm">
-					<div className="mx-auto px-4 pb-20 sm:max-w-xl md:max-w-full md:px-24 lg:max-w-screen-xl lg:px-8">
-						<Form>
-							<div className="relative max-w-xl pt-2 sm:mx-auto sm:max-w-xl sm:pt-8 sm:text-center md:max-w-2xl">
-								<div>
-									<label className="sr-only" htmlFor="pesquisa">
-										Pesquisar
-									</label>
-									<div className="mt-2 flex rounded-md shadow-md">
-										<div className="relative flex flex-grow items-stretch focus-within:z-10">
-											<div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-												<SparklesIcon
-													aria-hidden="true"
-													className="h-5 w-5 text-text"
-												/>
-											</div>
-											<input
-												className="block w-full rounded-none rounded-l-md border-0 py-4 pl-10 text-text-light placeholder:text-text-lighter focus:ring-2 focus:ring-inset focus:ring-colder sm:text-sm sm:leading-6"
-												defaultValue={term}
-												id="pesquisa"
-												name="pesquisa"
-												placeholder="Pesquisa aqui..."
-												type="text"
-											/>
-										</div>
-										<button
-											className="text-md relative -ml-px inline-flex items-center gap-x-1.5 rounded-r-md bg-text px-6 font-bold uppercase text-white transition-colors duration-300 hover:bg-warmer sm:px-3"
-											type="submit"
-										>
-											<span className="hidden sm:block">Pesquisar</span>
-											<MagnifyingGlassIcon
-												aria-hidden="true"
-												className="-ml-1 h-7 w-auto sm:h-4"
-											/>
-										</button>
-									</div>
+					<div className="mx-auto max-w-3xl py-20">
+						<div className="mx-auto max-w-lg pb-8">
+							<h1 className="text-center font-serif text-2xl uppercase text-background">
+								{'Pesquisa aqui pelas melhores ideias de presente'}
+							</h1>
+						</div>
+						<Form className="relative max-w-xl px-4 sm:mx-auto sm:max-w-xl sm:px-0 sm:text-center md:max-w-2xl">
+							<label className="sr-only" htmlFor="pesquisa">
+								Pesquisa na Presentes e Prendas
+							</label>
+							<div className="flex rounded-md focus-within:shadow-lg">
+								<div className="relative flex flex-grow items-stretch">
+									<svg
+										{...defaults}
+										viewBox="0 0 20 20"
+										fill="currentColor"
+										aria-hidden="true"
+										className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-cold"
+										xmlnsXlink="http://www.w3.org/1999/xlink"
+									>
+										<use xlinkHref={`${sprite}#sparkles`} />
+									</svg>
+									<input
+										className="block w-full rounded-none rounded-l-md border-0 py-4 pl-10 text-text-light placeholder:text-text-lighter focus:ring-0 focus:ring-offset-0 sm:text-sm sm:leading-6"
+										id="pesquisa"
+										name="pesquisa"
+										placeholder="Pesquisa ideias de presentes"
+										type="text"
+									/>
 								</div>
+								<button
+									aria-label="Pesquisar"
+									className="rounded-r-md bg-cold px-6 text-white hover:bg-colder"
+									type="submit"
+								>
+									<span className="sr-only">Pesquisar</span>
+									<svg
+										{...defaults}
+										viewBox="0 0 20 20"
+										fill="currentColor"
+										aria-hidden="true"
+										className="h-7 w-auto px-2"
+										xmlnsXlink="http://www.w3.org/1999/xlink"
+									>
+										<use xlinkHref={`${sprite}#magnifier`} />
+									</svg>
+								</button>
 							</div>
 						</Form>
 					</div>
 				</div>
 			</section>
 
-			<h2 className="sr-only">Resultados da Pesquisa</h2>
-			<section className="mx-auto max-w-7xl px-8">
-				<h3 className="font-heading py-12 text-center text-4xl uppercase text-warm">
-					Guias de Presentes
-				</h3>
+			{term !== null ? (
+				<div className="mx-auto max-w-7xl px-4 py-12">
+					<h2 className="text-center font-serif text-3xl">
+						Resultados da pesquisa para: "{term}"
+					</h2>
+				</div>
+			) : null}
 
-				{guiasCollection.slices.map((slice, index) => {
-					return (
-						<div key={`guias-grid-${index}`}>
-							{index > 0 ? (
-								<AsteriskDividerShadow className="mx-auto mb-16 h-8 fill-warm" />
-							) : null}
-							<Suspense
-								fallback={
-									<p className="pb-20 text-center">A carregar conteúdos</p>
-								}
-							>
-								<PresentesGrid ideias={slice} />
-							</Suspense>
-						</div>
-					)
-				})}
-			</section>
+			{guiasCollection.slices[0] && guiasCollection.slices[0].length ? (
+				<section className="mx-auto max-w-7xl px-8">
+					<h3 className="font-heading py-12 text-center text-4xl uppercase text-warm">
+						Guias de Presentes
+					</h3>
 
-			<section className="mx-auto max-w-7xl px-8 pb-16">
-				<h3 className="font-heading py-12 text-center text-4xl uppercase text-warm">
-					Promocões
-				</h3>
-				{promocoesCollection.slices.map((slice, index) => {
-					return (
-						<div key={`promocoes-grid-${index}`}>
-							{index > 0 ? (
-								<AsteriskDividerShadow className="mx-auto mb-16 h-8 fill-warm" />
-							) : null}
-							<Suspense
-								fallback={
-									<p className="pb-20 text-center">A carregar conteúdos</p>
-								}
-							>
-								<PromocoesGrid promocoes={slice} />
-							</Suspense>
-						</div>
-					)
-				})}
-			</section>
+					{guiasCollection.slices.map((slice, index) => {
+						return (
+							<div key={`guias-grid-${index}`}>
+								{index > 0 ? (
+									<AsteriskDividerShadow className="mx-auto mb-16 h-8 fill-warm" />
+								) : null}
+								<Suspense
+									fallback={
+										<p className="pb-20 text-center">A carregar conteúdos</p>
+									}
+								>
+									<PresentesGrid ideias={slice} />
+								</Suspense>
+							</div>
+						)
+					})}
+				</section>
+			) : null}
+
+			{promocoesCollection.slices[0] && promocoesCollection.slices[0].length ? (
+				<section className="mx-auto max-w-7xl px-8">
+					<h3 className="font-heading py-12 text-center text-4xl uppercase text-warm">
+						Promocões
+					</h3>
+					{promocoesCollection.slices.map((slice, index) => {
+						return (
+							<div key={`promocoes-grid-${index}`}>
+								{index > 0 ? (
+									<AsteriskDividerShadow className="mx-auto mb-16 h-8 fill-warm" />
+								) : null}
+								<Suspense
+									fallback={
+										<p className="pb-20 text-center">A carregar conteúdos</p>
+									}
+								>
+									<PromocoesGrid promocoes={slice} />
+								</Suspense>
+							</div>
+						)
+					})}
+				</section>
+			) : null}
+			<div className="pb-16"></div>
 		</main>
 	)
 }
