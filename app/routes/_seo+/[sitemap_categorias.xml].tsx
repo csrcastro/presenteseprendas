@@ -38,16 +38,16 @@ function getRelated(stories: ISbStoryData[]) {
 						.map(promocao => {
 							const searchParams = new URLSearchParams('')
 
-							if (guia < 2 && promocao < 2) {
+							if (guia < 1 && promocao < 1) {
 								return
 							}
 
-							if (guia > 1) {
-								searchParams.append('pagina-de-guias', `${guia}`)
+							if (guia > 0) {
+								searchParams.append('pagina-de-guias', `${guia + 1}`)
 							}
 
 							if (promocao > 1) {
-								searchParams.append('pagina-de-promocoes', `${promocao}`)
+								searchParams.append('pagina-de-promocoes', `${promocao + 1}`)
 							}
 
 							return {

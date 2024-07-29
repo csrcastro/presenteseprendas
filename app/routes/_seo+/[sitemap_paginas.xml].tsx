@@ -1,25 +1,19 @@
-import { getStoryblokApi ,type  ISbStoriesParams } from '@storyblok/react'
+import { getStoryblokApi, type ISbStoriesParams } from '@storyblok/react'
 import dayjs from 'dayjs'
 import config from '#app/helpers/sitemap/config'
 import printLinks from '#app/helpers/sitemap/printLinks'
-import  { type Link, type Links } from '#app/helpers/sitemap/types'
-
+import { type Link, type Links } from '#app/helpers/sitemap/types'
 
 const { responseParams, storyblokRequestParams } = config
 
-function pushLinks(
-	container: Link[],
-	links: Links<Link>,
-	priority: number,
-	frequency: string,
-) {
-	Object.keys(links).forEach((key: string) => {
+function pushLinks(container: Link[], links: Links<Link>, frequency: string) {
+	Object.keys(links).forEach((key: string, index: number) => {
 		const link: Link = links[key] || {}
 		container.push({
 			id: link.id,
 			slug: link.full_slug?.replace('pages/', '').replace(/\/$/, ''),
 			published_at: dayjs(link.published_at).format('YYYY-MM-DD'),
-			priority,
+			priority: index % 2 === 0 ? 0.2 : 0.1,
 			frequency,
 		})
 	})
@@ -35,7 +29,7 @@ export const loader = async () => {
 
 	const { total, data } = await getStoryblokApi().get(`cdn/stories`, params)
 
-	pushLinks(all_links, data.stories, 0.1, 'yearly')
+	pushLinks(all_links, data.stories, 'yearly')
 
 	const maxPage = Math.ceil(total / config.storyblokRequestParams.per_page)
 
@@ -53,7 +47,7 @@ export const loader = async () => {
 
 	await Promise.all(contentRequests).then(responses => {
 		responses.forEach(resp => {
-			pushLinks(all_links, resp.data.stories, 0.1, 'yearly')
+			pushLinks(all_links, resp.data.stories, 'yearly')
 		})
 	})
 

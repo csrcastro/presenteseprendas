@@ -1,8 +1,8 @@
-import { getStoryblokApi ,type  ISbStoriesParams } from '@storyblok/react'
+import { getStoryblokApi, type ISbStoriesParams } from '@storyblok/react'
 import dayjs from 'dayjs'
 import config from '#app/helpers/sitemap/config'
 import printLinks from '#app/helpers/sitemap/printLinks'
-import  { type Link, type Links } from '#app/helpers/sitemap/types'
+import { type Link, type Links } from '#app/helpers/sitemap/types'
 
 const { responseParams, storyblokRequestParams } = config
 
@@ -29,8 +29,9 @@ export const loader = async () => {
 		{
 			id: 0,
 			slug: 'pesquisa',
-			frequency: 'never',
-			priority: 0,
+			frequency: 'yearly',
+			published_at: '2023-06-14',
+			priority: 0.1,
 		},
 	]
 
