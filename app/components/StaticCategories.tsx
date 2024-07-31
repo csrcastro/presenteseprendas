@@ -16,19 +16,12 @@ export default function StaticCategories({
 			<section className="mx-auto max-w-7xl">
 				<h2 className="heading-large pb-8 text-white">
 					Inspira-te
-					<span className="sr-only">
-						{' '}
-						com as nossas categorias de guias de presentes
-					</span>
+					<span className="sr-only"> com as nossas categorias</span>
 				</h2>
 				<p className="mb-16 px-10 text-center text-xs text-white">
-					Escolher presentes originais pode ser um desafio, mas com um pouco de
-					inspiração e conhecimento sobre as diferentes categorias de presentes,
-					a tarefa pode tornar-se muito mais fácil. Lembra-te, o mais importante
-					ao escolher um presente é pensar na pessoa que o vai receber.
-					<br />
-					Considera os seus gostos, interesses e personalidade e de certeza de
-					que vais encontrar o presente perfeito.
+					{
+						'A tarefa de escolher presentes e prendas originais e apropriadas acaba muitas vezes por tornar-se num grande desafio longo e chato. Felizmente, nós somos o segredo para que isso não aconteça contigo. Queremos que as nossas categorias e os seus guias sejam a tua fonte de inspiração para encontrar o presente perfeito que procuras, à primeira e sem complicações. Vem daí descobrir todas as ideias e sugestões que temos para ti.'
+					}
 				</p>
 				<ul className="s-c-grid">
 					{categorias.map(categoria => {

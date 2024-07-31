@@ -109,8 +109,8 @@ export const loader: LoaderFunction = async () => {
 }
 
 const metadata = {
-	title: 'Presentes e Prendas: a inspiração perfeita para oferecer!',
-	description: `Presentes e prendas é a plataforma onde vais descobrir o que oferecer em diferentes ocasiões com sugestões para todos os gostos, estilos e carteiras.`,
+	title: 'Presentes e Prendas: o segredo para oferecer mais e melhor!',
+	description: `Presentes e Prendas: ajudamos-te a oferecer melhor 🎁 em qualquer ocasião. Guias, ideias e sugestões para todos os gostos, estilos e carteiras.`,
 }
 
 export const meta: MetaFunction<typeof loader> = ({
@@ -207,7 +207,7 @@ export default function Slug() {
 				</div>
 				<div className="mx-auto px-4 pb-20 sm:max-w-xl md:max-w-full md:px-24 lg:max-w-screen-xl lg:px-8">
 					<h1 className="sr-only">
-						Presentes e Prendas inspiração perfeita para oferecer
+						{'Presentes e Prendas: o segredo para oferecer melhor'}
 					</h1>
 					<Form
 						action="pesquisa"
@@ -215,7 +215,7 @@ export default function Slug() {
 						className="relative max-w-xl sm:mx-auto sm:max-w-xl sm:text-center md:max-w-2xl"
 					>
 						<label className="sr-only" htmlFor="pesquisa">
-							Pesquisa na Presentes e Prendas
+							{'Pesquisa na Presentes e Prendas'}
 						</label>
 						<div className="flex rounded-md focus-within:shadow-lg">
 							<div className="relative flex flex-grow items-stretch">

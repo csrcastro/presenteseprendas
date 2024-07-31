@@ -42,9 +42,9 @@ export default function Guias({
 			<h2 className="heading-large pb-8 pt-0">Encontra o melhor presente</h2>
 
 			<p className="mb-16 px-10 text-center text-black">
-				Descobre o presente perfeito para qualquer ocasião com os nossos guias
-				de presentes. Presente de aniversário, presente de casamento, presente
-				de Natal e muitos mais, temos as melhores ideias de presentes para ti.
+				{
+					'Descobre o segredo para oferecer o presente perfeito em qualquer ocasião. Para aniversário, casamento, natal e muitos mais, temos os melhores guias, ideias e sugestões para te mostrar.'
+				}
 			</p>
 
 			<h3 className="sr-only">Lista de guias de presentes</h3>
