@@ -194,7 +194,6 @@ export default function Autores() {
 							As minhas escolhas
 						</h2>
 						<section
-							aria-labelledby="products-heading"
 							className="mx-auto max-w-7xl overflow-hidden pb-2"
 						>
 							<h3 className="sr-only">As minhas promoções favoritas</h3>
@@ -210,7 +209,6 @@ export default function Autores() {
 					<AsteriskDividerShadow className="mx-auto my-16 h-8 fill-warm" />
 					<div className="mx-auto max-w-5xl pb-16">
 						<section
-							aria-labelledby="products-heading"
 							className="mx-auto max-w-7xl overflow-hidden"
 						>
 							<h3 className="sr-only">Os meus guias favoritos</h3>
@@ -227,7 +225,7 @@ export default function Autores() {
 				<div className="bg-white">
 					<div className="mx-auto max-w-5xl px-8 py-24">
 						<div className="grid gap-6 sm:grid-cols-2">
-							<section aria-labelledby="products-heading" className="">
+							<section>
 								<h3 className="font-heading mb-8 text-2xl text-colder md:text-3xl lg:text-4xl">
 									Guias recentes
 								</h3>
@@ -282,7 +280,7 @@ export default function Autores() {
 								) : null}
 							</section>
 
-							<section aria-labelledby="products-heading" className="">
+							<section>
 								<h3 className="font-heading mb-8 text-2xl text-colder md:text-3xl lg:text-4xl">
 									Promoções recentes
 								</h3>

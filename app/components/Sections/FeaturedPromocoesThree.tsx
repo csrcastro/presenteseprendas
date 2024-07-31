@@ -29,7 +29,7 @@ export default function FeaturedPromocoesThree({
 	}
 
 	return (
-		<section aria-labelledby="featured-promotions-heading">
+		<section>
 			<div className="relative z-30 pb-16">
 				<h2
 					className="heading-large pb-8 pt-0"
@@ -90,7 +90,7 @@ export default function FeaturedPromocoesThree({
 								</div>
 
 								<div className="f-p-3-a-d3">
-									<div className="flex">{`até -${discount}% de desconto`}</div>
+									<div className="flex">at&#233; -{`${discount}`}&#37; de desconto</div>
 									<div className="">
 										{promocao.content.ShippingCost ? (
 											<div className="flex">

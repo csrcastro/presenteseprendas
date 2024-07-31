@@ -40,7 +40,7 @@ const PromocoesGrid = ({ promocoes }: { promocoes: ISbStoryData[] }) => {
 								{promocao?.content.Title}
 							</Link>
 							<div>
-								<span className="p-grid-a-d2-h-s">{`até -${discount}%`}</span>
+								<span className="p-grid-a-d2-h-s">at&#233; -{`${discount}`}&#37;</span>
 								{promocao?.content?.Loja ? (
 									<aside className="p-grid-a-d2-h-a">
 										na {promocao?.content?.Loja?.content?.Title}

@@ -39,7 +39,7 @@ export default function Landing({
 }) {
 	return (
 		<main {...storyblokEditable(blok)} key={blok._uid}>
-			<section aria-labelledby="Cabeçalho da página de guias">
+			<section>
 				<div className="relative overflow-hidden bg-background">
 					<div
 						aria-hidden="true"

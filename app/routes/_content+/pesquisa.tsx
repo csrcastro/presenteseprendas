@@ -116,7 +116,7 @@ export default function Pesquisa() {
 
 	return (
 		<main>
-			<section aria-labelledby="category-heading">
+			<section>
 				<div className="relative bg-warm">
 					<div className="mx-auto max-w-3xl py-20">
 						<div className="mx-auto max-w-lg pb-8">

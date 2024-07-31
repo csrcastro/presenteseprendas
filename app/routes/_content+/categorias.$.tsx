@@ -1,4 +1,8 @@
-import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react'
+import {
+	Disclosure,
+	DisclosureButton,
+	DisclosurePanel,
+} from '@headlessui/react'
 import { type LoaderFunction, type MetaFunction, defer } from '@remix-run/node'
 import { Await, Link, useLoaderData, useLocation } from '@remix-run/react'
 import {
@@ -255,12 +259,12 @@ export default function Categoria() {
 
 	return (
 		<main>
-			<article aria-labelledby="category-heading">
+			<article>
 				<div className="relative overflow-hidden">
 					<div
 						className="relative flex aspect-[1380/500] flex-col items-center justify-center overflow-hidden bg-cover bg-center"
 						style={{
-							backgroundImage: `url("${story?.content?.Image?.filename}/m/320x0${format})"`,
+							backgroundImage: `url("${story?.content?.Image?.filename}/m/320x0${format}")`,
 						}}
 					>
 						<div
@@ -324,10 +328,9 @@ export default function Categoria() {
 									<div
 										className="h-64 w-full rounded-lg bg-cover bg-center shadow-md"
 										style={{
-											backgroundImage: `url("${promocao.content?.Image?.filename}/m/384x256${format})"`,
+											backgroundImage: `url("${promocao.content?.Image?.filename}/m/384x256${format}")`,
 										}}
 									/>
-
 									<div className="mx-4 -mt-10 overflow-hidden rounded-lg bg-white px-4 py-2 shadow-lg transition-colors duration-300 lg:group-hover:bg-warm">
 										<Link
 											aria-label={promocao.content.Title}

@@ -16,10 +16,10 @@ import { Suspense, lazy } from 'react'
 import Image, { type IBlok as IBlokImage } from '#app/components/Content/Image'
 import Text, { type IBlok as IBlokText } from '#app/components/Content/Text'
 import { GeneralErrorBoundary } from '#app/components/error-boundary.js'
+import RichText from '#app/components/Helpers/RichText.js'
 import config from '#app/config'
 import generateMetadata from '#app/helpers/metadata'
 import generateStructureddata from '#app/helpers/structureddata'
-import RichText from '#app/components/Helpers/RichText.js'
 
 const {
 	sb: { listParams },
@@ -148,7 +148,7 @@ export default function Loja() {
 					<div
 						className="relative flex h-72 w-full flex-col items-center justify-center overflow-hidden bg-cover bg-top lg:h-96"
 						style={{
-							backgroundImage: `url("${story.content.BackgroundImage?.filename}/m/320x0${format})"`,
+							backgroundImage: `url("${story.content.BackgroundImage?.filename}/m/320x0${format}")`,
 						}}
 					>
 						<div
