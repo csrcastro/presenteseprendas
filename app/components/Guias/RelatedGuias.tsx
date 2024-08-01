@@ -14,7 +14,7 @@ export default function GuiasRelated({
 		<section className="pb-8 text-center">
 			<h3 className="heading-large pt-0 text-colder">Guias Relacionados</h3>
 			<Suspense
-				fallback={<p className="pb-20 text-center">A carregar conteúdos</p>}
+				fallback={<p className="pb-20 text-center">{'A carregar conteúdos'}</p>}
 			>
 				<PresentesGrid ideias={related.data.stories} alt={true} />
 			</Suspense>

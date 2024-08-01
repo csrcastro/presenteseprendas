@@ -199,7 +199,7 @@ export default function Autores() {
 							<h3 className="sr-only">As minhas promoções favoritas</h3>
 							<Suspense
 								fallback={
-									<p className="pb-20 text-center">A carregar conteúdos</p>
+									<p className="pb-20 text-center">{'A carregar conteúdos'}</p>
 								}
 							>
 								<PromocoesGrid promocoes={story?.content.Promocoes} />
@@ -214,7 +214,7 @@ export default function Autores() {
 							<h3 className="sr-only">Os meus guias favoritos</h3>
 							<Suspense
 								fallback={
-									<p className="pb-20 text-center">A carregar conteúdos</p>
+									<p className="pb-20 text-center">{'A carregar conteúdos'}</p>
 								}
 							>
 								<PresentesGrid ideias={story?.content.Guias} />

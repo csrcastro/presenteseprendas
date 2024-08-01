@@ -88,7 +88,7 @@ function Guias({
 						) : null}
 						<Suspense
 							fallback={
-								<p className="pb-20 text-center">A carregar conteúdos</p>
+								<p className="pb-20 text-center">{'A carregar conteúdos'}</p>
 							}
 						>
 							<PresentesGrid ideias={slice} alt={true} />
@@ -251,7 +251,7 @@ export default function Slug() {
 			</div>
 
 			<Suspense
-				fallback={<p className="pb-20 text-center">A carregar conteúdos</p>}
+				fallback={<p className="pb-20 text-center">{'A carregar conteúdos'}</p>}
 			>
 				<Await resolve={related}>
 					{state => {
@@ -263,7 +263,7 @@ export default function Slug() {
 			</Suspense>
 
 			<Suspense
-				fallback={<p className="pb-20 text-center">A carregar conteúdos</p>}
+				fallback={<p className="pb-20 text-center">{'A carregar conteúdos'}</p>}
 			>
 				<Await resolve={guiasInitialState}>
 					{state => <Guias guiasInitialState={state} slug={slug} />}

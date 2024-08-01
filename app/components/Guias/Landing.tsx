@@ -112,7 +112,7 @@ export default function Landing({
 			</section>
 			{guias.stories.length > 0 && (
 				<Suspense
-					fallback={<p className="pb-20 text-center">A carregar conteúdos</p>}
+					fallback={<p className="pb-20 text-center">{'A carregar conteúdos'}</p>}
 				>
 					<section className="bg-background">
 						<div className="mx-auto px-4 lg:max-w-7xl lg:px-8" id="guias">

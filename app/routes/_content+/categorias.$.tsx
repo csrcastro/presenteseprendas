@@ -377,7 +377,7 @@ export default function Categoria() {
 				</div>
 			</article>
 			<Suspense
-				fallback={<p className="pb-20 text-center">A carregar conteúdos</p>}
+				fallback={<p className="pb-20 text-center">{'A carregar conteúdos'}</p>}
 			>
 				<HomeGuiasDestaques
 					containerClasses="px-4 lg:px-16"
@@ -388,7 +388,7 @@ export default function Categoria() {
 			</Suspense>
 
 			<Suspense
-				fallback={<p className="pb-20 text-center">A carregar conteúdos</p>}
+				fallback={<p className="pb-20 text-center">{'A carregar conteúdos'}</p>}
 			>
 				<Await resolve={guiasPromise}>
 					{state => {
@@ -415,7 +415,7 @@ export default function Categoria() {
 			</Suspense>
 
 			<Suspense
-				fallback={<p className="pb-20 text-center">A carregar conteúdos</p>}
+				fallback={<p className="pb-20 text-center">{'A carregar conteúdos'}</p>}
 			>
 				<Await resolve={promocoesPromise}>
 					{state => {

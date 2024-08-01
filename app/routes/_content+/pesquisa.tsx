@@ -71,7 +71,8 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
 const metadata = {
 	title: 'Pesquisa na Presentes e Prendas',
-	description: 'Estás à procura de algo específico?',
+	description:
+		'Pesquisa pelo presente ou prenda perfeitos aqui na Presentes e Prendas 🔍. Clica para encontrar rapidamente a inspiração que precisas para oferecer mais e melhor.',
 }
 export const meta: MetaFunction<typeof loader> = () => {
 	return [
@@ -120,13 +121,13 @@ export default function Pesquisa() {
 				<div className="relative bg-warm">
 					<div className="mx-auto max-w-3xl py-20">
 						<div className="mx-auto max-w-lg pb-8">
-							<h1 className="text-center font-serif text-2xl uppercase text-background">
+							<h2 className="text-center font-serif text-2xl uppercase text-background">
 								{'Pesquisa aqui pelas melhores ideias de presente'}
-							</h1>
+							</h2>
 						</div>
 						<Form className="relative max-w-xl px-4 sm:mx-auto sm:max-w-xl sm:px-0 sm:text-center md:max-w-2xl">
 							<label className="sr-only" htmlFor="pesquisa">
-								Pesquisa na Presentes e Prendas
+								{'Pesquisa na Presentes e Prendas'}
 							</label>
 							<div className="flex rounded-md focus-within:shadow-lg">
 								<div className="relative flex flex-grow items-stretch">
@@ -153,7 +154,7 @@ export default function Pesquisa() {
 									className="rounded-r-md bg-cold px-6 text-white hover:bg-colder"
 									type="submit"
 								>
-									<span className="sr-only">Pesquisar</span>
+									<span className="sr-only">{'Pesquisar'}</span>
 									<svg
 										{...defaults}
 										viewBox="0 0 20 20"
@@ -174,7 +175,7 @@ export default function Pesquisa() {
 			{term !== null ? (
 				<div className="mx-auto max-w-7xl px-4 py-12">
 					<h2 className="text-center font-serif text-3xl">
-						Resultados da pesquisa para: "{term}"
+						{`Resultados da pesquisa para: "${term}"`}
 					</h2>
 				</div>
 			) : null}
@@ -182,7 +183,7 @@ export default function Pesquisa() {
 			{guiasCollection.slices[0] && guiasCollection.slices[0].length ? (
 				<section className="mx-auto max-w-7xl px-8">
 					<h3 className="font-heading py-12 text-center text-4xl uppercase text-warm">
-						Guias de Presentes
+						{'Guias de Presentes'}
 					</h3>
 
 					{guiasCollection.slices.map((slice, index) => {
@@ -193,7 +194,9 @@ export default function Pesquisa() {
 								) : null}
 								<Suspense
 									fallback={
-										<p className="pb-20 text-center">A carregar conteúdos</p>
+										<p className="pb-20 text-center">
+											{'A carregar conteúdos'}
+										</p>
 									}
 								>
 									<PresentesGrid ideias={slice} />
@@ -207,7 +210,7 @@ export default function Pesquisa() {
 			{promocoesCollection.slices[0] && promocoesCollection.slices[0].length ? (
 				<section className="mx-auto max-w-7xl px-8">
 					<h3 className="font-heading py-12 text-center text-4xl uppercase text-warm">
-						Promocões
+						{'Promocões'}
 					</h3>
 					{promocoesCollection.slices.map((slice, index) => {
 						return (
@@ -217,7 +220,9 @@ export default function Pesquisa() {
 								) : null}
 								<Suspense
 									fallback={
-										<p className="pb-20 text-center">A carregar conteúdos</p>
+										<p className="pb-20 text-center">
+											{'A carregar conteúdos'}
+										</p>
 									}
 								>
 									<PromocoesGrid promocoes={slice} />
@@ -228,6 +233,49 @@ export default function Pesquisa() {
 				</section>
 			) : null}
 			<div className="pb-16"></div>
+
+			<section className="border-t-2 border-warm">
+				<div className="relative overflow-hidden bg-background">
+					<div
+						aria-hidden="true"
+						className="absolute inset-x-0 -top-16 flex transform-gpu justify-center overflow-hidden blur-3xl"
+					>
+						<div
+							className="to-backround aspect-[1318/752] w-[82.375rem] flex-none bg-gradient-to-r from-background to-warm opacity-25"
+							style={{
+								clipPath: `polygon(73.6% 51.7%, 91.7% 11.8%, 100% 46.4%, 97.4% 82.2%, 92.5% 84.9%, 75.7% 64%,
+                  55.3% 47.5%, 46.5% 49.4%, 45% 62.9%, 50.3% 87.2%, 21.3% 64.1%, 0.1% 100%, 5.4% 51.1%, 
+                  21.4% 63.9%, 58.9% 0.2%, 73.6% 51.7%)`,
+							}}
+						/>
+					</div>
+					<div className="relative mx-auto max-w-5xl px-4">
+						<h1 className="heading-large text-warm">
+							{'Pesquisa Presentes e Prendas'}
+						</h1>
+						<div className="mb-16">
+							<p className="mb-6">
+								{
+									'A nossa funcionalidade de pesquisa existe para que possas encontrar o guia ou sugestão de presente que procuras da forma mais rápida possível.'
+								}
+							</p>
+							<p className="mb-6">
+								{
+									'A funcionalidade de pesquisa funciona de duas maneiras; no canto superior direito temos a pesquisa rápida (ícone da lupa), que quando inicializada, te permite inserir um termo de pesquisa e ver os guias de presentes onde esse termo consta; no cimo desta página podes inserir um termo na barra de pesquisa e ser-te-ão devolvidos os resultados das páginas, guias e promoções associadas.'
+								}
+							</p>
+							<p className="mb-6">
+								{
+									'Tudo isto para que não percas mais tempo que o necessário à procura da inspiração que precisas para oferecer aquele presente perfeito aquela pessoa especial.'
+								}
+							</p>
+							<p className="mb-6">
+								<b>{'Boas Prendas!'}</b>
+							</p>
+						</div>
+					</div>
+				</div>
+			</section>
 		</main>
 	)
 }

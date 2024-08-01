@@ -264,7 +264,7 @@ export default function Slug() {
 				<span className="sr-only"> que não vais querer perder</span>
 			</h2>
 			<Suspense
-				fallback={<p className="pb-20 text-center">A carregar conteúdos</p>}
+				fallback={<p className="pb-20 text-center">{'A carregar conteúdos'}</p>}
 			>
 				<HomeGuiasDestaques
 					containerClasses="pb-16 px-4 lg:px-16"
@@ -279,7 +279,7 @@ export default function Slug() {
 				</Suspense>
 			</aside>
 			<Suspense
-				fallback={<p className="pb-20 text-center">A carregar conteúdos</p>}
+				fallback={<p className="pb-20 text-center">{'A carregar conteúdos'}</p>}
 			>
 				<Await resolve={guiasInitialState}>
 					{state => <Guias guiasInitialState={state} />}
@@ -295,19 +295,19 @@ export default function Slug() {
 				<FeaturedPromocoesThree promocoes={featuredPromocoes} />
 			</Suspense>
 			<Suspense
-				fallback={<p className="pb-20 text-center">A carregar conteúdos</p>}
+				fallback={<p className="pb-20 text-center">{'A carregar conteúdos'}</p>}
 			>
 				<StaticCategories categorias={Categorias} />
 			</Suspense>
 			<Suspense
-				fallback={<p className="pb-20 text-center">A carregar conteúdos</p>}
+				fallback={<p className="pb-20 text-center">{'A carregar conteúdos'}</p>}
 			>
 				<Await resolve={promocoesInitialState}>
 					{state => <Promocoes promocoesInitialState={state} />}
 				</Await>
 			</Suspense>
 			<Suspense
-				fallback={<p className="pb-20 text-center">A carregar conteúdos</p>}
+				fallback={<p className="pb-20 text-center">{'A carregar conteúdos'}</p>}
 			>
 				<Perguntas perguntas={PerguntasFrequentes} />
 			</Suspense>

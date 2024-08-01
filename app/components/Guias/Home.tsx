@@ -57,7 +57,7 @@ export default function Guias({
 						) : null}
 						<Suspense
 							fallback={
-								<p className="pb-20 text-center">A carregar conteúdos</p>
+								<p className="pb-20 text-center">{'A carregar conteúdos'}</p>
 							}
 						>
 							<PresentesGrid ideias={slice} />

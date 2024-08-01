@@ -51,7 +51,7 @@ export default function Promocoes({
 						) : null}
 						<Suspense
 							fallback={
-								<p className="pb-20 text-center">A carregar conteúdos</p>
+								<p className="pb-20 text-center">{'A carregar conteúdos'}</p>
 							}
 						>
 							<PromocoesGrid promocoes={list} />

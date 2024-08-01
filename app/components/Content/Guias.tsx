@@ -17,7 +17,7 @@ export default function Guias({ blok }: { blok: IBlok }) {
 		<section className="pb-8 text-center">
 			<h3 className="heading-large pt-0 text-colder">{blok.Title}</h3>
 			<Suspense
-				fallback={<p className="pb-20 text-center">A carregar conteúdos</p>}
+				fallback={<p className="pb-20 text-center">{'A carregar conteúdos'}</p>}
 			>
 				<PresentesGrid ideias={blok.Guias} alt={true} />
 			</Suspense>
