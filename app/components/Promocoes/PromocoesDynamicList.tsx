@@ -1,7 +1,7 @@
 import {
 	type ISbStories,
 	getStoryblokApi,
-	ISbStoriesParams,
+	type ISbStoriesParams,
 } from '@storyblok/react'
 import { Suspense, lazy, useState } from 'react'
 

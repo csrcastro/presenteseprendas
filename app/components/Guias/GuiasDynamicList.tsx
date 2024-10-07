@@ -1,5 +1,5 @@
 import {
-	ISbStoriesParams,
+	type ISbStoriesParams,
 	getStoryblokApi,
 	type ISbResult,
 } from '@storyblok/react'
