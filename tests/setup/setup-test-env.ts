@@ -12,11 +12,12 @@ installGlobals()
 
 afterEach(() => server.resetHandlers())
 afterEach(() => cleanup())
-
+//@ts-ignore
 export let consoleError: MockInstance<Parameters<(typeof console)['error']>>
 
 beforeEach(() => {
 	const originalConsoleError = console.error
+	//@ts-ignore
 	consoleError = vi.spyOn(console, 'error')
 	consoleError.mockImplementation(
 		(...args: Parameters<typeof console.error>) => {

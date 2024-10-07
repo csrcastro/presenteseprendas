@@ -162,6 +162,7 @@ interface CustomMatchers<R = unknown> {
 
 declare module 'vitest' {
 	interface Assertion<T = any> extends CustomMatchers<T> {}
+	//@ts-ignore
 	interface AsymmetricMatchersContaining extends CustomMatchers {}
 }
 
