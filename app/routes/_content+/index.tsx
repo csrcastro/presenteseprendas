@@ -153,7 +153,7 @@ export const meta: MetaFunction<typeof loader> = ({
 				fetchpriority: 'high',
 			}),
 		),
-		...generateMetadata('', metadata),
+		...generateMetadata('/', metadata),
 		generateStructureddata(
 			{
 				breadcrumbs: [],
