@@ -44,11 +44,18 @@ function AmazonLink({
 	children: any
 	className?: string
 }) {
-	const monetizedTo: string = loja?.content?.UrlTag
-		? `${rest.to}${rest.to.includes('?') ? '&' : '?'}${loja.content.UrlTag}`
-		: rest.to
+	const monetizedTo: string = encodeURIComponent(
+		loja?.content?.UrlTag
+			? `${rest.to}${rest.to.includes('?') ? '&' : '?'}${loja.content.UrlTag}`
+			: rest.to,
+	)
 	return (
-		<Link {...rest} to={monetizedTo} {...linkProps}>
+		<Link
+			{...rest}
+			to={`/sugestao/amazon?destino=${monetizedTo}`}
+			{...linkProps}
+			reloadDocument
+		>
 			{children}
 		</Link>
 	)
@@ -64,11 +71,15 @@ function AwinLink({
 	children: any
 	className?: string
 }) {
-	const monetizedTo: string = `${loja?.content?.UrlTag}${encodeURIComponent(
-		rest.to,
-	)}`
+	const monetizedTo: string = encodeURIComponent(
+		`${loja?.content?.UrlTag}${rest.to}`,
+	)
 	return (
-		<Link {...rest} to={monetizedTo} {...linkProps}>
+		<Link
+			{...rest}
+			to={`/sugestao/${loja.name.toLowerCase()}?destino=${monetizedTo}`}
+			{...linkProps}
+		>
 			{children}
 		</Link>
 	)

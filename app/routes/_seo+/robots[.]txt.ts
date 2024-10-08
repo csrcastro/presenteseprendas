@@ -8,6 +8,7 @@ Disallow: /cdn-cgi
 Disallow: /pesquisa
 Allow: /pesquisa$
 Disallow: /admin
+Disallow: /sugestao
 Disallow: /users
 Disallow: /settings
 Disallow: /login
