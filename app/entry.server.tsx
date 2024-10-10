@@ -9,7 +9,7 @@ import { RemixServer } from '@remix-run/react'
 import * as Sentry from '@sentry/remix'
 import { apiPlugin, storyblokInit } from '@storyblok/react'
 import chalk from 'chalk'
-import { isbot } from 'isbot'
+import { list, createIsbotFromList } from 'isbot'
 import { renderToPipeableStream } from 'react-dom/server'
 import { IsBotProvider } from './is-bot.context'
 import { getCv } from './models/contentCacheVersion.server.ts'
@@ -51,11 +51,15 @@ export default async function handleRequest(...args: DocRequestArgs) {
 
 	global.ENV.CV = await getCv()
 
-	const isBot = isbot(request.headers.get('user-agent'))
+	const isBotChecker = createIsbotFromList(
+		list.concat('^W3C_Validator', '^Validator'),
+	)
+
+	const isBot = isBotChecker(request.headers.get('user-agent') ?? '')
 
 	const callbackName = isBot ? 'onAllReady' : 'onShellReady'
 
-	const nonce = String(loadContext.cspNonce) ?? undefined
+	const nonce = loadContext.cspNonce?.toString() ?? ''
 	return new Promise(async (resolve, reject) => {
 		let didError = false
 		// NOTE: this timing will only include things that are rendered in the shell
