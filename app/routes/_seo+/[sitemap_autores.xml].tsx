@@ -24,7 +24,6 @@ export const loader = async () => {
 
 	const { total, data } = await getStoryblokApi().get(`cdn/stories`, params)
 
-	console.log(data.stories)
 	pushLinks(all_links, data.stories, 0.2, 'monthly')
 
 	const maxPage = Math.ceil(total / config.storyblokRequestParams.per_page)
