@@ -1,8 +1,8 @@
+import { type ISbStoryData, type ISbRichtext } from '@storyblok/react'
 import {
-	type ISbStoryData,
-	type ISbRichtext,
-	renderRichText,
-} from '@storyblok/react'
+	richTextResolver,
+	type StoryblokRichTextNode,
+} from '@storyblok/richtext'
 import dayjs from 'dayjs'
 import striptags from 'striptags'
 
@@ -172,7 +172,7 @@ function generateFaq(
 	faqList:
 		| {
 				Title: string
-				Copy: ISbRichtext
+				Copy: StoryblokRichTextNode<string>
 		  }[]
 		| undefined,
 ) {
@@ -183,12 +183,14 @@ function generateFaq(
 	return {
 		'@type': 'FAQPage',
 		mainEntity: faqList.map(
-			({ Title, Copy }: { Title: string; Copy: ISbRichtext }) => {
-				const answer = striptags(
-					renderRichText(Copy, {
-						resolver: (_, blok) => blok.text,
-					}),
-				)
+			({
+				Title,
+				Copy,
+			}: {
+				Title: string
+				Copy: StoryblokRichTextNode<string>
+			}) => {
+				const answer = striptags(richTextResolver<string>().render(Copy))
 
 				return {
 					'@type': 'Question',
@@ -283,7 +285,7 @@ export default function generatesd(
 		}[]
 		faq?: {
 			Title: string
-			Copy: ISbRichtext
+			Copy: StoryblokRichTextNode<string>
 		}[]
 		video?: {
 			id?: string
