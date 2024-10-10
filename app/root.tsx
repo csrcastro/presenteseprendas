@@ -91,13 +91,11 @@ export const links: LinksFunction = () => {
 			rel: 'icon',
 			href: '/favicon-16x16.png',
 			type: 'image/png',
-			fetchpriority: 'low',
 		},
 		{
 			rel: 'icon',
 			href: '/favicon.png',
 			type: 'image/png',
-			fetchpriority: 'low',
 		},
 		{
 			rel: 'apple-touch-icon',
@@ -108,7 +106,6 @@ export const links: LinksFunction = () => {
 		{
 			rel: 'manifest',
 			href: '/site.webmanifest',
-			fetchpriority: 'low',
 			crossOrigin: 'use-credentials',
 		} as const,
 		{
@@ -121,7 +118,6 @@ export const links: LinksFunction = () => {
 			rel: 'shortcut icon',
 			href: '/favicon.svg',
 			type: 'image/svg+xml',
-			fetchpriority: 'low',
 		},
 		{
 			href: '/sitemap.xml',
@@ -271,16 +267,7 @@ function Document({
 						<script
 							nonce={nonce}
 							dangerouslySetInnerHTML={{
-								__html: `window.onload = function (){
-								if(window.location.hostname === "presenteseprendas.pt" ){
-									setTimeout(function(){
-									var z=document.createElement('script');
-									z.type='text/javascript';
-									z.src='/cdn-cgi/zaraz/i.js';
-									document.getElementsByTagName('head')[0].appendChild(z)
-									},500);
-								}
-								}`,
+								__html: `window.onload=function(){"presenteseprendas.pt"===window.location.hostname&&setTimeout(function(){var e=document.createElement("script");e.type="text/javascript",e.src="/cdn-cgi/zaraz/i.js",document.getElementsByTagName("head")[0].appendChild(e)},500)};`,
 							}}
 						/>
 					</>
