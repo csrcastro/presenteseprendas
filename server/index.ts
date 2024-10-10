@@ -1,10 +1,6 @@
 import crypto from 'crypto'
 import { createRequestHandler as _createRequestHandler } from '@remix-run/express'
-import {
-	type RequestHandler,
-	type ServerBuild,
-	installGlobals,
-} from '@remix-run/node'
+import { type ServerBuild, installGlobals } from '@remix-run/node'
 import * as Sentry from '@sentry/remix'
 import { ip as ipAddress } from 'address'
 import chalk from 'chalk'
@@ -121,6 +117,11 @@ app.use(
 					MODE === 'development' ? 'ws:' : null,
 					process.env.SENTRY_DSN ? '*.sentry.io' : null,
 					"'self'",
+					'https://presenteseprendas.pt',
+					'*.doubleclick.net',
+					'*.hotjar.com',
+					'*.hotjar.io',
+					'*.google.com',
 				].filter(Boolean),
 				'font-src': ["'self'", '*.gstatic.com'],
 				'frame-src': ["'self'"],
