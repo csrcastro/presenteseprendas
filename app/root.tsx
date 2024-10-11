@@ -29,7 +29,7 @@ import { Layout } from './layout'
 import { getCv } from './models/contentCacheVersion.server.ts'
 import sprite from './sprites/sprite.svg?url'
 import tailwindStyleSheetUrl from './styles/tailwind.css?url'
-import { getUserId, logout } from './utils/auth.server.ts'
+// import { getUserId, logout } from './utils/auth.server.ts'
 import { ClientHintCheck, getHints } from './utils/client-hints.tsx'
 import { prisma } from './utils/db.server.ts'
 import { getEnv } from './utils/env.server.ts'
@@ -142,30 +142,30 @@ export async function loader({ request }: LoaderFunctionArgs) {
 	// 	type: 'getUserId',
 	// 	desc: 'getUserId in root',
 	// })
-
-	// const user = userId
-	// 	? await time(
-	// 			() =>
-	// 				prisma.user.findUniqueOrThrow({
-	// 					select: {
-	// 						id: true,
-	// 						name: true,
-	// 						username: true,
-	// 						image: { select: { id: true } },
-	// 						roles: {
-	// 							select: {
-	// 								name: true,
-	// 								permissions: {
-	// 									select: { entity: true, action: true, access: true },
-	// 								},
-	// 							},
-	// 						},
-	// 					},
-	// 					where: { id: userId },
-	// 				}),
-	// 			{ timings, type: 'find user', desc: 'find user in root' },
-	// 		)
-	// 	: null
+	const userId = null
+	const user = userId
+		? await time(
+				() =>
+					prisma.user.findUniqueOrThrow({
+						select: {
+							id: true,
+							name: true,
+							username: true,
+							image: { select: { id: true } },
+							roles: {
+								select: {
+									name: true,
+									permissions: {
+										select: { entity: true, action: true, access: true },
+									},
+								},
+							},
+						},
+						where: { id: userId },
+					}),
+				{ timings, type: 'find user', desc: 'find user in root' },
+			)
+		: null
 	// if (userId && !user) {
 	// 	console.info('something weird happened')
 	// 	// something weird happened... The user is authenticated but we can't find
@@ -188,7 +188,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
 	return json(
 		{
-			// user,
+			user,
 			requestInfo: {
 				hints: getHints(request),
 				origin: getDomainUrl(request),
