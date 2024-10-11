@@ -29,7 +29,7 @@ import { Layout } from './layout'
 import { getCv } from './models/contentCacheVersion.server.ts'
 import sprite from './sprites/sprite.svg?url'
 import tailwindStyleSheetUrl from './styles/tailwind.css?url'
-// import { getUserId, logout } from './utils/auth.server.ts'
+import { getUserId, logout } from './utils/auth.server.ts'
 import { ClientHintCheck, getHints } from './utils/client-hints.tsx'
 import { prisma } from './utils/db.server.ts'
 import { getEnv } from './utils/env.server.ts'
@@ -137,12 +137,11 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 
 export async function loader({ request }: LoaderFunctionArgs) {
 	const timings = makeTimings('root loader')
-	// const userId = await time(() => getUserId(request), {
-	// 	timings,
-	// 	type: 'getUserId',
-	// 	desc: 'getUserId in root',
-	// })
-	const userId = null
+	const userId = await time(() => getUserId(request), {
+		timings,
+		type: 'getUserId',
+		desc: 'getUserId in root',
+	})
 	const user = userId
 		? await time(
 				() =>
@@ -166,12 +165,12 @@ export async function loader({ request }: LoaderFunctionArgs) {
 				{ timings, type: 'find user', desc: 'find user in root' },
 			)
 		: null
-	// if (userId && !user) {
-	// 	console.info('something weird happened')
-	// 	// something weird happened... The user is authenticated but we can't find
-	// 	// them in the database. Maybe they were deleted? Let's log them out.
-	// 	await logout({ request, redirectTo: '/' })
-	// }
+	if (userId && !user) {
+		console.info('something weird happened')
+		// something weird happened... The user is authenticated but we can't find
+		// them in the database. Maybe they were deleted? Let's log them out.
+		await logout({ request, redirectTo: '/' })
+	}
 	const { toast, headers: toastHeaders } = await getToast(request)
 	const honeyProps = honeypot.getInputProps()
 
