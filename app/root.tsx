@@ -263,7 +263,12 @@ function Document({
 					<>
 						<ScrollRestoration nonce={nonce} />
 						<Scripts nonce={nonce} />
-						<script nonce={nonce} src="/resources/zaraz.js" defer async />
+						<script
+							nonce={nonce}
+							dangerouslySetInnerHTML={{
+								__html: `window.onload=function(){"presenteseprendas.pt"===window.location.hostname&&setTimeout(function(){var e=document.createElement("script");e.type="text/javascript",e.src="/cdn-cgi/zaraz/i.js",document.getElementsByTagName("head")[0].appendChild(e)},318)};`,
+							}}
+						/>
 					</>
 				)}
 			</body>
