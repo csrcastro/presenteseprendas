@@ -114,14 +114,14 @@ app.use(
 			reportOnly: true,
 			directives: {
 				'connect-src': [
-					MODE === 'development' ? 'ws:' : null,
+					'ws:',
 					process.env.SENTRY_DSN ? '*.sentry.io' : null,
-					"'self'",
 					'https://presenteseprendas.pt',
 					'*.doubleclick.net',
 					'*.hotjar.com',
 					'*.hotjar.io',
 					'*.google.com',
+					"'self'",
 				].filter(Boolean),
 				'font-src': ["'self'", '*.gstatic.com'],
 				'frame-src': ["'self'"],
@@ -133,7 +133,6 @@ app.use(
 					'*.awin1.com',
 				],
 				'script-src': [
-					'https://presenteseprendas.pt',
 					"'strict-dynamic'",
 					"'self'",
 					// @ts-expect-error

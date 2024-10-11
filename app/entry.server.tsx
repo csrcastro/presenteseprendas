@@ -48,6 +48,7 @@ export default async function handleRequest(...args: DocRequestArgs) {
 	] = args
 	responseHeaders.set('fly-region', process.env.FLY_REGION ?? 'unknown')
 	responseHeaders.set('fly-app', process.env.FLY_APP_NAME ?? 'unknown')
+	responseHeaders.append('Link', '<https://a.storyblok.com>; rel="preconnect"')
 
 	global.ENV.CV = await getCv()
 
