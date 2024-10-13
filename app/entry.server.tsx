@@ -11,8 +11,10 @@ import { apiPlugin, storyblokInit } from '@storyblok/react'
 import chalk from 'chalk'
 import { list, createIsbotFromList } from 'isbot'
 import { renderToPipeableStream } from 'react-dom/server'
+import latoItalic from './fonts/lato900italic.woff2'
 import { IsBotProvider } from './is-bot.context'
 import { getCv } from './models/contentCacheVersion.server.ts'
+import tailwindStyleSheetUrl from './styles/tailwind.css?url'
 import { getEnv, init } from './utils/env.server.ts'
 import { NonceProvider } from './utils/nonce-provider.ts'
 import { makeTimings } from './utils/timing.server.ts'
@@ -49,11 +51,15 @@ export default async function handleRequest(...args: DocRequestArgs) {
 	responseHeaders.set('fly-region', process.env.FLY_REGION ?? 'unknown')
 	responseHeaders.set('fly-app', process.env.FLY_APP_NAME ?? 'unknown')
 
-	responseHeaders.append('Link', '<https://a.storyblok.com>; rel="preconnect"')
 	responseHeaders.append(
 		'Link',
-		'<https://a.storyblok.com>; rel="dns-prefetch"',
+		`<${latoItalic}>; rel="preload"; as="font"; type="font/woff2"; crossorigin="anonymous"`,
 	)
+	responseHeaders.append(
+		'Link',
+		`<${tailwindStyleSheetUrl}>; rel="preload"; as="style"`,
+	)
+	responseHeaders.append('Link', '<https://a.storyblok.com>; rel="preconnect"')
 
 	global.ENV.CV = await getCv()
 

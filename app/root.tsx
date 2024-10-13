@@ -21,13 +21,19 @@ import timezone from 'dayjs/plugin/timezone'
 import utc from 'dayjs/plugin/utc'
 import { Suspense, lazy } from 'react'
 import { HoneypotProvider } from 'remix-utils/honeypot/react'
+import appleTouchIcon from './assets/apple-touch-icon.png'
+import favIcon16 from './assets/favicon-16x16.png?url'
+import favIcon32 from './assets/favicon-32x32.png?url'
+import favIconPng from './assets/favicon.png?url'
+import favIconSvg from './assets/favicon.svg?url'
+import safariPinnedTab from './assets/safari-pinned-tab.svg?url'
+import webmanifest from './assets/site.webmanifest?url'
 import { GeneralErrorBoundary } from './components/error-boundary.tsx'
 import { useToast } from './components/toaster.tsx'
 import latoItalic from './fonts/lato900italic.woff2'
 import { useIsBot } from './is-bot.context'
 import { Layout } from './layout'
 import { getCv } from './models/contentCacheVersion.server.ts'
-import sprite from './sprites/sprite.svg?url'
 import tailwindStyleSheetUrl from './styles/tailwind.css?url'
 import { getUserId, logout } from './utils/auth.server.ts'
 import { getHints } from './utils/client-hints.tsx'
@@ -50,57 +56,43 @@ const UnexpectedError = lazy(
 )
 
 export const links: LinksFunction = () => {
-	const crossOrigin: 'anonymous' | 'use-credentials' | undefined = 'anonymous'
 	return [
-		{
-			as: 'font',
-			type: 'font/woff2',
-			crossOrigin,
-			rel: 'preload',
-			href: latoItalic,
-		},
-		{
-			rel: 'preload',
-			href: sprite,
-			as: 'image',
-			type: 'image/svg+xml',
-		},
 		{ rel: 'stylesheet', href: tailwindStyleSheetUrl },
 		{
 			rel: 'icon',
-			href: '/favicon-32x32.png',
+			href: favIcon32,
 			type: 'image/png',
 		},
 		{
 			rel: 'icon',
-			href: '/favicon-16x16.png',
+			href: favIcon16,
 			type: 'image/png',
 		},
 		{
 			rel: 'icon',
-			href: '/favicon.png',
+			href: favIconPng,
 			type: 'image/png',
 		},
 		{
 			rel: 'apple-touch-icon',
-			href: '/apple-touch-icon.png',
+			href: appleTouchIcon,
 			sizes: '180x180',
 			type: 'image/png',
 		},
 		{
 			rel: 'manifest',
-			href: '/site.webmanifest',
+			href: webmanifest,
 			crossOrigin: 'use-credentials',
 		} as const,
 		{
 			rel: 'mask-icon',
-			href: '/safari-pinned-tab.svg',
+			href: safariPinnedTab,
 			color: '#ff5c35',
 			type: 'image/svg+xml',
 		},
 		{
 			rel: 'shortcut icon',
-			href: '/favicon.svg',
+			href: favIconSvg,
 			type: 'image/svg+xml',
 		},
 		{
@@ -230,7 +222,7 @@ function Document({
 				)}
 				<style
 					dangerouslySetInnerHTML={{
-						__html: `@font-face{font-display:block;font-family:Lato;font-style:italic;font-weight:900;src:url('${latoItalic}') format("woff2")}`,
+						__html: `@font-face{font-display:block;font-family:Lato;font-style:italic;font-weight:900;src:local('Lato'),url('${latoItalic}') format("woff2")}`,
 					}}
 				/>
 			</head>

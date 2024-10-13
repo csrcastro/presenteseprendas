@@ -25,14 +25,15 @@ export default function Header() {
 				<div className="nv-d">
 					<Link
 						aria-label="Página inicial da Presentes e Prendas"
-						className="mx-auto block w-[300px]"
+						className="mx-auto block w-[52px]"
 						to={ENV.BASE_URL}
+						title='Presentes e Prendas'
 					>
 						<span className="sr-only">Presentes e Prendas</span>
 						<Logo className="h-6 w-auto fill-warm" />
 					</Link>
 				</div>
-				<div className="relative mt-2 pr-[48px] lg:mt-0 lg:grow lg:pl-[316px]">
+				<div className="relative mt-2 pr-[48px] lg:mt-0 lg:grow lg:pl-[68px]">
 					<div className="scroll-hidden flex overflow-y-auto whitespace-nowrap">
 						{headerNavigation.content.Sections.map(
 							(

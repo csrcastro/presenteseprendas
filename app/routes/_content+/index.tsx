@@ -93,7 +93,7 @@ export const loader: LoaderFunction = async () => {
 				'page.Categorias',
 			],
 		})
-		.catch(_ => {
+		.catch((_) => {
 			return { data: null }
 		})
 
@@ -126,33 +126,19 @@ export const meta: MetaFunction<typeof loader> = ({
 	} = loaderData as {
 		data: ISbStory['data']
 	}
+
+	const fl = content.featuredGuias[0].content.Image.filename
+
 	return [
-		...content.featuredGuias.map(
-			(
-				{
-					content: {
-						Image: { filename },
-					},
-				}: { content: { Image: { filename: string } } },
-				index: number,
-			) => ({
-				tagName: 'link',
-				rel: 'preload',
-				href: `${filename}/m/${index === 0 ? '249x187' : '187x140'}${format}`,
-				as: 'image',
-				imageSizes: `${
-					index === 0
-						? '(min-width: 1360px) 384px, (min-width: 1040px) calc(26.67vw + 27px), (min-width: 780px) 33.33vw, (min-width: 480px) calc(50vw - 16px), calc(100vw - 32px)'
-						: '(min-width: 1360px) 288px, (min-width: 1040px) calc(20vw + 20px), (min-width: 780px) 25vw, calc(50vw - 16px)'
-				}`,
-				imageSrcSet: `${
-					index === 0
-						? `${filename}/m/446x335${format} 446w, ${filename}/m/249x187${format} 249w, ${filename}/m/303x228${format} 303w, ${filename}/m/384x288${format} 384w`
-						: `${filename}/m/187x140${format} 187w, ${filename}/m/228x171${format} 228w, ${filename}/m/288x216${format} 288w, ${filename}/m/253x190${format} 253w`
-				}`,
-				fetchpriority: 'high',
-			}),
-		),
+		{
+			tagName: 'link',
+			rel: 'preload',
+			href: `${fl}/m/249x187${format}`,
+			as: 'image',
+			imageSizes: `${'(min-width: 1360px) 384px, (min-width: 1040px) calc(26.67vw + 27px), (min-width: 780px) 33.33vw, (min-width: 480px) calc(50vw - 16px), calc(100vw - 32px)'}`,
+			imageSrcSet: `${`${fl}/m/446x335${format} 446w, ${fl}/m/249x187${format} 249w, ${fl}/m/303x228${format} 303w, ${fl}/m/384x288${format} 384w`}`,
+			fetchPriority: 'high',
+		},
 		...generateMetadata('/', metadata),
 		generateStructureddata(
 			{
@@ -259,7 +245,7 @@ export default function Slug() {
 					{/* <StaticCategoriesIcons categorias={Categorias} /> */}
 				</div>
 			</section>
-			<h2 className="heading-large text-warm mx-auto max-w-3xl">
+			<h2 className="heading-large mx-auto max-w-3xl text-warm">
 				Destaques
 				<span className="sr-only"> que não vais querer perder</span>
 			</h2>
@@ -282,7 +268,7 @@ export default function Slug() {
 				fallback={<p className="pb-20 text-center">{'A carregar conteúdos'}</p>}
 			>
 				<Await resolve={guiasInitialState}>
-					{state => <Guias guiasInitialState={state} />}
+					{(state) => <Guias guiasInitialState={state} />}
 				</Await>
 			</Suspense>
 			<AsteriskDividerShadow className="mx-auto mb-16 h-8 fill-warm" />
@@ -303,7 +289,7 @@ export default function Slug() {
 				fallback={<p className="pb-20 text-center">{'A carregar conteúdos'}</p>}
 			>
 				<Await resolve={promocoesInitialState}>
-					{state => <Promocoes promocoesInitialState={state} />}
+					{(state) => <Promocoes promocoesInitialState={state} />}
 				</Await>
 			</Suspense>
 			<Suspense

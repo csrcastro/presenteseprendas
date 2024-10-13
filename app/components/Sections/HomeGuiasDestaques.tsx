@@ -86,7 +86,7 @@ export default function HomeGuiasDestaques({
 										src={`${fl}/m/187x140${format}`}
 										srcSet={`${fl}/m/187x140${format} 187w, ${fl}/m/228x171${format} 228w, ${fl}/m/288x216${format} 288w, ${fl}/m/253x190${format} 253w`}
 										width="187"
-										loading="eager"
+										loading="lazy"
 									/>
 								</div>
 								<strong className="text-md block p-2 font-serif leading-5 group-hover:underline">

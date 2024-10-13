@@ -140,7 +140,7 @@ export const loader: LoaderFunction = async ({ params: { slug } }) => {
 	})
 	const { data } = await getStoryblokApi()
 		.get(`cdn/stories/guias-de-presentes/${slug}`, sbParams)
-		.catch(_ => {
+		.catch((_) => {
 			return { data: null }
 		})
 
@@ -150,7 +150,7 @@ export const loader: LoaderFunction = async ({ params: { slug } }) => {
 
 	const related =
 		!data.story.content.Related || data.story.content.Related.length < 1
-			? new Promise(resolve => {
+			? new Promise((resolve) => {
 					setTimeout(() => {
 						resolve({ data: { stories: [] } })
 					}, 0)
@@ -185,6 +185,7 @@ export const meta: MetaFunction<typeof loader> = ({ data: loaderData }) => {
 			rel: 'preload',
 			href: `${fl}/m/394x296${format}`,
 			as: 'image',
+			fetchPriority: 'high',
 		},
 		{
 			tagName: 'link',
@@ -194,6 +195,7 @@ export const meta: MetaFunction<typeof loader> = ({ data: loaderData }) => {
 			imageSizes:
 				'(min-width: 1360px) 547px, (min-width: 780px) calc(38.93vw + 25px), (min-width: 640px) calc(75vw - 36px), (min-width: 480px) calc(83.57vw - 41px), calc(91.88vw - 45px)',
 			imageSrcSet: `${fl}/m/547x411${format} 547w, ${fl}/m/539x405${format} 539w, ${fl}/m/493x370${format} 493w, ${fl}/m/394x296${format} 394w`,
+			fetchPriority: 'high',
 		},
 		...generateMetadata(data.story.full_slug.replace(/\/$/, ''), metadata),
 		generateStructureddata(
@@ -254,7 +256,7 @@ export default function Slug() {
 				fallback={<p className="pb-20 text-center">{'A carregar conteúdos'}</p>}
 			>
 				<Await resolve={related}>
-					{state => {
+					{(state) => {
 						return state.data.stories.length > 0 ? (
 							<RelatedGuias related={state} />
 						) : null
@@ -266,7 +268,7 @@ export default function Slug() {
 				fallback={<p className="pb-20 text-center">{'A carregar conteúdos'}</p>}
 			>
 				<Await resolve={guiasInitialState}>
-					{state => <Guias guiasInitialState={state} slug={slug} />}
+					{(state) => <Guias guiasInitialState={state} slug={slug} />}
 				</Await>
 			</Suspense>
 		</main>

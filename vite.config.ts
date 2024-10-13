@@ -13,13 +13,7 @@ export default defineConfig({
 		rollupOptions: {
 			external: [/node:.*/, 'stream', 'crypto', 'fsevents'],
 		},
-
-		assetsInlineLimit: (source: string) => {
-			if (source.endsWith('sprite.svg')) {
-				return false
-			}
-		},
-
+		assetsInlineLimit: 0,
 		sourcemap: true,
 	},
 	server: {
@@ -31,7 +25,7 @@ export default defineConfig({
 		remix({
 			ignoredRouteFiles: ['**/*'],
 			serverModuleFormat: 'esm',
-			routes: async defineRoutes => {
+			routes: async (defineRoutes) => {
 				return flatRoutes('routes', defineRoutes, {
 					ignoredRouteFiles: [
 						'.*',
