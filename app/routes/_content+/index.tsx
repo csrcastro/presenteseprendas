@@ -259,7 +259,7 @@ export default function Slug() {
 					{/* <StaticCategoriesIcons categorias={Categorias} /> */}
 				</div>
 			</section>
-			<h2 className="heading-large mx-auto max-w-3xl">
+			<h2 className="heading-large text-warm mx-auto max-w-3xl">
 				Destaques
 				<span className="sr-only"> que não vais querer perder</span>
 			</h2>

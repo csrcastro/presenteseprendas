@@ -20,7 +20,7 @@ export default function Presentes({
 }) {
 	return (
 		<div className="mt-8">
-			<h2 className="font-heading mb-8 text-2xl text-colder">Sugestões:</h2>
+			<h2 className="font-serif mb-8  text-3xl xl:text-4xl text-colder">As nossas sugestões:</h2>
 			<ol className="present-list">
 				{presentes.map(
 					(

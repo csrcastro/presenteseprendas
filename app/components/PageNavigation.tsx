@@ -58,7 +58,7 @@ export default function PageNavigation({
 							: ` hover:bg-${borderColor}`
 					}`}
 				>
-					<ChevronLeftIcon className="-mt-[2px] h-5 w-5" aria-hidden="true" />{' '}
+					<ChevronLeftIcon className="-mt-[2px] h-4 w-4" aria-hidden="true" />{' '}
 					Anterior
 				</Link>
 				<Link
@@ -71,7 +71,7 @@ export default function PageNavigation({
 					}`}
 				>
 					{'Próximo'}{' '}
-					<ChevronRightIcon className="-mt-[2px] h-5 w-5" aria-hidden="true" />
+					<ChevronRightIcon className="-mt-[2px] h-4 w-4" aria-hidden="true" />
 				</Link>
 			</div>
 			<div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-center">

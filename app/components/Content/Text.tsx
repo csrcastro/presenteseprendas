@@ -84,7 +84,7 @@ function RichText({ document }: { document: StoryblokRichtext }) {
 				return createElement(
 					`h${level}`,
 					{
-						className: `text-${textSize} font-heading`,
+						className: `text-${textSize} font-serif`,
 					},
 					children,
 				)

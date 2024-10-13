@@ -21,7 +21,7 @@ export default function Unexpected({
 		<>
 			<div className="text-center">
 				<FourOhFour className="mx-auto h-auto w-[200px] fill-warm sm:w-[365px]" />
-				<h1 className="text-gray-900 font-heading mt-12 text-3xl tracking-tight sm:text-5xl">
+				<h1 className="text-gray-900 font-serif mt-12 text-3xl tracking-tight sm:text-5xl">
 					Cum catano...
 					<br />
 					então n&apos;é qu&apos;isto na funciona
@@ -41,7 +41,7 @@ export default function Unexpected({
 				</p>
 				<div className="mt-2 flex items-center justify-center gap-x-6">
 					<a
-						className="font-heading mx-auto bg-warm px-6 py-2 text-3xl uppercase text-white shadow-[3px_3px_#212121] transition duration-300 hover:bg-warmer hover:shadow-[4px_4px_#212121] focus:outline-none active:shadow-[2px_2px_#212121]"
+						className="font-serif mx-auto bg-warm px-6 py-2 text-3xl uppercase text-white shadow-[3px_3px_#212121] transition duration-300 hover:bg-warmer hover:shadow-[4px_4px_#212121] focus:outline-none active:shadow-[2px_2px_#212121]"
 						href={`
           mailto: csrcastro+problemas-presentes-e-prendas@gmail.com
           ?subject=Problema no PresentesePrendas!

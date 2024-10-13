@@ -63,7 +63,7 @@ export default function PromocoesDynamicList({
 
 	return (
 		<section className="mx-auto mb-16 max-w-7xl px-8 text-center">
-			<h3 className="heading-large">{title}</h3>
+			<h3 className="heading-large text-colder">{title}</h3>
 
 			{subtitle ? <p className="mb-16 px-10 text-black">{subtitle}</p> : null}
 

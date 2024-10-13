@@ -24,5 +24,7 @@
 			"name": "PeP"
 		}
 	],
-	"sqltools.useNodeRuntime": true
+	"sqltools.useNodeRuntime": true,
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"css.customData": [".vscode/tailwind.json"]
 }

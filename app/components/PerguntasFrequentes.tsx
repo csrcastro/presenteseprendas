@@ -21,7 +21,7 @@ export default function PerguntasFrequentes({
 
 			{perguntas.map((nestedBlok: IBlok, index: number) => (
 				<dl key={`faq-${index}`}>
-					<dt className="font-heading text-md mb-4 text-cold">
+					<dt className="font-serif text-xl mb-4 text-cold">
 						{`${nestedBlok.Title}`}
 					</dt>
 					<dd>
@@ -49,7 +49,7 @@ export default function PerguntasFrequentes({
 				dicas e sugestões para te ajudar a escolher os presentes ideais para
 				cada pessoa e cada ocasião.
 			</p>
-			<p className="font-heading my-16 px-10 text-center text-3xl text-warm">
+			<p className="font-serif my-16 px-10 text-center text-5xl text-warm">
 				Boas Prendas!
 			</p>
 		</section>

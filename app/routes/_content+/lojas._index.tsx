@@ -96,7 +96,7 @@ export default function Page() {
 									/>
 								</Link>
 
-								<h2 className="font-heading mt-12 grow-0 text-xl">
+								<h2 className="font-serif mt-12 grow-0 text-xl">
 									{story.content.Title}
 								</h2>
 								<p className="mt-6 grow">{story?.content?.ShortBio}</p>

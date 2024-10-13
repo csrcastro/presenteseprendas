@@ -180,7 +180,7 @@ export default function Autores() {
 								src={story?.content.Foto.filename}
 							/>
 							<div className="grow">
-								<h1 className="font-heading mb-4 mt-8 text-center text-4xl lg:mt-0 lg:text-left">
+								<h1 className="font-serif mb-4 mt-8 text-center text-4xl lg:mt-0 lg:text-left">
 									{story?.content.Nome}
 								</h1>
 								<RichText document={story?.content.Bio} />
@@ -190,7 +190,7 @@ export default function Autores() {
 				</div>
 				<div className="-mt-12 bg-background px-8">
 					<div className="mx-auto max-w-5xl pt-12">
-						<h2 className="font-heading py-16 text-center text-4xl uppercase">
+						<h2 className="font-serif py-16 text-center text-4xl uppercase">
 							As minhas escolhas
 						</h2>
 						<section
@@ -226,7 +226,7 @@ export default function Autores() {
 					<div className="mx-auto max-w-5xl px-8 py-24">
 						<div className="grid gap-6 sm:grid-cols-2">
 							<section>
-								<h3 className="font-heading mb-8 text-2xl text-colder md:text-3xl lg:text-4xl">
+								<h3 className="font-serif mb-8 text-2xl text-colder md:text-3xl lg:text-4xl">
 									Guias recentes
 								</h3>
 
@@ -281,7 +281,7 @@ export default function Autores() {
 							</section>
 
 							<section>
-								<h3 className="font-heading mb-8 text-2xl text-colder md:text-3xl lg:text-4xl">
+								<h3 className="font-serif mb-8 text-2xl text-colder md:text-3xl lg:text-4xl">
 									Promoções recentes
 								</h3>
 								{promocoes.slices.map(slice =>

@@ -72,7 +72,7 @@ export const loader: LoaderFunction = async ({ params: { slug } }) => {
 
 	const { data } = await getStoryblokApi()
 		.get(`cdn/stories/promocoes/${slug}`, sbPromocoesParams)
-		.catch(_ => {
+		.catch((_) => {
 			return { data: null }
 		})
 
@@ -143,8 +143,8 @@ function Guias({ guiasInitialState }: { guiasInitialState: ISbStories }) {
 	}
 	return (
 		<section className="pb-8 text-center">
-			<h3 className="heading-large pt-0 text-colder">
-				guias de presentes recentes
+			<h3 className="heading-large pt-0 text-warm">
+				Guias de presentes recentes
 			</h3>
 
 			{guias.slices.map((slice, index) => {
@@ -203,7 +203,7 @@ export default function Slug() {
 				fallback={<p className="pb-20 text-center">{'A carregar conteúdos'}</p>}
 			>
 				<Await resolve={guiasInitialState}>
-					{state => <Guias guiasInitialState={state} />}
+					{(state) => <Guias guiasInitialState={state} />}
 				</Await>
 			</Suspense>
 		</main>

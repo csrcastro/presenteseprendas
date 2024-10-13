@@ -18,7 +18,7 @@ export default function StaticCategories({
 					Inspira-te
 					<span className="sr-only"> com as nossas categorias</span>
 				</h2>
-				<p className="mb-16 px-10 text-center text-xs text-white">
+				<p className="mb-16 px-10 text-center text-md text-white">
 					{
 						'A tarefa de escolher presentes e prendas originais e apropriadas acaba muitas vezes por tornar-se num grande desafio longo e chato. Felizmente, nós somos o segredo para que isso não aconteça contigo. Queremos que as nossas categorias e os seus guias sejam a tua fonte de inspiração para encontrar o presente perfeito que procuras, à primeira e sem complicações. Vem daí descobrir todas as ideias e sugestões que temos para ti.'
 					}

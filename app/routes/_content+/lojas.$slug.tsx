@@ -189,7 +189,7 @@ export default function Loja() {
 						src={`${story.content.Image?.filename}/m/128x128${format}`}
 					/>
 
-					<h1 className="font-heading my-12 text-center text-4xl text-warm">
+					<h1 className="font-serif my-12 text-center text-4xl text-warm">
 						{story.content.Title}
 					</h1>
 
@@ -207,7 +207,7 @@ export default function Loja() {
 				<div className="mb-12 p-8">
 					<div className="mx-auto max-w-4xl animate-grad overflow-hidden rounded-lg bg-gradient-to-tr from-warm via-[#efe7bc] to-cold bg-2x p-4 shadow-md lg:p-4">
 						<div className=" rounded-sm bg-white p-8 text-sm shadow">
-							<h4 className="font-heading mb-8 text-xl">{`Envios na ${story.content.Title}`}</h4>
+							<h4 className="font-serif mb-8 text-xl">{`Envios na ${story.content.Title}`}</h4>
 							<RichText document={story.content.ShippingInfo} />
 						</div>
 					</div>

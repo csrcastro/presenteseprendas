@@ -70,7 +70,7 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 
 	const { data } = await getStoryblokApi()
 		.get(`cdn/stories/categorias/${slug}`, sbParams)
-		.catch(_ => {
+		.catch((_) => {
 			return { data: null }
 		})
 
@@ -286,7 +286,7 @@ export default function Categoria() {
 						<div className="absi-0 z-10 bg-colder/25" />
 						<div className="relative z-20 mx-auto max-w-5xl text-center">
 							<h1
-								className="font-heading text-3xl uppercase text-background sm:text-5xl md:text-6xl lg:text-5xl"
+								className="font-serif text-4xl text-background sm:text-6xl lg:text-8xl"
 								id="category-heading"
 							>
 								<span className="sr-only">
@@ -382,7 +382,7 @@ export default function Categoria() {
 				<HomeGuiasDestaques
 					containerClasses="px-4 lg:px-16"
 					heading="Destaques"
-					headingClasses="heading-large"
+					headingClasses="heading-large text-warm"
 					ideias={featuredGuias}
 				/>
 			</Suspense>
@@ -391,10 +391,10 @@ export default function Categoria() {
 				fallback={<p className="pb-20 text-center">{'A carregar conteúdos'}</p>}
 			>
 				<Await resolve={guiasPromise}>
-					{state => {
+					{(state) => {
 						return state.data.stories.length > 0 ? (
 							<section className="mx-auto max-w-7xl px-8">
-								<h3 className="heading-large" id="guia-grid">
+								<h3 className="heading-large text-warm" id="guia-grid">
 									Guias de Presentes
 								</h3>
 								<PresentesGrid ideias={state.data.stories} alt={true} />
@@ -418,7 +418,7 @@ export default function Categoria() {
 				fallback={<p className="pb-20 text-center">{'A carregar conteúdos'}</p>}
 			>
 				<Await resolve={promocoesPromise}>
-					{state => {
+					{(state) => {
 						return state.data.stories.length > 0 ? (
 							<section className="mx-auto max-w-7xl px-8">
 								<h3 className="heading-large" id="promo-grid">

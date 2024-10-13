@@ -121,7 +121,7 @@ export default function Pesquisa() {
 				<div className="relative bg-warm">
 					<div className="mx-auto max-w-3xl py-20">
 						<div className="mx-auto max-w-lg pb-8">
-							<h2 className="text-center font-serif text-2xl uppercase text-background">
+							<h2 className="text-center font-serif text-2xl text-background">
 								{'Pesquisa aqui pelas melhores ideias de presente'}
 							</h2>
 						</div>
@@ -182,7 +182,7 @@ export default function Pesquisa() {
 
 			{guiasCollection.slices[0] && guiasCollection.slices[0].length ? (
 				<section className="mx-auto max-w-7xl px-8">
-					<h3 className="font-heading py-12 text-center text-4xl uppercase text-warm">
+					<h3 className="font-serif py-12 text-center text-4xl text-warm">
 						{'Guias de Presentes'}
 					</h3>
 
@@ -209,7 +209,7 @@ export default function Pesquisa() {
 
 			{promocoesCollection.slices[0] && promocoesCollection.slices[0].length ? (
 				<section className="mx-auto max-w-7xl px-8">
-					<h3 className="font-heading py-12 text-center text-4xl uppercase text-warm">
+					<h3 className="font-serif py-12 text-center text-4xl text-colder">
 						{'Promocões'}
 					</h3>
 					{promocoesCollection.slices.map((slice, index) => {
@@ -250,7 +250,7 @@ export default function Pesquisa() {
 						/>
 					</div>
 					<div className="relative mx-auto max-w-5xl px-4">
-						<h1 className="heading-large text-warm">
+						<h1 className="my-8 text-center font-serif text-4xl">
 							{'Pesquisa Presentes e Prendas'}
 						</h1>
 						<div className="mb-16">

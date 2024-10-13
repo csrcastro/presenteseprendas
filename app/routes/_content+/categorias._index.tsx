@@ -88,7 +88,7 @@ export default function Page() {
 								<figcaption className="px-2 py-4">
 									<Link
 										to={`${ENV.BASE_URL}/${story.full_slug.replace(/\/$/, '')}`}
-										className="font-heading mb-2 block text-lg font-bold leading-7 tracking-tight"
+										className="font-serif mb-2 block text-lg font-bold leading-7 tracking-tight"
 									>
 										<span aria-hidden="true" className="absi-0" />
 										{story.content.Title}

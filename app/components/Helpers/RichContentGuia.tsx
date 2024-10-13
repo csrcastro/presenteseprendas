@@ -82,7 +82,7 @@ export default function RichContentGuia({
         return createElement(
           `h${level}`,
           {
-            className: `text-${textSize} font-heading`,
+            className: `text-${textSize} font-serif`,
           },
           children,
         );

@@ -40,7 +40,7 @@ export default function Guia({
 	return (
 		<div {...storyblokEditable(blok)} key={blok._uid}>
 			<article>
-				<h1 className="font-heading mb-6 mt-6 text-2xl leading-8 text-colder sm:text-3xl lg:text-4xl">
+				<h1 className="font-serif mb-6 mt-6 text-2xl leading-8 text-colder sm:text-4xl lg:text-5xl">
 					{blok.Title}
 				</h1>
 				{blok.Image && (
@@ -150,8 +150,8 @@ export default function Guia({
 				</Suspense>
 				{blok.PerguntasFrequentes && blok.PerguntasFrequentes.length ? (
 					<div className="mb-12 mt-8">
-						<h3 className="font-heading mb-8 text-2xl text-colder">
-							Perguntas e respostas:
+						<h3 className="font-serif mb-8 text-3xl text-colder xl:text-4xl">
+							Perguntas frequentes:
 						</h3>
 						<dl>
 							{blok.PerguntasFrequentes.map(
@@ -163,7 +163,7 @@ export default function Guia({
 									index: number,
 								) => (
 									<Fragment key={`faq-${index}`}>
-										<dt className="mb-2 font-black text-cold">
+										<dt className="mb-2 font-serif text-xl text-cold">
 											{`${nestedBlok.Title}`}
 										</dt>
 										<dd>
@@ -179,8 +179,8 @@ export default function Guia({
 				blok.Notar.content[0] &&
 				blok.Notar.content[0].content ? (
 					<div className="mb-12 mt-8">
-						<h3 className="font-heading mb-8 text-2xl text-colder">
-							Post scriptum:
+						<h3 className="font-serif mb-8 text-3xl text-colder xl:text-4xl">
+							Nota final:
 						</h3>
 						<RichContentGuia document={blok.Notar} />
 					</div>

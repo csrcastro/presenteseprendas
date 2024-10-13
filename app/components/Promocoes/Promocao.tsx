@@ -52,14 +52,14 @@ export default function PromocaoBlok({ blok }: { blok: IBlok }) {
 			<div className="mt-6 w-full items-center gap-x-8 sm:flex">
 				<div className="order-1 sm:w-2/3 lg:w-3/5">
 					<MonetizedLink to={blok?.Link?.url} loja={blok.Loja}>
-						<h1 className="font-heading mb-2 mt-8 text-2xl transition-colors hover:text-contrast sm:mt-0">
+						<h1 className="font-serif mb-2 mt-8 text-2xl transition-colors hover:text-contrast sm:mt-0">
 							{blok.Title}
 						</h1>
 					</MonetizedLink>
 					<p className="mb-4 text-sm">{blok.blurb}</p>
 					<p>
-						<span className="font-heading text-2xl">{blok.price}€</span>
-						<span className="font-heading text-2xl text-warmer">{` (-${discount}%)`}</span>
+						<span className="font-serif text-2xl">{blok.price}€</span>
+						<span className="font-serif text-2xl text-warmer">{` (-${discount}%)`}</span>
 						<span className="block text-sm font-light text-text-light">{`Preço anterior: ${blok.oldprice}€`}</span>
 					</p>
 				</div>
@@ -85,7 +85,7 @@ export default function PromocaoBlok({ blok }: { blok: IBlok }) {
 						loja={blok?.Loja}
 					>
 						<span className="inline-flex items-start text-white">
-							<span className="font-serif text-lg/6 font-black">
+							<span className="font-black text-lg/6">
 								{'COMPRAR JÁ'}
 							</span>
 							<FireIcon className="ml-1 h-5 w-5" aria-hidden="true" />
@@ -100,7 +100,7 @@ export default function PromocaoBlok({ blok }: { blok: IBlok }) {
 			</div>
 			<aside className="mb-8 rounded bg-warm/5 px-4 py-4 text-xs italic text-text-light">
 				{
-					'Esperamos que gostes desta Promo&#231;&#227;o, ela foi selecionada independentemente por um dos nossos autores. A Presentes e Prendas poder&#225; receber uma parte das vendas e/ou outros tipos de compensação atrav&#233;s dos links nesta p&#225;gina.'
+					'Esperamos que gostes desta Promoção, ela foi selecionada independentemente por um dos nossos autores. A Presentes e Prendas poderá receber uma parte das vendas e/ou outros tipos de compensação através dos links nesta página.'
 				}
 			</aside>
 			<aside>
@@ -114,7 +114,7 @@ export default function PromocaoBlok({ blok }: { blok: IBlok }) {
 						<DynamicExpression className="h-16 w-auto fill-warm drop-shadow" />
 					</Suspense>
 				</div>
-				<h2 className="font-heading mb-8 text-3xl">
+				<h2 className="font-serif mb-8 text-3xl">
 					{'Acerca desta promoção:'}
 				</h2>
 				<RichText document={blok.copy} />
@@ -128,7 +128,7 @@ export default function PromocaoBlok({ blok }: { blok: IBlok }) {
 				</Suspense>
 			</aside>
 			<div className="mb-12 rounded-sm bg-white p-8 shadow">
-				<h3 className="font-heading mb-8 text-3xl">{'Avaliação:'}</h3>
+				<h3 className="font-serif mb-8 text-3xl">{'Avaliação:'}</h3>
 				<Suspense fallback={null}>
 					<RichParagraphsOnly className={''} document={blok.Review} />
 				</Suspense>
@@ -139,7 +139,7 @@ export default function PromocaoBlok({ blok }: { blok: IBlok }) {
 			</div>
 
 			<div className="mb-12 rounded-sm bg-white p-8 shadow">
-				<h4 className="font-heading mb-8 text-3xl">{'Informação de envio:'}</h4>
+				<h4 className="font-serif mb-8 text-3xl">{'Informação de envio:'}</h4>
 				<RichText document={blok.Loja?.content.ShippingInfo} />
 			</div>
 		</article>

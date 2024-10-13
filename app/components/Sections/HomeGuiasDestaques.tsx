@@ -26,14 +26,14 @@ function HomeGuiasDestaquesTop({ ideia }: { ideia?: ISbStoryData }) {
 			/>
 			<div className="flex flex-col justify-center bg-warm p-8 text-background duration-300 group-hover:bg-warmer xs:w-1/2 md:w-8/12">
 				<Link
-					className="font-serif text-xl/6 font-black group-hover:underline md:text-2xl/6 lg:text-3xl/8"
+					className="font-serif text-xl group-hover:underline md:text-3xl lg:text-4xl"
 					to={`${ENV.BASE_URL}/${ideia.full_slug.replace(/\/$/, '')}`}
 				>
 					<span aria-hidden="true" className="absi-0 z-10" />
 					<RichTitle document={ideia.content.Title} />
 				</Link>
 
-				<span className="mt-4 hidden text-sm font-bold md:inline lg:text-lg">
+				<span className="mt-4 hidden text-sm md:inline lg:text-lg">
 					{ideia.content?.ShortDescription}
 				</span>
 			</div>
@@ -89,7 +89,7 @@ export default function HomeGuiasDestaques({
 										loading="eager"
 									/>
 								</div>
-								<strong className="block p-2 text-sm group-hover:underline">
+								<strong className="text-md block p-2 font-serif leading-5 group-hover:underline">
 									<RichTitle document={ideia.content.Title} />
 								</strong>
 							</Link>

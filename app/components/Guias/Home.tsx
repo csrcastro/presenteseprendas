@@ -39,7 +39,7 @@ export default function Guias({
 
 	return (
 		<section className="mx-auto my-16 max-w-7xl px-8 text-center">
-			<h2 className="heading-large pb-8 pt-0">Encontra o melhor presente</h2>
+			<h2 className="heading-large text-warm pb-8 pt-0">Encontra o melhor presente</h2>
 
 			<p className="mb-16 px-10 text-center text-black">
 				{

@@ -115,7 +115,7 @@ export default function Page() {
 									src={story?.content?.Foto?.filename}
 								/>
 
-								<h2 className="font-heading mt-4 text-xl capitalize">
+								<h2 className="font-serif mt-4 text-xl capitalize">
 									{story?.content.Nome}
 								</h2>
 

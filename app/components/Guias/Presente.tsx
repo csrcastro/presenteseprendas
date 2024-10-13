@@ -42,7 +42,8 @@ export default function Presente({
 			)}
 
 			<figure>
-				<figcaption className="font-heading relative mb-3 text-xl lg:mb-7 xl:text-2xl">
+				<figcaption className="font-serif presentes-list__caption mb-3 text-xl lg:mb-7 xl:text-2xl">
+					<span className="presentes-list__caption__first">{index}.</span>{' '}
 					<RichContent document={blok.Headline} />
 				</figcaption>
 				<PresenteImages
@@ -57,9 +58,9 @@ export default function Presente({
 						document={blok?.ImagesSource}
 					/>
 				</div>
-				<div className="tracking-snug italic">
+				<div className="tracking-snug">
 					{blok?.ReviewLink && blok?.ReviewName ? (
-						<span className="font-bold text-warm">
+						<span className="font-black text-colder">
 							<MonetizedLink
 								className="hover:text-contrast"
 								to={blok?.ReviewLink}
@@ -80,10 +81,8 @@ export default function Presente({
 					loja={blok?.Loja}
 				>
 					<span className="inline-flex items-start text-white">
-						<span className="font-serif text-lg/6 font-black">
-							{'OFERECER'}
-						</span>
-						<GiftIcon className="ml-1 h-5 w-5" aria-hidden="true" />
+						<span className="text-xl font-black">{'OFERECER'}</span>
+						<GiftIcon className="ml-1 h-6 w-6" aria-hidden="true" />
 					</span>
 				</MonetizedLink>
 			</div>

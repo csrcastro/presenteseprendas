@@ -23,14 +23,14 @@ import { Suspense, lazy } from 'react'
 import { HoneypotProvider } from 'remix-utils/honeypot/react'
 import { GeneralErrorBoundary } from './components/error-boundary.tsx'
 import { useToast } from './components/toaster.tsx'
-import montserrat from './fonts/montserrat.woff2'
+import latoItalic from './fonts/lato900italic.woff2'
 import { useIsBot } from './is-bot.context'
 import { Layout } from './layout'
 import { getCv } from './models/contentCacheVersion.server.ts'
 import sprite from './sprites/sprite.svg?url'
 import tailwindStyleSheetUrl from './styles/tailwind.css?url'
 import { getUserId, logout } from './utils/auth.server.ts'
-import { ClientHintCheck, getHints } from './utils/client-hints.tsx'
+import { getHints } from './utils/client-hints.tsx'
 import { prisma } from './utils/db.server.ts'
 import { getEnv } from './utils/env.server.ts'
 import { honeypot } from './utils/honeypot.server.ts'
@@ -50,42 +50,26 @@ const UnexpectedError = lazy(
 )
 
 export const links: LinksFunction = () => {
+	const crossOrigin: 'anonymous' | 'use-credentials' | undefined = 'anonymous'
 	return [
 		{
-			rel: 'preload',
-			href: montserrat,
 			as: 'font',
 			type: 'font/woff2',
-			crossOrigin: 'anonymous',
-			fetchpriority: 'high',
-		} as const,
-		{
+			crossOrigin,
 			rel: 'preload',
-			href: tailwindStyleSheetUrl,
-			as: 'style',
-			fetchpriority: 'high',
+			href: latoItalic,
 		},
 		{
 			rel: 'preload',
 			href: sprite,
 			as: 'image',
 			type: 'image/svg+xml',
-			fetchpriority: 'high',
 		},
 		{ rel: 'stylesheet', href: tailwindStyleSheetUrl },
-		{
-			rel: 'preconnect',
-			href: '//a.storyblok.com',
-		},
-		{
-			rel: 'dns-prefetch',
-			href: '//a.storyblok.com',
-		},
 		{
 			rel: 'icon',
 			href: '/favicon-32x32.png',
 			type: 'image/png',
-			fetchpriority: 'low',
 		},
 		{
 			rel: 'icon',
@@ -236,17 +220,17 @@ function Document({
 		<html lang="pt">
 			<head>
 				<meta charSet="utf-8" />
-				<ClientHintCheck nonce={nonce} />
-				<Meta />
 				<meta name="viewport" content="width=device-width,initial-scale=1" />
 				<meta content="#fcf7f4" name="theme-color" />
+				{/* <ClientHintCheck nonce={nonce} /> */}
+				<Links />
+				<Meta />
 				{allowIndexing ? null : (
 					<meta name="robots" content="noindex, nofollow" />
 				)}
-				<Links />
 				<style
 					dangerouslySetInnerHTML={{
-						__html: `@font-face{font-display:block;font-family:Montserrat;font-style:normal;font-weight:900;src:url('${montserrat}') format("woff2")}`,
+						__html: `@font-face{font-display:block;font-family:Lato;font-style:italic;font-weight:900;src:url('${latoItalic}') format("woff2")}`,
 					}}
 				/>
 			</head>
@@ -323,7 +307,7 @@ export function ErrorBoundary() {
 	return (
 		<Document nonce={nonce}>
 			<GeneralErrorBoundary
-				unexpectedErrorHandler={_ => (
+				unexpectedErrorHandler={(_) => (
 					<Suspense fallback={<p className="pb-20 text-center">Erro</p>}>
 						<UnexpectedError location={location.pathname} />
 					</Suspense>

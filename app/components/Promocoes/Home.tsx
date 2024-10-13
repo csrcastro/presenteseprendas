@@ -41,7 +41,7 @@ export default function Promocoes({
 
 	return (
 		<section className="mx-auto mb-16 max-w-7xl px-8">
-			<h3 className="heading-large">Promoções mais recentes</h3>
+			<h3 className="heading-large text-colder">Promoções mais recentes</h3>
 
 			{promocoes.slices.map((list, index) => {
 				return (

@@ -81,7 +81,7 @@ export default function SearchBox({
 								/>
 								<Link
 									to={`${ENV.BASE_URL}/${story.full_slug.replace(/\/$/, '')}`}
-									className="grow-1 font-bold hover:text-contrast"
+									className="grow-1 font-serif text-lg hover:text-contrast"
 									reloadDocument
 								>
 									{story.content.Title}

@@ -79,7 +79,7 @@ export default function PerguntasFrequentes() {
 								<>
 									<dt>
 										<DisclosureButton className="flex w-full items-start justify-between text-left">
-											<span className="font-heading">{faq.Title}</span>
+											<span className="font-serif">{faq.Title}</span>
 											<span className="ml-6 flex h-7 items-center">
 												{open ? (
 													<MinusIcon aria-hidden="true" className="h-6 w-6" />

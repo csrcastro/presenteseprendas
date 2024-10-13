@@ -45,7 +45,7 @@ export default function IdeiasCarouselLarge({
 								/>
 								<div className="g-c-div-div">
 									<div>
-										<strong className="font-heading g-c-div-div-h3">
+										<strong className="font-serif g-c-div-div-h3">
 											<RichTitle document={ideia.content.Title} />
 										</strong>
 

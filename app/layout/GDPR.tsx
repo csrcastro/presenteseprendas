@@ -21,7 +21,7 @@ export default function GDPR() {
       loaded ? "1" : "0"
     }`}
     >
-      <span className="font-heading">🍪🍪🍪 COOKIES! 🍪🍪🍪</span>
+      <span className="font-serif">🍪🍪🍪 COOKIES! 🍪🍪🍪</span>
 
       <p className="mt-4 text-sm">
         Nós utilizamos cookies para assegurar que proporcionamos a melhor
@@ -33,7 +33,7 @@ export default function GDPR() {
           <input hidden readOnly name="redirectUrl" value={pathname + search} />
 
           <button
-            className="rounded-lg bg-white px-4 py-2.5 font-heading text-xs uppercase text-black 
+            className="rounded-lg bg-white px-4 py-2.5 font-serif text-xs uppercase text-black 
             transition-colors duration-300 hover:bg-warm hover:text-white focus:outline-none"
             name="accept-gdpr"
             type="submit"

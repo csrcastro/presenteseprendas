@@ -19,7 +19,7 @@ export default function RouteError({ location }: { location: string }) {
 	return (
 		<div className="my-16 text-center">
 			<FourOhFour className="mx-auto h-auto w-[200px] fill-warm sm:w-[365px]" />
-			<h1 className="font-heading mt-12 text-3xl tracking-tight sm:text-5xl">
+			<h1 className="font-serif mt-12 text-3xl tracking-tight sm:text-5xl">
 				Cum catano...
 				<br />
 				esta página na funciona
@@ -37,7 +37,7 @@ export default function RouteError({ location }: { location: string }) {
 			</p>
 			<div className="mx-auto mt-12 max-w-3xl gap-x-6">
 				<a
-					className="font-heading mx-auto bg-warm px-6 py-2 text-3xl uppercase text-white rounded-custom transition duration-300 hover:bg-warmer focus:outline-none"
+					className="font-serif mx-auto bg-warm px-6 py-2 text-3xl uppercase text-white rounded-custom transition duration-300 hover:bg-warmer focus:outline-none"
 					href={`
           mailto: csrcastro+problemas-presentes-e-prendas@gmail.com
           ?subject=Problema no PresentesePrendas!
@@ -49,7 +49,7 @@ export default function RouteError({ location }: { location: string }) {
 					ou clica no botão abaixo para sair daqui
 				</span>
 				<Link
-					className="font-heading mx-auto bg-cold px-6 py-2 text-3xl uppercase text-colder rounded-custom transition duration-300 hover:bg-colder hover:text-white focus:outline-none"
+					className="font-serif mx-auto bg-cold px-6 py-2 text-3xl uppercase text-colder rounded-custom transition duration-300 hover:bg-colder hover:text-white focus:outline-none"
 					to={`${ENV.BASE_URL}`}
 				>
 					Página Principal

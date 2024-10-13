@@ -109,7 +109,7 @@ export default function Pagina() {
 				<div className="relative mb-16 bg-warm pt-24">
 					<div className="mx-auto px-4 pb-20 sm:max-w-xl md:max-w-full md:px-24 lg:max-w-screen-xl lg:px-8">
 						<div className="mx-auto max-w-3xl text-colder">
-							<h1 className="font-heading mb-16 mt-16 text-center text-4xl uppercase leading-tight text-background">
+							<h1 className="font-serif mb-16 mt-16 text-center text-6xl text-background">
 								{story?.content.Title}
 							</h1>
 						</div>
@@ -129,7 +129,7 @@ export default function Pagina() {
 						return (
 							<div key={blok._uid}>
 								<p>{blok.component}</p>
-								{JSON.stringify(blok)}
+								{/* {JSON.stringify(blok)} */}
 								<br />
 								<br />
 							</div>

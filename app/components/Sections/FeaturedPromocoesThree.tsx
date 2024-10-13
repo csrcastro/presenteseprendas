@@ -32,7 +32,7 @@ export default function FeaturedPromocoesThree({
 		<section>
 			<div className="relative z-30 pb-16">
 				<h2
-					className="heading-large pb-8 pt-0"
+					className="heading-large text-colder pb-8 pt-0"
 					id="featured-promotions-heading"
 				>
 					Promoções em Destaque
@@ -57,7 +57,7 @@ export default function FeaturedPromocoesThree({
 								<figcaption className="f-p-3-a-d1">
 									<Link
 										to={`${ENV.BASE_URL}/${promocao.full_slug.replace(/\/$/, '')}`}
-										className="grow font-bold uppercase"
+										className="font-serif grow leading-5 uppercase"
 									>
 										<span aria-hidden="true" className="absi-0 z-10" />
 										{promocao.content.Title}

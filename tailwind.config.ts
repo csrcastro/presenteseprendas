@@ -67,7 +67,7 @@ export default {
 				'arial',
 				'sans-serif',
 			],
-			serif: ['Montserrat', 'sans-serif'],
+			serif: ['Lato', 'sans-serif'],
 		},
 	},
 	plugins: [aspectRatio, forms],

@@ -61,7 +61,7 @@ export default function GuiasDinamicList({
 
 	return (
 		<section className="mx-auto my-16 max-w-7xl px-8 text-center">
-			<h3 className="heading-large">{title}</h3>
+			<h3 className="heading-large text-warm">{title}</h3>
 
 			{subtitle ? <p className="mb-16 px-10 text-black">{subtitle}</p> : null}
 
