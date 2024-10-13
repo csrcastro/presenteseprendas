@@ -185,17 +185,19 @@ export const meta: MetaFunction<typeof loader> = ({ data: loaderData }) => {
 			rel: 'preload',
 			href: `${fl}/m/394x296${format}`,
 			as: 'image',
-			fetchPriority: 'high',
+			type: 'image/webp',
+			fetchpriority: 'high',
 		},
 		{
 			tagName: 'link',
 			rel: 'preload',
 			href: `${fl}/m/161x120${format}`,
 			as: 'image',
+			type: 'image/webp',
 			imageSizes:
 				'(min-width: 1360px) 547px, (min-width: 780px) calc(38.93vw + 25px), (min-width: 640px) calc(75vw - 36px), (min-width: 480px) calc(83.57vw - 41px), calc(91.88vw - 45px)',
 			imageSrcSet: `${fl}/m/547x411${format} 547w, ${fl}/m/539x405${format} 539w, ${fl}/m/493x370${format} 493w, ${fl}/m/394x296${format} 394w`,
-			fetchPriority: 'high',
+			fetchpriority: 'high',
 		},
 		...generateMetadata(data.story.full_slug.replace(/\/$/, ''), metadata),
 		generateStructureddata(

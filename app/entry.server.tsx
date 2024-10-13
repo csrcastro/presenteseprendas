@@ -50,14 +50,13 @@ export default async function handleRequest(...args: DocRequestArgs) {
 	] = args
 	responseHeaders.set('fly-region', process.env.FLY_REGION ?? 'unknown')
 	responseHeaders.set('fly-app', process.env.FLY_APP_NAME ?? 'unknown')
-
-	responseHeaders.append(
-		'Link',
-		`<${latoItalic}>; rel="preload"; as="font"; type="font/woff2"; crossorigin="anonymous"`,
-	)
 	responseHeaders.append(
 		'Link',
 		`<${tailwindStyleSheetUrl}>; rel="preload"; as="style"`,
+	)
+	responseHeaders.append(
+		'Link',
+		`<${latoItalic}>; rel="preload"; as="font"; type="font/woff2"; crossorigin="anonymous"`,
 	)
 	responseHeaders.append('Link', '<https://a.storyblok.com>; rel="preconnect"')
 

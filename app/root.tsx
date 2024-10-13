@@ -57,6 +57,11 @@ const UnexpectedError = lazy(
 
 export const links: LinksFunction = () => {
 	return [
+		{
+			rel: 'preconnect',
+			href: '//a.storyblok.com',
+		},
+
 		{ rel: 'stylesheet', href: tailwindStyleSheetUrl },
 		{
 			rel: 'icon',
@@ -222,7 +227,7 @@ function Document({
 				)}
 				<style
 					dangerouslySetInnerHTML={{
-						__html: `@font-face{font-display:block;font-family:Lato;font-style:italic;font-weight:900;src:local('Lato'),url('${latoItalic}') format("woff2")}`,
+						__html: `@font-face{font-display:swap;font-family:Lato;font-style:italic;font-weight:900;src:local('Lato'),url('${latoItalic}') format("woff2")}`,
 					}}
 				/>
 			</head>

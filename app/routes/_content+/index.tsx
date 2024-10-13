@@ -135,9 +135,10 @@ export const meta: MetaFunction<typeof loader> = ({
 			rel: 'preload',
 			href: `${fl}/m/249x187${format}`,
 			as: 'image',
+			type: 'image/webp',
 			imageSizes: `${'(min-width: 1360px) 384px, (min-width: 1040px) calc(26.67vw + 27px), (min-width: 780px) 33.33vw, (min-width: 480px) calc(50vw - 16px), calc(100vw - 32px)'}`,
 			imageSrcSet: `${`${fl}/m/446x335${format} 446w, ${fl}/m/249x187${format} 249w, ${fl}/m/303x228${format} 303w, ${fl}/m/384x288${format} 384w`}`,
-			fetchPriority: 'high',
+			fetchpriority: 'high',
 		},
 		...generateMetadata('/', metadata),
 		generateStructureddata(
