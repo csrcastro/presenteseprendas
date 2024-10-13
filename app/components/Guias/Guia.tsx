@@ -8,7 +8,6 @@ import {
 import dayjs from 'dayjs'
 import { lazy, Suspense, Fragment } from 'react'
 import LiteYouTubeEmbed from 'react-lite-youtube-embed'
-import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css'
 import { type StoryblokRichtext } from 'storyblok-rich-text-react-renderer'
 import RichContent from '../Helpers/RichContent'
 import RichContentGuia from '../Helpers/RichContentGuia'
