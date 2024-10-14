@@ -16,7 +16,6 @@ import {
 import { lazy, Suspense, useState } from 'react'
 import AsteriskDividerShadow from '#app/components/Assets/Dividers/AsteriskDividerShadow'
 import { GeneralErrorBoundary } from '#app/components/error-boundary.js'
-import MonetizedBanners from '#app/components/Monetize/MonetizedBanners'
 import Promocao, { type IBlok } from '#app/components/Promocoes/Promocao'
 import config from '#app/config'
 import generateMetadata from '#app/helpers/metadata'
@@ -143,9 +142,9 @@ function Guias({ guiasInitialState }: { guiasInitialState: ISbStories }) {
 	}
 	return (
 		<section className="pb-8 text-center">
-			<h3 className="heading-large pt-0 text-warm">
-				Guias de presentes recentes
-			</h3>
+			<h2 className="heading-large pt-0 text-warm">
+				Guias de Presentes Recentes
+			</h2>
 
 			{guias.slices.map((slice, index) => {
 				return (
@@ -178,7 +177,7 @@ function Guias({ guiasInitialState }: { guiasInitialState: ISbStories }) {
 	)
 }
 
-export default function Slug() {
+export default function PromocaoPagina() {
 	const { data, guiasInitialState } = useLoaderData<typeof loader>() as {
 		data: ISbStory['data']
 		guiasInitialState: Promise<ISbStories>
@@ -188,17 +187,13 @@ export default function Slug() {
 	>
 	return (
 		<main className="mx-auto max-w-7xl p-6 lg:px-8">
-			<div className="grid grid-cols-5">
-				<div className="col-span-5 md:col-span-3">
-					<Suspense fallback={<div style={{ height: '17px' }} />}>
-						<Breadcrumbs category={story?.content.Categoria} />
-					</Suspense>
-					<Promocao blok={story?.content} />
-				</div>
-				<aside className="col-span-5 hidden md:col-span-2 md:block">
-					<MonetizedBanners />
-				</aside>
+			<Suspense fallback={<div style={{ height: '17px' }} />}>
+				<Breadcrumbs category={story?.content.Categoria} />
+			</Suspense>
+			<div className="mx-auto max-w-3xl">
+				<Promocao blok={story?.content} />
 			</div>
+
 			<Suspense
 				fallback={<p className="pb-20 text-center">{'A carregar conteúdos'}</p>}
 			>

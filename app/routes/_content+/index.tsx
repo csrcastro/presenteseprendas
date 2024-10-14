@@ -36,12 +36,7 @@ const Guias = lazy(() => import('#app/components/Guias/Home'))
 const HomeGuiasDestaques = lazy(
 	() => import('#app/components/Sections/HomeGuiasDestaques'),
 )
-const MonetizedMobileBannerOne = lazy(
-	() => import('#app/components/Monetize/MonetizedMobileBannerOne.js'),
-)
-const MonetizedMobileBannerTwo = lazy(
-	() => import('#app/components/Monetize/MonetizedMobileBannerTwo.js'),
-)
+
 const Perguntas = lazy(() => import('#app/components/PerguntasFrequentes'))
 const Promocoes = lazy(() => import('#app/components/Promocoes/Home'))
 const StaticCategories = lazy(() => import('#app/components/StaticCategories'))
@@ -260,11 +255,7 @@ export default function Slug() {
 				/>
 			</Suspense>
 			<AsteriskDividerShadow className="mx-auto mb-16 h-8 fill-warm" />
-			<aside className="mx-auto max-w-3xl px-8">
-				<Suspense fallback={null}>
-					<MonetizedMobileBannerOne />
-				</Suspense>
-			</aside>
+
 			<Suspense
 				fallback={<p className="pb-20 text-center">{'A carregar conteúdos'}</p>}
 			>
@@ -273,11 +264,7 @@ export default function Slug() {
 				</Await>
 			</Suspense>
 			<AsteriskDividerShadow className="mx-auto mb-16 h-8 fill-warm" />
-			<aside className="mx-auto max-w-3xl px-8">
-				<Suspense fallback={null}>
-					<MonetizedMobileBannerTwo />
-				</Suspense>
-			</aside>
+
 			<Suspense fallback={null}>
 				<FeaturedPromocoesThree promocoes={featuredPromocoes} />
 			</Suspense>

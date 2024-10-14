@@ -12,7 +12,6 @@ import { Suspense, lazy, useState } from 'react'
 import AsteriskDividerShadow from '#app/components/Assets/Dividers/AsteriskDividerShadow'
 import { GeneralErrorBoundary } from '#app/components/error-boundary.tsx'
 import Guia from '#app/components/Guias/Guia'
-import MonetizedBanners from '#app/components/Monetize/MonetizedBanners.js'
 import config from '#app/config'
 import generateMetadata from '#app/helpers/metadata'
 import generateStructureddata from '#app/helpers/structureddata'
@@ -78,7 +77,9 @@ function Guias({
 
 	return (
 		<section className="pb-8 text-center">
-			<h3 className="heading-large pt-0 text-colder">Ver mais guias</h3>
+			<h2 className="heading-large pt-0 text-colder">
+				Guias de Presentes Recentes
+			</h2>
 
 			{guias.slices.map((slice, index) => {
 				return (
@@ -183,7 +184,7 @@ export const meta: MetaFunction<typeof loader> = ({ data: loaderData }) => {
 		{
 			tagName: 'link',
 			rel: 'preload',
-			href: `${fl}/m/394x296${format}`,
+			href: `${fl}/m/314x209${format}`,
 			as: 'image',
 			type: 'image/webp',
 			fetchpriority: 'high',
@@ -191,12 +192,11 @@ export const meta: MetaFunction<typeof loader> = ({ data: loaderData }) => {
 		{
 			tagName: 'link',
 			rel: 'preload',
-			href: `${fl}/m/161x120${format}`,
 			as: 'image',
 			type: 'image/webp',
-			imageSizes:
-				'(min-width: 1360px) 547px, (min-width: 780px) calc(38.93vw + 25px), (min-width: 640px) calc(75vw - 36px), (min-width: 480px) calc(83.57vw - 41px), calc(91.88vw - 45px)',
-			imageSrcSet: `${fl}/m/547x411${format} 547w, ${fl}/m/539x405${format} 539w, ${fl}/m/493x370${format} 493w, ${fl}/m/394x296${format} 394w`,
+			href: `${fl}/m/314x209${format}`,
+			imageSizes: `(min-width: 780px) 504px, (min-width: 640px) calc(50vw + 124px), (min-width: 480px) calc(83.57vw - 41px), calc(91.88vw - 45px)`,
+			imageSrcSet: `${fl}/m/504x336${format} 504w, ${fl}/m/444x296${format} 444w, ${fl}/m/360x240${format} 360w, ${fl}/m/314x209${format} 314w`,
 			fetchpriority: 'high',
 		},
 		...generateMetadata(data.story.full_slug.replace(/\/$/, ''), metadata),
@@ -220,7 +220,7 @@ export const meta: MetaFunction<typeof loader> = ({ data: loaderData }) => {
 	]
 }
 
-export default function Slug() {
+export default function GuiaDePresentesPagina() {
 	const { data, guiasInitialState, related, slug } = useLoaderData<
 		typeof loader
 	>() as {
@@ -237,21 +237,16 @@ export default function Slug() {
 
 	return (
 		<main className="mx-auto max-w-7xl p-6 lg:px-8">
-			<div className="grid md:grid-cols-5">
-				<div className="col-span-3">
-					<Suspense fallback={<div className="h-[17px]" />}>
-						<Breadcrumbs category={story?.content.Categoria} />
-					</Suspense>
-					<Guia
-						autor={story?.content?.Autor}
-						blok={story?.content}
-						publishedAt={story.published_at || ''}
-						firstPublishedAt={story.first_published_at || ''}
-					/>
-				</div>
-				<aside className="col-span-2 hidden md:block">
-					<MonetizedBanners />
-				</aside>
+			<Suspense fallback={<div className="h-[17px]" />}>
+				<Breadcrumbs category={story?.content.Categoria} />
+			</Suspense>
+			<div className="mx-auto max-w-2xl">
+				<Guia
+					autor={story?.content?.Autor}
+					blok={story?.content}
+					publishedAt={story.published_at || ''}
+					firstPublishedAt={story.first_published_at || ''}
+				/>
 			</div>
 
 			<Suspense

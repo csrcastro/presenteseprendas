@@ -12,13 +12,6 @@ import RichText from '../Helpers/RichText'
 import Loja from '../Loja'
 import MonetizedLink from '../Monetize/MonetizedLink'
 
-const MonetizedMobileBannerOne = lazy(
-	() => import('../Monetize/MonetizedMobileBannerOne.js'),
-)
-const MonetizedMobileBannerTwo = lazy(
-	() => import('../Monetize/MonetizedMobileBannerTwo.js'),
-)
-
 const {
 	img: { format },
 } = config
@@ -52,7 +45,7 @@ export default function PromocaoBlok({ blok }: { blok: IBlok }) {
 			<div className="mt-6 w-full items-center gap-x-8 sm:flex">
 				<div className="order-1 sm:w-2/3 lg:w-3/5">
 					<MonetizedLink to={blok?.Link?.url} loja={blok.Loja}>
-						<h1 className="font-serif mb-2 mt-8 text-2xl transition-colors hover:text-contrast sm:mt-0">
+						<h1 className="mb-2 mt-8 font-serif text-2xl transition-colors hover:text-contrast sm:mt-0">
 							{blok.Title}
 						</h1>
 					</MonetizedLink>
@@ -68,11 +61,11 @@ export default function PromocaoBlok({ blok }: { blok: IBlok }) {
 						<img
 							alt={blok.Title}
 							className="aspect-1 w-full object-cover object-center"
-							height="285"
-							sizes="(min-width: 1360px) 279px, (min-width: 1040px) calc(19.33vw + 20px), (min-width: 780px) calc(20vw - 20px), (min-width: 640px) calc(33.33vw - 26px), (min-width: 460px) 384px, calc(94.29vw - 31px)"
-							src={`${blok.Image.filename}/m/279x279${format}`}
-							srcSet={`${blok.Image.filename}/m/279x279${format} 279w, ${blok.Image.filename}/m/221x221${format} 221w, ${blok.Image.filename}/m/229x229${format} 229w, ${blok.Image.filename}/m/384x384${format} 384w`}
-							width="285"
+							height="187"
+							sizes="(min-width: 1040px) 294px, (min-width: 880px) 245px, (min-width: 640px) calc(26.36vw + 18px), (min-width: 460px) 384px, calc(94.29vw - 31px)"
+							src={`${blok.Image.filename}/m/187x187${format}`}
+							srcSet={`${blok.Image.filename}/m/294x294${format} 294w, ${blok.Image.filename}/m/245x245${format} 245w, ${blok.Image.filename}/m/187x187${format} 187w, ${blok.Image.filename}/m/384x384${format} 384w, ${blok.Image.filename}/m/342x342${format} 342w`}
+							width="187"
 						/>
 					</MonetizedLink>
 				</figure>
@@ -85,9 +78,7 @@ export default function PromocaoBlok({ blok }: { blok: IBlok }) {
 						loja={blok?.Loja}
 					>
 						<span className="inline-flex items-start text-white">
-							<span className="font-black text-lg/6">
-								{'COMPRAR JÁ'}
-							</span>
+							<span className="text-lg/6 font-black">{'COMPRAR JÁ'}</span>
 							<FireIcon className="ml-1 h-5 w-5" aria-hidden="true" />
 						</span>
 					</MonetizedLink>
@@ -98,37 +89,22 @@ export default function PromocaoBlok({ blok }: { blok: IBlok }) {
 					</Suspense>
 				</div>
 			</div>
-			<aside className="mb-8 rounded bg-warm/5 px-4 py-4 text-xs italic text-text-light">
-				{
-					'Esperamos que gostes desta Promoção, ela foi selecionada independentemente por um dos nossos autores. A Presentes e Prendas poderá receber uma parte das vendas e/ou outros tipos de compensação através dos links nesta página.'
-				}
-			</aside>
-			<aside>
-				<Suspense fallback={null}>
-					<MonetizedMobileBannerOne />
-				</Suspense>
-			</aside>
+
 			<div className="relative mb-12 rounded-sm bg-white p-8 shadow">
 				<div className="absolute -bottom-6 -right-1 z-10 lg:-right-8">
 					<Suspense fallback={null}>
 						<DynamicExpression className="h-16 w-auto fill-warm drop-shadow" />
 					</Suspense>
 				</div>
-				<h2 className="font-serif mb-8 text-3xl">
-					{'Acerca desta promoção:'}
-				</h2>
+				<h2 className="mb-8 font-serif text-3xl">{'Acerca desta promoção:'}</h2>
 				<RichText document={blok.copy} />
 				<Loja blok={blok.Loja} />
 
 				<Autor blok={blok.Autor} />
 			</div>
-			<aside>
-				<Suspense fallback={null}>
-					<MonetizedMobileBannerTwo />
-				</Suspense>
-			</aside>
-			<div className="mb-12 rounded-sm bg-white p-8 shadow">
-				<h3 className="font-serif mb-8 text-3xl">{'Avaliação:'}</h3>
+
+			<div className="rounded-sm bg-white p-8 shadow">
+				<h2 className="mb-8 font-serif text-3xl">{'Avaliação:'}</h2>
 				<Suspense fallback={null}>
 					<RichParagraphsOnly className={''} document={blok.Review} />
 				</Suspense>
@@ -137,9 +113,14 @@ export default function PromocaoBlok({ blok }: { blok: IBlok }) {
 					{blok.ReviewName}
 				</MonetizedLink>
 			</div>
+			<aside className="my-8 rounded bg-warm/5 px-4 py-4 text-xs italic text-text-light">
+				{
+					'Esperamos que gostes desta Promoção, ela foi selecionada independentemente por um dos nossos autores. A Presentes e Prendas poderá receber uma parte das vendas e/ou outros tipos de compensação através dos links nesta página.'
+				}
+			</aside>
 
 			<div className="mb-12 rounded-sm bg-white p-8 shadow">
-				<h4 className="font-serif mb-8 text-3xl">{'Informação de envio:'}</h4>
+				<h2 className="mb-8 font-serif text-3xl">{'Informação de envio:'}</h2>
 				<RichText document={blok.Loja?.content.ShippingInfo} />
 			</div>
 		</article>

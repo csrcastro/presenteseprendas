@@ -32,12 +32,12 @@ export default function PresenteImages({
 							<img
 								alt={alt}
 								className={`aspect-[4/3] h-auto w-full rounded-custom object-cover shadow shadow-background-darker`}
-								height="116"
+								height="216"
 								loading="lazy"
-								sizes={`(min-width: 1360px) 608px, (min-width: 780px) calc(43.21vw + 29px), (min-width: 480px) calc(66.79vw - 33px), calc(100vw - 48px)`}
+								sizes={`(min-width: 800px) 560px, (min-width: 760px) calc(560vw - 3808px), (min-width: 480px) 61.54vw, calc(100vw - 48px)`}
 								src={`${image.filename}/m/288x216${format}`}
-								srcSet={`${image.filename}/m/288x216${format} 288w, ${image.filename}/m/430x323${format} 430w, ${image.filename}/m/488x366${format} 488w, ${image.filename}/m/609x457${format} 609w`}
-								width="155"
+								srcSet={`${image.filename}/m/560x420${format} 560w, ${image.filename}/m/488x366${format} 488w, ${image.filename}/m/288x216${format} 288w, ${image.filename}/m/342x257${format} 342w`}
+								width="288"
 							/>
 						</MonetizedLink>
 					)
@@ -53,12 +53,12 @@ export default function PresenteImages({
 						<img
 							alt={alt}
 							className={`aspect-[4/3] h-auto w-full rounded-custom object-cover shadow shadow-background-darker`}
-							height="116"
+							height="102"
 							loading="lazy"
-							sizes={`(min-width: 1360px) 296px, (min-width: 780px) 21.61vw, (min-width: 480px) calc(33.21vw - 23px), calc(50vw - 32px)`}
-							src={`${image.filename}/m/207x155${format}`}
-							srcSet={`${image.filename}/m/296x222${format} 296w, ${image.filename}/m/232x174${format} 232w, ${image.filename}/m/207x155${format} 207w`}
-							width="155"
+							sizes={`(min-width: 800px) 272px, (min-width: 760px) calc(280vw - 1912px), (min-width: 480px) calc(30.77vw - 12px), calc(50vw - 32px)`}
+							src={`${image.filename}/m/132x102${format}`}
+							srcSet={`${image.filename}/m/272x204${format} 272w, ${image.filename}/m/216x162${format} 216w, ${image.filename}/m/136x102${format} 136w, ${image.filename}/m/163x122${format} 163w`}
+							width="132"
 						/>
 					</MonetizedLink>
 				)

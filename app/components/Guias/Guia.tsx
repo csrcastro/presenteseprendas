@@ -1,4 +1,3 @@
-import { Disclosure, DisclosureButton } from '@headlessui/react'
 import { Link } from '@remix-run/react'
 import {
 	type ISbStoryData,
@@ -11,15 +10,7 @@ import LiteYouTubeEmbed from 'react-lite-youtube-embed'
 import { type StoryblokRichtext } from 'storyblok-rich-text-react-renderer'
 import RichContent from '../Helpers/RichContent'
 import RichContentGuia from '../Helpers/RichContentGuia'
-import MonetizedMobileBannerTemu from '../Monetize/MonetizedMobileBannerTemu'
 import GuiaImage from './GuiaImage'
-
-const MonetizedMobileBannerOne = lazy(
-	() => import('../Monetize/MonetizedMobileBannerOne.js'),
-)
-const MonetizedMobileBannerTwo = lazy(
-	() => import('../Monetize/MonetizedMobileBannerTwo.js'),
-)
 
 const Presentes = lazy(() => import('./Presentes'))
 
@@ -37,154 +28,124 @@ export default function Guia({
 	firstPublishedAt: string
 }) {
 	return (
-		<div {...storyblokEditable(blok)} key={blok._uid}>
-			<article>
-				<h1 className="font-serif mb-6 mt-6 text-2xl leading-8 text-colder sm:text-4xl lg:text-5xl">
-					{blok.Title}
-				</h1>
-				{blok.Image && (
-					<GuiaImage image={blok.Image} alt={blok.Title} title={blok.Title} />
-				)}
-				{publishedAt ? (
-					<footer className="mb-4 text-sm text-text-light">
-						<time dateTime={dayjs(firstPublishedAt).toISOString()}>
-							{dayjs(firstPublishedAt).tz('Europe/Lisbon').format('DD')} de{' '}
-							<span className="capitalize">
-								{dayjs(firstPublishedAt).tz('Europe/Lisbon').format('MMM')}
-							</span>{' '}
-							{dayjs(firstPublishedAt).tz('Europe/Lisbon').format('YYYY')}
-						</time>{' '}
-						por{' '}
-						<address className="inline">
-							<Link
-								rel="author"
-								to={`${ENV.BASE_URL}/${autor.full_slug.replace(/\/$/, '')}`}
-							>
-								{autor.content.Nome}
-							</Link>
-						</address>
-						{', atualizado a '}
-						<time dateTime={dayjs(publishedAt).toISOString()}>
-							{dayjs(publishedAt).tz('Europe/Lisbon').format('DD')} de{' '}
-							<span className="capitalize">
-								{dayjs(publishedAt).tz('Europe/Lisbon').format('MMM')}
-							</span>{' '}
-							{dayjs(publishedAt).tz('Europe/Lisbon').format('YYYY')}
-						</time>{' '}
-					</footer>
-				) : null}
+		<article {...storyblokEditable(blok)} key={blok._uid}>
+			<h1 className="my-8 font-serif text-2xl leading-tight text-colder sm:my-12 sm:text-5xl sm:leading-tight lg:my-16">
+				{blok.Title}
+			</h1>
+			{blok.Image && (
+				<GuiaImage image={blok.Image} alt={blok.Title} title={blok.Title} />
+			)}
+			{publishedAt ? (
+				<footer className="mb-8 text-xs tracking-tighter sm:text-sm text-text-light">
+					<time dateTime={dayjs(firstPublishedAt).toISOString()}>
+						{dayjs(firstPublishedAt).tz('Europe/Lisbon').format('DD')} de{' '}
+						<span className="capitalize">
+							{dayjs(firstPublishedAt).tz('Europe/Lisbon').format('MMM')}
+						</span>{' '}
+						{dayjs(firstPublishedAt).tz('Europe/Lisbon').format('YYYY')}
+					</time>{' '}
+					por{' '}
+					<address className="inline">
+						<Link
+							rel="author"
+							to={`${ENV.BASE_URL}/${autor.full_slug.replace(/\/$/, '')}`}
+						>
+							{autor.content.Nome}
+						</Link>
+					</address>
+					{', atualizado a '}
+					<time dateTime={dayjs(publishedAt).toISOString()}>
+						{dayjs(publishedAt).tz('Europe/Lisbon').format('DD')} de{' '}
+						<span className="capitalize">
+							{dayjs(publishedAt).tz('Europe/Lisbon').format('MMM')}
+						</span>{' '}
+						{dayjs(publishedAt).tz('Europe/Lisbon').format('YYYY')}
+					</time>{' '}
+				</footer>
+			) : null}
 
-				{blok.Subtitle && !blok.V2_Intro ? (
-					<p className="mb-4 text-base">
-						<RichContent document={blok.Subtitle} />
-					</p>
-				) : (
-					<div className="relative mb-48">
-						<p className="mb-6">{blok.V2_Intro}</p>
-
-						<Disclosure key={`${blok._uid}-content`}>
-							{({ open }) => (
-								<>
-									{open ? null : (
-										<>
-											<div className="absolute -bottom-24 z-10 flex w-full items-center justify-center">
-												<DisclosureButton className="btn-medium btn-lermais bg-warm text-white hover:bg-warmer">
-													Continuar a ler
-												</DisclosureButton>
-											</div>
-											<div className="absolute bottom-0 block h-12 w-full bg-gradient-to-b from-background/0 to-background" />
-										</>
-									)}
-
-									<Disclosure.Panel as="div" unmount={false}>
-										<RichContentGuia document={blok.V2_Content} />
-									</Disclosure.Panel>
-								</>
-							)}
-						</Disclosure>
+			{blok.Subtitle && !blok.V2_Intro ? (
+				<p className="mb-4 text-base">
+					<RichContent document={blok.Subtitle} />
+				</p>
+			) : (
+				<div className="relative mb-6">
+					<p>{blok.V2_Intro}</p>
+					<div className='text-center mt-12'>
+						<a
+							className="btn-medium font-black  uppercase text-lg md:text-xl bg-warm text-white hover:bg-warmer"
+							href="#sugestoes"
+						>
+							Saltar para as sugestões
+						</a>
 					</div>
-				)}
+					<span className="p-separator my-12">
+						<span className="p-separator-break" />
+					</span>
 
-				<aside className="col-span-2 md:hidden">
-					<MonetizedMobileBannerTemu />
-				</aside>
+					<RichContentGuia document={blok.V2_Content} />
+				</div>
+			)}
 
-				{!!blok.YoutubeID && blok.YoutubeDate && (
-					<div>
-						<h2 className="sr-only">Vídeo:</h2>
-						<LiteYouTubeEmbed
-							containerElement="div"
-							id={blok.YoutubeID}
-							adNetwork={true}
-							poster="maxresdefault"
-							title={blok.Title}
-							noCookie={true}
-						/>
-					</div>
-				)}
+			{!!blok.YoutubeID && blok.YoutubeDate && (
+				<div>
+					<h2 className="sr-only">Vídeo</h2>
+					<LiteYouTubeEmbed
+						containerElement="div"
+						id={blok.YoutubeID}
+						adNetwork={true}
+						poster="maxresdefault"
+						title={blok.Title}
+						noCookie={true}
+					/>
+				</div>
+			)}
 
-				<aside>
-					<Suspense fallback={null}>
-						<MonetizedMobileBannerOne />
-					</Suspense>
-				</aside>
+			<Suspense fallback={null}>
+				<Presentes presentes={blok.Presentes} />
+			</Suspense>
 
-				<Suspense fallback={null}>
-					<Presentes presentes={blok.Presentes} />
-				</Suspense>
-				<aside>
-					<Suspense fallback={null}>
-						<MonetizedMobileBannerTwo />
-					</Suspense>
-				</aside>
-				<aside className="mb-8 rounded bg-warm/5 px-4 py-4 text-xs italic text-text-light">
-					{
-						'Esperamos que gostes das nossas sugestões, elas foram selecionadas independentemente pelos nossos autores. Poderemos receber uma parte das vendas e/ou outros tipos de compensação através das ligações nesta página.'
-					}
-				</aside>
-				<Suspense fallback={<div className="mb-4 h-12" />}>
-					<div className="my-8 h-12">
-						<Share image={blok.Image.filename} />
-					</div>
-				</Suspense>
-				{blok.PerguntasFrequentes && blok.PerguntasFrequentes.length ? (
-					<div className="mb-12 mt-8">
-						<h3 className="font-serif mb-8 text-3xl text-colder xl:text-4xl">
-							Perguntas frequentes:
-						</h3>
-						<dl>
-							{blok.PerguntasFrequentes.map(
-								(
-									nestedBlok: SbBlokData & {
-										Titel: string
-										Copy: StoryblokRichtext
-									},
-									index: number,
-								) => (
-									<Fragment key={`faq-${index}`}>
-										<dt className="mb-2 font-serif text-xl text-cold">
-											{`${nestedBlok.Title}`}
-										</dt>
-										<dd>
-											<RichContentGuia document={nestedBlok.Copy} />
-										</dd>
-									</Fragment>
-								),
-							)}
-						</dl>
-					</div>
-				) : null}
-				{blok.Notar &&
-				blok.Notar.content[0] &&
-				blok.Notar.content[0].content ? (
-					<div className="mb-12 mt-8">
-						<h3 className="font-serif mb-8 text-3xl text-colder xl:text-4xl">
-							Nota final:
-						</h3>
-						<RichContentGuia document={blok.Notar} />
-					</div>
-				) : null}
-			</article>
-		</div>
+			<aside className="mb-8 rounded bg-warm/5 px-4 py-4 text-xs italic text-text-light">
+				{
+					'Esperamos que gostes das nossas sugestões, elas foram selecionadas independentemente pelos nossos autores. Poderemos receber uma parte das vendas e/ou outros tipos de compensação através das ligações nesta página.'
+				}
+			</aside>
+			<Suspense fallback={<div className="mb-4 h-12" />}>
+				<div className="my-8 h-12">
+					<Share image={blok.Image.filename} />
+				</div>
+			</Suspense>
+			{blok.PerguntasFrequentes && blok.PerguntasFrequentes.length ? (
+				<section>
+					<h2 className="my-16 font-serif text-4xl text-colder sm:text-5xl">
+						Perguntas frequentes
+					</h2>
+					{blok.PerguntasFrequentes.map(
+						(
+							nestedBlok: SbBlokData & {
+								Titel: string
+								Copy: StoryblokRichtext
+							},
+							index: number,
+						) => (
+							<Fragment key={`faq-${index}`}>
+								<h3 className="mb-2 font-serif text-xl text-cold">
+									{`${nestedBlok.Title}`}
+								</h3>
+								<RichContentGuia document={nestedBlok.Copy} />
+							</Fragment>
+						),
+					)}
+				</section>
+			) : null}
+			{blok.Notar && blok.Notar.content[0] && blok.Notar.content[0].content ? (
+				<section>
+					<h2 className="my-16 font-serif text-4xl text-colder sm:text-5xl">
+						Nota final
+					</h2>
+					<RichContentGuia document={blok.Notar} />
+				</section>
+			) : null}
+		</article>
 	)
 }

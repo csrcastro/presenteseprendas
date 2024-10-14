@@ -30,7 +30,7 @@ export default function Header() {
 						title='Presentes e Prendas'
 					>
 						<span className="sr-only">Presentes e Prendas</span>
-						<Logo className="h-6 w-auto fill-warm" />
+						<Logo className="h-6 w-auto fill-warm" viewBox="0 0 70 28" />
 					</Link>
 				</div>
 				<div className="relative mt-2 pr-[48px] lg:mt-0 lg:grow lg:pl-[68px]">

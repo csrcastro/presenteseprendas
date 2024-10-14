@@ -12,7 +12,7 @@ export default function GuiasRelated({
 
 	return (
 		<section className="pb-8 text-center">
-			<h3 className="heading-large pt-0 text-colder">Guias Relacionados</h3>
+			<h2 className="heading-large pt-0 text-colder">Guias de Presentes que Podes Gostar</h2>
 			<Suspense
 				fallback={<p className="pb-20 text-center">{'A carregar conteúdos'}</p>}
 			>

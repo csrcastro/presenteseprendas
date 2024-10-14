@@ -42,9 +42,11 @@ export default function Presente({
 			)}
 
 			<figure>
-				<figcaption className="font-serif presentes-list__caption mb-3 text-xl lg:mb-7 xl:text-2xl">
+				<figcaption className="presentes-list__caption mb-3 font-serif text-xl lg:mb-7 xl:text-2xl">
 					<span className="presentes-list__caption__first">{index}.</span>{' '}
-					<RichContent document={blok.Headline} />
+					<h3>
+						<RichContent document={blok.Headline} />
+					</h3>
 				</figcaption>
 				<PresenteImages
 					images={blok?.Images}
