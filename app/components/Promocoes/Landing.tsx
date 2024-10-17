@@ -50,7 +50,9 @@ export default function Landing({
 				>
 					<section className="bg-background">
 						<div className="mx-auto px-4 lg:max-w-7xl lg:px-8" id="promocoes">
-							<h2 className="heading-large text-colder">{'Todas as Promoções'}</h2>
+							<h2 className="heading-large text-colder">
+								{'Todas as Promoções'}
+							</h2>
 							<PromocoesGrid promocoes={promocoes.stories} />
 							<div className="my-16 text-center">
 								<PageNavigation
@@ -88,7 +90,7 @@ export default function Landing({
 						<div className="mb-16">
 							{blok?.Content.map((part: IBlok) => {
 								if (part.component === 'Content--Text') {
-									return <Text key={part._uid} blok={part} />
+									return <Text key={part._uid} content={part.Copy} />
 								}
 								return (
 									<div key={part._uid}>

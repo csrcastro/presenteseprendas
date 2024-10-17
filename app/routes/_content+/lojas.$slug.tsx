@@ -73,7 +73,7 @@ export const loader: LoaderFunction = async ({ params: { slug } }) => {
 
 	const { data } = await getStoryblokApi()
 		.get(`cdn/stories/lojas/${slug}`, sbParams)
-		.catch(_ => {
+		.catch((_) => {
 			return { data: null }
 		})
 
@@ -182,21 +182,21 @@ export default function Loja() {
 						/>
 					</div>
 				</div>
-				<div className="text-text-mid relative z-20 mx-auto max-w-2xl p-6 pt-16 text-lg lg:p-12">
+				<div className="relative z-20 mx-auto max-w-2xl p-6 pt-16 text-lg text-text-mid lg:p-12">
 					<img
 						alt={story.content.Title}
 						className="absolute left-1/2 h-32 w-32 -translate-x-1/2 -translate-y-full rounded-3xl"
 						src={`${story.content.Image?.filename}/m/128x128${format}`}
 					/>
 
-					<h1 className="font-serif my-12 text-center text-4xl text-warm">
+					<h1 className="my-12 text-center font-serif text-4xl text-warm">
 						{story.content.Title}
 					</h1>
 
 					{story.content.Content &&
 						story.content.Content.map((blok: IBlok) => {
 							if (blok.component === 'Content--Text') {
-								return <Text key={blok._uid} blok={blok} />
+								return <Text key={blok._uid} content={blok.Copy} />
 							}
 							if (blok.component === 'Content--Image') {
 								return <Image key={blok._uid} blok={blok} />
@@ -206,8 +206,8 @@ export default function Loja() {
 				</div>
 				<div className="mb-12 p-8">
 					<div className="mx-auto max-w-4xl animate-grad overflow-hidden rounded-lg bg-gradient-to-tr from-warm via-[#efe7bc] to-cold bg-2x p-4 shadow-md lg:p-4">
-						<div className=" rounded-sm bg-white p-8 text-sm shadow">
-							<h4 className="font-serif mb-8 text-xl">{`Envios na ${story.content.Title}`}</h4>
+						<div className="rounded-sm bg-white p-8 text-sm shadow">
+							<h4 className="mb-8 font-serif text-xl">{`Envios na ${story.content.Title}`}</h4>
 							<RichText document={story.content.ShippingInfo} />
 						</div>
 					</div>
@@ -218,7 +218,7 @@ export default function Loja() {
 				fallback={<p className="pb-20 text-center">{'A carregar promoções'}</p>}
 			>
 				<Await resolve={promocoesInitialState}>
-					{state => (
+					{(state) => (
 						<Promocoes
 							filterQuery={{
 								Loja: { in: data.story.uuid },
@@ -235,7 +235,7 @@ export default function Loja() {
 				}
 			>
 				<Await resolve={guiasInitialState}>
-					{state => <Guias guiasInitialState={state} />}
+					{(state) => <Guias guiasInitialState={state} />}
 				</Await>
 			</Suspense>
 		</main>

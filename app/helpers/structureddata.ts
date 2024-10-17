@@ -1,4 +1,4 @@
-import { type ISbStoryData, type ISbRichtext } from '@storyblok/react'
+import { type ISbStoryData } from '@storyblok/react'
 import {
 	richTextResolver,
 	type StoryblokRichTextNode,
@@ -108,7 +108,7 @@ function generateCollection(
 		mainEntity: {
 			'@type': 'ItemList',
 			itemListOrder: 'descending',
-			itemListElement: stories.map(story => {
+			itemListElement: stories.map((story) => {
 				return {
 					'@type': 'ListItem',
 					position: 1,
@@ -233,8 +233,8 @@ function generateArticle(url: string, story: ISbStoryData | undefined) {
 		mainEntityOfPage: url,
 		description: story.content.ShortDescription,
 		headline: story.content.Title,
-		datePublished: story.published_at,
-		dateModified: story.updated_at,
+		datePublished: story.first_published_at,
+		dateModified: story.published_at,
 		author: [
 			{
 				'@type': 'Person',
@@ -262,6 +262,46 @@ function generateArticle(url: string, story: ISbStoryData | undefined) {
 	}
 }
 
+function generatePost(url: string, story: ISbStoryData | undefined) {
+	if (!story) {
+		return null
+	}
+	return {
+		'@type': 'Article',
+		isAccessibleForFree: true,
+		inLanguage: 'pt-PT',
+		mainEntityOfPage: url,
+		description: story.content.META_description,
+		headline: story.content.Title,
+		datePublished: story.first_published_at,
+		dateModified: story.published_at,
+		author: [
+			{
+				'@type': 'Person',
+				name: story.content.Autor.content.Nome,
+				url: `${ENV.BASE_URL}/${story.content.Autor.full_slug}`,
+				jobTitle: 'Autor no Presentes e Prendas',
+			},
+		],
+
+		keywords: [
+			'presentes',
+			'prendas',
+			'guias de presentes',
+			'guias de prendas',
+			'presentes e prendas',
+		],
+		publisher: generateOrganization(),
+		image: {
+			'@type': 'ImageObject',
+			url: `${story.content.Image?.filename}/m/1280x960/smart`,
+			width: 1280,
+			height: 960,
+			representativeOfPage: true,
+		},
+	}
+}
+
 export default function generatesd(
 	{
 		breadcrumbs,
@@ -270,6 +310,7 @@ export default function generatesd(
 		presentList,
 		faq,
 		video = {},
+		post,
 	}: {
 		breadcrumbs?: { name: string; item: string }[]
 		collection?: {
@@ -279,6 +320,7 @@ export default function generatesd(
 			stories: ISbStoryData[]
 		}
 		article?: ISbStoryData
+		post?: ISbStoryData
 		presentList?: {
 			ProductName: string
 			Images: { filename: string }[]
@@ -310,6 +352,9 @@ export default function generatesd(
 	}
 	if (article) {
 		result.push(generateArticle(url, article))
+	}
+	if (post) {
+		result.push(generatePost(url, post))
 	}
 	if (presentList && url) {
 		result.push(generatePresentList(presentList, url))

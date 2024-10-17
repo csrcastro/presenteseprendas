@@ -53,7 +53,7 @@ function RichText({ document }: { document: StoryblokRichtext }) {
 			},
 		},
 		nodeResolvers: {
-			[NODE_PARAGRAPH]: children =>
+			[NODE_PARAGRAPH]: (children) =>
 				createElement(
 					`p`,
 					{
@@ -62,20 +62,20 @@ function RichText({ document }: { document: StoryblokRichtext }) {
 					children,
 				),
 			[NODE_HEADING]: (children, { level }) => {
-				let textSize = 'xl mb-2 mt-2'
+				let hClass = 'text-xl mb-2 mt-2'
 
 				switch (level) {
 					case 1:
-						textSize = '3xl mb-12 mt-12'
+						hClass = 'text-2xl sm:text-3xl mb-12 mt-12'
 						break
 					case 2:
-						textSize = '3xl text-center mb-8 mt-16 text-warm'
+						hClass = 'text-3xl sm:text-4xl text-center mb-12'
 						break
 					case 3:
-						textSize = 'xl mb-8 mt-8'
+						hClass = 'text-lg sm:text-xl mb-8 mt-8'
 						break
 					case 4:
-						textSize = 'lg mb-4 mt-4'
+						hClass = 'sm:text-lg mb-4 mt-4'
 						break
 					default:
 						break
@@ -84,12 +84,12 @@ function RichText({ document }: { document: StoryblokRichtext }) {
 				return createElement(
 					`h${level}`,
 					{
-						className: `text-${textSize} font-serif`,
+						className: `font-serif ${hClass} `,
 					},
 					children,
 				)
 			},
-			[NODE_OL]: children =>
+			[NODE_OL]: (children) =>
 				createElement(
 					`ol`,
 					{
@@ -97,7 +97,7 @@ function RichText({ document }: { document: StoryblokRichtext }) {
 					},
 					children,
 				),
-			[NODE_UL]: children =>
+			[NODE_UL]: (children) =>
 				createElement(
 					`ul`,
 					{
@@ -105,7 +105,7 @@ function RichText({ document }: { document: StoryblokRichtext }) {
 					},
 					children,
 				),
-			[NODE_LI]: children =>
+			[NODE_LI]: (children) =>
 				createElement(
 					`li`,
 					{
@@ -117,6 +117,6 @@ function RichText({ document }: { document: StoryblokRichtext }) {
 	})
 }
 
-export default function Text({ blok }: { blok: IBlok }) {
-	return <RichText document={blok.Copy} />
+export default function Text({ content }: { content: StoryblokRichtext }) {
+	return <RichText document={content} />
 }

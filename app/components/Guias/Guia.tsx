@@ -20,12 +20,10 @@ export default function Guia({
 	blok,
 	autor,
 	publishedAt,
-	firstPublishedAt,
 }: {
 	blok: ISbStoryData['content']
 	autor: ISbStoryData
 	publishedAt: string
-	firstPublishedAt: string
 }) {
 	return (
 		<article {...storyblokEditable(blok)} key={blok._uid}>
@@ -36,15 +34,7 @@ export default function Guia({
 				<GuiaImage image={blok.Image} alt={blok.Title} title={blok.Title} />
 			)}
 			{publishedAt ? (
-				<footer className="mb-8 text-xs tracking-tighter sm:text-sm text-text-light">
-					<time dateTime={dayjs(firstPublishedAt).toISOString()}>
-						{dayjs(firstPublishedAt).tz('Europe/Lisbon').format('DD')} de{' '}
-						<span className="capitalize">
-							{dayjs(firstPublishedAt).tz('Europe/Lisbon').format('MMM')}
-						</span>{' '}
-						{dayjs(firstPublishedAt).tz('Europe/Lisbon').format('YYYY')}
-					</time>{' '}
-					por{' '}
+				<footer className="mb-8 text-xs tracking-tighter text-text-light sm:text-sm">
 					<address className="inline">
 						<Link
 							rel="author"
@@ -71,9 +61,9 @@ export default function Guia({
 			) : (
 				<div className="relative mb-6">
 					<p>{blok.V2_Intro}</p>
-					<div className='text-center mt-12'>
+					<div className="mt-12 text-center">
 						<a
-							className="btn-medium font-black  uppercase text-lg md:text-xl bg-warm text-white hover:bg-warmer"
+							className="btn-medium bg-warm text-lg font-black uppercase text-white hover:bg-warmer md:text-xl"
 							href="#sugestoes"
 						>
 							Saltar para as sugestões

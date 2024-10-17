@@ -245,7 +245,6 @@ export default function GuiaDePresentesPagina() {
 					autor={story?.content?.Autor}
 					blok={story?.content}
 					publishedAt={story.published_at || ''}
-					firstPublishedAt={story.first_published_at || ''}
 				/>
 			</div>
 
