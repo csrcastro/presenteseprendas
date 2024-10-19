@@ -98,7 +98,10 @@ export const meta: MetaFunction<typeof loader> = ({
 			imageSrcSet: `${fl}/m/504x336${format} 504w, ${fl}/m/444x296${format} 444w, ${fl}/m/360x240${format} 360w, ${fl}/m/314x209${format} 314w`,
 			fetchpriority: 'high',
 		},
-		...generateMetadata(data.story.full_slug.replace(/\/$/, ''), metadata),
+		...generateMetadata(
+			data.story.full_slug.replace(/\/$/, '').replace('/pages', ''),
+			metadata,
+		),
 		generateStructureddata(
 			{
 				breadcrumbs: [
