@@ -123,9 +123,13 @@ export default function Pagina() {
 	return (
 		<main>
 			<article>
-				<div className="bg-rabanete pb-4 pt-24 sm:pb-96">
+				<div
+					className={`bg-${story?.content.Title_Background} pb-4 pt-24 sm:pb-96`}
+				>
 					<div className="mx-auto max-w-3xl px-6 lg:px-8">
-						<h1 className="text-ameixa mb-16 text-left font-serif text-4xl sm:text-6xl">
+						<h1
+							className={`text-${story?.content.Title_Color} mb-16 text-left font-serif text-4xl sm:text-6xl`}
+						>
 							{story?.content.Title}
 						</h1>
 						<p className="text-pimenta mb-4 font-light italic sm:text-lg">

@@ -117,6 +117,7 @@ app.use(
 					'ws:',
 					process.env.SENTRY_DSN ? '*.sentry.io' : null,
 					'https://presenteseprendas.pt',
+					'*.storyblok.com',
 					'*.doubleclick.net',
 					'*.hotjar.com',
 					'*.hotjar.io',

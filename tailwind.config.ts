@@ -4,6 +4,20 @@ import { type Config } from 'tailwindcss'
 
 export default {
 	content: ['./app/**/*.{js,jsx,ts,tsx}'],
+	safelist: [
+		'bg-ameixa',
+		'text-ameixa',
+		'bg-chila',
+		'text-chila',
+		'bg-couve',
+		'text-couve',
+		'bg-inhame',
+		'text-inhame',
+		'bg-pimenta',
+		'text-pimenta',
+		'bg-rabanete',
+		'text-rabanete',
+	],
 	theme: {
 		extend: {
 			keyframes: {

@@ -32,6 +32,7 @@ const FeaturedPromocoesThree = lazy(
 	() => import('#app/components/Sections/FeaturedPromocoesThree'),
 )
 const Guias = lazy(() => import('#app/components/Guias/Home'))
+const Artigos = lazy(() => import('#app/components/Artigos/Home'))
 
 const HomeGuiasDestaques = lazy(
 	() => import('#app/components/Sections/HomeGuiasDestaques'),
@@ -78,6 +79,11 @@ export const loader: LoaderFunction = async () => {
 		starts_with: 'promocoes',
 		resolve_relations: ['Promocao.Loja'],
 	})
+	const artigosInitialState = getStoryblokApi().get(`cdn/stories`, {
+		...listStoryblokParams,
+		starts_with: 'pages',
+		excluding_slugs: `pages/perguntas-frequentes,pages/politica-de-cookies,pages/sobre-nos`,
+	})
 
 	const { data } = await getStoryblokApi()
 		.get(`cdn/stories/home`, {
@@ -100,6 +106,7 @@ export const loader: LoaderFunction = async () => {
 		data,
 		guiasInitialState,
 		promocoesInitialState,
+		artigosInitialState,
 	})
 }
 
@@ -154,12 +161,16 @@ export const meta: MetaFunction<typeof loader> = ({
 }
 
 export default function Slug() {
-	const { data, guiasInitialState, promocoesInitialState } = useLoaderData<
-		typeof loader
-	>() as {
+	const {
+		data,
+		guiasInitialState,
+		promocoesInitialState,
+		artigosInitialState,
+	} = useLoaderData<typeof loader>() as {
 		data: ISbStory['data']
 		guiasInitialState: Promise<ISbStories>
 		promocoesInitialState: Promise<ISbStories>
+		artigosInitialState: Promise<ISbStories>
 	}
 
 	const story = useStoryblokState(data.story) as ISbStoryData<{
@@ -255,6 +266,12 @@ export default function Slug() {
 				/>
 			</Suspense>
 			<AsteriskDividerShadow className="mx-auto mb-16 h-8 fill-warm" />
+
+			<Suspense fallback={null}>
+				<Await resolve={artigosInitialState}>
+					{(state) => <Artigos artigosInitialState={state} />}
+				</Await>
+			</Suspense>
 
 			<Suspense
 				fallback={<p className="pb-20 text-center">{'A carregar conteúdos'}</p>}

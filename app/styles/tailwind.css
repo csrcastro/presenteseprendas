@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@tailwind variants;
 
 @layer base {
 	:root {
@@ -535,6 +536,63 @@ body {
 }
 .p-separator-break::before {
 	@apply absolute bottom-0 left-0 block h-px w-full bg-gradient-to-r from-background via-background-lighter;
+}
+
+.a-grid {
+	@apply flex flex-wrap justify-center text-left;
+}
+
+.a-grid .group {
+	width: calc((100% - 16px) / 2);
+	margin-left: 16px;
+	margin-bottom: 32px;
+}
+
+.a-grid .group:nth-child(2n + 1) {
+	margin-left: 0;
+}
+
+@screen md {
+	.a-grid .group {
+		width: calc((100% - 32px) / 3);
+	}
+
+	.a-grid .group:nth-child(2n + 1) {
+		margin-left: 16px;
+	}
+
+	.a-grid .group:nth-child(3n + 1) {
+		margin-left: 0;
+	}
+}
+@screen lg {
+	.a-grid .group {
+		width: calc((100% - 48px) / 4);
+	}
+
+	.a-grid .group:nth-child(3n + 1) {
+		margin-left: 16px;
+	}
+
+	.a-grid .group:nth-child(4n + 1) {
+		margin-left: 0;
+	}
+}
+
+.a-grid-h {
+	@apply block px-6 py-8 font-serif text-xl italic group-hover:text-contrast;
+}
+
+.a-grid-s {
+	@apply mt-4 block text-base leading-tight;
+}
+
+.a-grid-a {
+	@apply aspect-[4/3] overflow-hidden;
+}
+
+.a-grid-a-img {
+	@apply w-full object-cover object-center;
 }
 
 .yt-lite {
