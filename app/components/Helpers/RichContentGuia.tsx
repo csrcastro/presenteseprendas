@@ -43,7 +43,7 @@ export default function RichContentGuia({
         return (
           <Link
             className="text-highlight hover:text-warmer hover:transition-colors"
-            to={(href || ENV.BASE_URL).replace(/\/$/, "")}
+            to={(href || ENV.BASE_URL).replace(/\/$/, "").replace('pages/','')}
           >
             {children}
           </Link>

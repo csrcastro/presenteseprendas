@@ -10,13 +10,18 @@ import config from '../config'
 
 const { sd } = config
 
-function generateWebsite() {
+function generateWebsite(collection: { stories: ISbStoryData[] }) {
+	const { stories } = collection
 	return {
+		'@context': 'https://schema.org/',
 		'@type': 'WebSite',
 		'@id': `${ENV.BASE_URL}#website`,
 		name: sd.name,
 		description: sd.description,
-		publisher: { '@id': `${ENV.BASE_URL}#organization` },
+		publisher: {
+			'@id': `${ENV.BASE_URL}#organization`,
+			name: 'Presentes e Prendas',
+		},
 		potentialAction: [
 			{
 				'@type': 'SearchAction',
@@ -29,6 +34,25 @@ function generateWebsite() {
 		],
 		url: ENV.BASE_URL,
 		inLanguage: 'pt-PT',
+		mainEntity: {
+			'@context': 'https://schema.org',
+			'@type': 'ItemList',
+			itemListElement: stories.map((story) => {
+				return {
+					'@type': 'ListItem',
+					position: 1,
+					name: `${story?.content?.Title}`,
+					url: `${ENV.BASE_URL}/${story?.full_slug.replace('pages/', '')}`,
+					image: {
+						'@type': 'ImageObject',
+						url: `${story?.content?.Image?.filename}/m/1000x1000`,
+						width: 1000,
+						height: 1000,
+					},
+				}
+			}),
+			numberOfItems: 50,
+		},
 	}
 }
 
@@ -66,15 +90,9 @@ function generateBreadcrumbs(
 	return {
 		'@type': 'BreadcrumbList',
 		itemListElement: [
-			{
-				'@type': 'ListItem',
-				position: 1,
-				name: 'Início',
-				item: `${ENV.BASE_URL}`,
-			},
 			...breadcrumbs.map(({ name, item }, index) => ({
 				'@type': 'ListItem',
-				position: index + 2,
+				position: index + 1,
 				name,
 				item: `${ENV.BASE_URL}/${item}`,
 			})),
@@ -113,7 +131,7 @@ function generateCollection(
 					'@type': 'ListItem',
 					position: 1,
 					name: `${story?.content?.Title}`,
-					url: `${ENV.BASE_URL}/${story?.full_slug}`,
+					url: `${ENV.BASE_URL}/${story?.full_slug.replace('pages/', '')}`,
 					image: {
 						'@type': 'ImageObject',
 						url: `${story?.content?.Image?.filename}/m/1000x1000`,
@@ -239,7 +257,7 @@ function generateArticle(url: string, story: ISbStoryData | undefined) {
 			{
 				'@type': 'Person',
 				name: story.content.Autor.content.Nome,
-				url: `${ENV.BASE_URL}/${story.content.Autor.full_slug}`,
+				url: `${ENV.BASE_URL}/${story.content.Autor.full_slug.replace('pages/', '')}`,
 				jobTitle: 'Autor no Presentes e Prendas',
 			},
 		],
@@ -279,7 +297,7 @@ function generatePost(url: string, story: ISbStoryData | undefined) {
 			{
 				'@type': 'Person',
 				name: story.content.Autor.content.Nome,
-				url: `${ENV.BASE_URL}/${story.content.Autor.full_slug}`,
+				url: `${ENV.BASE_URL}/${story.content.Autor.full_slug.replace('pages/', '')}`,
 				jobTitle: 'Autor no Presentes e Prendas',
 			},
 		],
@@ -336,12 +354,25 @@ export default function generatesd(
 	},
 	dirtyUrl: string,
 	metadata: any,
+	isHome?: boolean,
 ) {
 	const url = `${ENV.BASE_URL}${
 		dirtyUrl ? '/' + dirtyUrl.replace(/\/$/, '') : ''
 	}`
 
 	const result = []
+
+	if (isHome) {
+		if (collection) {
+			result.push(generateWebsite(collection))
+		}
+		return {
+			'script:ld+json': {
+				'@context': 'http://schema.org',
+				'@graph': [...result],
+			},
+		}
+	}
 
 	if (breadcrumbs) {
 		result.push(generateBreadcrumbs(breadcrumbs))
@@ -367,7 +398,6 @@ export default function generatesd(
 	}
 
 	result.push(generateOrganization())
-	result.push(generateWebsite())
 
 	const time = !!article
 		? {

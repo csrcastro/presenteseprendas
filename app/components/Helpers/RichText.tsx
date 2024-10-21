@@ -1,5 +1,9 @@
 import { Link } from '@remix-run/react'
-import  { type StoryblokRichtext , render, MARK_LINK } from 'storyblok-rich-text-react-renderer'
+import {
+	type StoryblokRichtext,
+	render,
+	MARK_LINK,
+} from 'storyblok-rich-text-react-renderer'
 export default function RichContent({
 	document,
 }: {
@@ -34,7 +38,9 @@ export default function RichContent({
 						return (
 							<Link
 								className="text-highlight hover:text-highlight-cold hover:transition-colors"
-								to={(href || ENV.BASE_URL).replace(/\/$/, '')}
+								to={(href || ENV.BASE_URL)
+									.replace(/\/$/, '')
+									.replace('pages/', '')}
 							>
 								{children}
 							</Link>

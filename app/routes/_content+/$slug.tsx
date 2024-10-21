@@ -99,7 +99,7 @@ export const meta: MetaFunction<typeof loader> = ({
 			fetchpriority: 'high',
 		},
 		...generateMetadata(
-			data.story.full_slug.replace(/\/$/, '').replace('/pages', ''),
+			data.story.full_slug.replace(/\/$/, '').replace('pages/', ''),
 			metadata,
 		),
 		generateStructureddata(
@@ -107,13 +107,13 @@ export const meta: MetaFunction<typeof loader> = ({
 				breadcrumbs: [
 					{
 						name: data.story.content.Title,
-						item: data.story.full_slug.replace('/pages', ''),
+						item: data.story.full_slug.replace('pages/', ''),
 					},
 				],
 				post: data.story,
 				faq: data.story.content.PerguntasFrequentes,
 			},
-			data.story.full_slug.replace('/pages', ''),
+			data.story.full_slug.replace('pages/', ''),
 			metadata,
 		),
 	]
@@ -135,7 +135,7 @@ export default function Pagina() {
 						>
 							{story?.content.Title}
 						</h1>
-						<p className="text-pimenta mb-4 font-light italic sm:text-lg">
+						<p className="mb-4 font-light italic text-pimenta sm:text-lg">
 							{story?.content.Subtitle}
 						</p>
 
@@ -193,7 +193,7 @@ export default function Pagina() {
 					}
 					if (blok.component === 'Content--Guias') {
 						return (
-							<div key={blok._uid} className="bg-inhame mb-24">
+							<div key={blok._uid} className="mb-24 bg-inhame">
 								<div className="mx-auto max-w-7xl px-6 py-24 lg:px-8">
 									<Guias
 										blok={blok}
@@ -217,7 +217,7 @@ export default function Pagina() {
 				story.content.PerguntasFrequentes.length ? (
 					<section className="bg-chila">
 						<div className="mx-auto mb-16 max-w-3xl px-6 py-24 lg:px-8">
-							<h2 className="text-couve my-16 font-serif text-4xl sm:text-5xl">
+							<h2 className="my-16 font-serif text-4xl text-couve sm:text-5xl">
 								Perguntas frequentes
 							</h2>
 							{story.content.PerguntasFrequentes.map(

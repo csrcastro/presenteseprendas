@@ -26,7 +26,7 @@ const ArtigosGrid = ({
 							className={`a-grid-h text-${artigo.content.Title_Color}`}
 							aria-label={artigo.content.Title}
 							title={`Ler: ${artigo.content.Title}`}
-							to={`${ENV.BASE_URL}/${artigo.full_slug.replace(/\/$/, '')}`}
+							to={`${ENV.BASE_URL}/${artigo.full_slug.replace(/\/$/, '').replace('pages/', '')}`}
 						>
 							<span aria-hidden="true" className="absi-0 z-10" />
 							{!alt ? (

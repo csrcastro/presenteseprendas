@@ -42,7 +42,7 @@ export default function RichLinksOnly({
         return (
           <Link
             className={className}
-            to={(href || ENV.BASE_URL).replace(/\/$/, "")}
+            to={(href || ENV.BASE_URL).replace(/\/$/, "").replace('pages/', '')}
           >
             {children}
           </Link>

@@ -37,7 +37,7 @@ export default function RichParagraphsOnly({
         }
         // Internal links: map to <Link>
         return (
-          <Link className={className} to={(href || ENV.BASE_URL).replace(/\/$/, "")}>
+          <Link className={className} to={(href || ENV.BASE_URL).replace(/\/$/, "").replace('pages/','')}>
             {children}
           </Link>
         );

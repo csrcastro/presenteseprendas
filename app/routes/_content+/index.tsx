@@ -145,7 +145,6 @@ export const meta: MetaFunction<typeof loader> = ({
 		...generateMetadata('/', metadata),
 		generateStructureddata(
 			{
-				breadcrumbs: [],
 				collection: {
 					url: '',
 					name: 'Presentes e Prendas',
@@ -156,6 +155,7 @@ export const meta: MetaFunction<typeof loader> = ({
 			},
 			'',
 			metadata,
+			true
 		),
 	]
 }
