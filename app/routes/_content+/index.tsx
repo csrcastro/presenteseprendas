@@ -142,7 +142,7 @@ export const meta: MetaFunction<typeof loader> = ({
 			imageSrcSet: `${`${fl}/m/446x335${format} 446w, ${fl}/m/249x187${format} 249w, ${fl}/m/303x228${format} 303w, ${fl}/m/384x288${format} 384w`}`,
 			fetchpriority: 'high',
 		},
-		...generateMetadata('/', metadata),
+		...generateMetadata('', metadata),
 		generateStructureddata(
 			{
 				collection: {
