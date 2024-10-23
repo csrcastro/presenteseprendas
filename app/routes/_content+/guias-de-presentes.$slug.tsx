@@ -87,13 +87,7 @@ function Guias({
 						{index > 0 ? (
 							<AsteriskDividerShadow className="mx-auto my-16 h-8 fill-warm" />
 						) : null}
-						<Suspense
-							fallback={
-								<p className="pb-20 text-center">{'A carregar conteúdos'}</p>
-							}
-						>
-							<PresentesGrid ideias={slice} alt={true} />
-						</Suspense>
+						<PresentesGrid ideias={slice} alt={true} />
 					</div>
 				)
 			})}

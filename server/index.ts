@@ -122,6 +122,7 @@ app.use(
 					'*.hotjar.com',
 					'*.hotjar.io',
 					'*.google.com',
+					'*.pinterest.com',
 					"'self'",
 				].filter(Boolean),
 				'font-src': ["'self'", '*.gstatic.com'],
