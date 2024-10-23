@@ -62,9 +62,7 @@ export default async function handleRequest(...args: DocRequestArgs) {
 
 	global.ENV.CV = await getCv()
 
-	const isBotChecker = createIsbotFromList(
-		list.concat('^W3C_Validator', '^Validator'),
-	)
+	const isBotChecker = createIsbotFromList(list.concat('Labrika'))
 
 	const isBot = isBotChecker(request.headers.get('user-agent') ?? '')
 
