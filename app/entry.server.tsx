@@ -65,6 +65,8 @@ export default async function handleRequest(...args: DocRequestArgs) {
 	const isBotChecker = createIsbotFromList(list.concat('Labrika'))
 
 	const isBot = isBotChecker(request.headers.get('user-agent') ?? '')
+	console.log(request.headers)
+	console.log(isBot)
 
 	const callbackName = isBot ? 'onAllReady' : 'onShellReady'
 
