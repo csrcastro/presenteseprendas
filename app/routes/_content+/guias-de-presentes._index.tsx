@@ -28,11 +28,11 @@ export const meta: MetaFunction<typeof loader> = ({ data: loaderData }) => {
 				)}?pagina=${guiasCurrentPage}`
 			: landing.story.full_slug
 	const metadata = {
-		title: `Guias de presentes: Inspira-te para oferecer mais e melhor!${
-			parseInt(guiasCurrentPage, 10) > 1 ? ` - ${guiasCurrentPage}` : ''
+		title: `Presentes e Prendas - Guias de Presentes${
+			parseInt(guiasCurrentPage, 10) > 1 ? ` - Página ${guiasCurrentPage}` : ''
 		}`,
-		description: `Explore os nossos guias de presentes e prendas repletos de inspiração para todas as ocasiões. Encontre sugestões personalizadas, ideias criativas e mais ${
-			parseInt(guiasCurrentPage, 10) > 1 ? ` - ${guiasCurrentPage}` : ''
+		description: `Os melhores guias de presentes e prendas para qualquer celebração, ocasião e faixa etária. A forma mais rápida e fácil de encontrares algo para oferecer${
+			parseInt(guiasCurrentPage, 10) > 1 ? ` Página ${guiasCurrentPage}` : ''
 		}`,
 	}
 
