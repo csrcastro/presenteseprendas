@@ -55,18 +55,44 @@ export default function Guia({
 			) : null}
 
 			{blok.Subtitle && !blok.V2_Intro ? (
-				<p className="mb-4 text-base">
-					<RichContent document={blok.Subtitle} />
-				</p>
+				<>
+					<p className="mb-4 text-base">
+						<RichContent document={blok.Subtitle} />
+					</p>
+					<Suspense fallback={<div className="mb-4 h-12" />}>
+						<div className="my-8 h-12">
+							<Share image={blok.Image.filename} />
+						</div>
+					</Suspense>
+				</>
 			) : (
 				<div className="relative mb-6">
 					<p>{blok.V2_Intro}</p>
+					{!!blok.YoutubeID && blok.YoutubeDate && (
+						<div className="mt-12">
+							<h2 className="my-16 font-serif text-2xl text-colder sm:text-5xl">{`Ideias de presente em vídeo`}</h2>
+							<LiteYouTubeEmbed
+								containerElement="div"
+								id={blok.YoutubeID}
+								adNetwork={true}
+								poster="maxresdefault"
+								title={blok.Title}
+								noCookie={true}
+							/>
+						</div>
+					)}
+
+					<Suspense fallback={<div className="mb-4 h-12" />}>
+						<div className="my-8 h-12">
+							<Share image={blok.Image.filename} />
+						</div>
+					</Suspense>
 					<div className="mt-12 text-center">
 						<a
-							className="btn-medium bg-warm text-lg font-black uppercase text-white hover:bg-warmer md:text-xl"
-							href="#sugestoes"
+							className="btn-medium bg-warm text-sm font-black uppercase text-white hover:bg-warmer md:text-lg"
+							href="#ideias-de-presente"
 						>
-							Saltar para as sugestões
+							Saltar para as ideias de presente
 						</a>
 					</div>
 					<span className="p-separator my-12">
@@ -74,20 +100,6 @@ export default function Guia({
 					</span>
 
 					<RichContentGuia document={blok.V2_Content} />
-				</div>
-			)}
-
-			{!!blok.YoutubeID && blok.YoutubeDate && (
-				<div>
-					<h2 className="sr-only">Vídeo</h2>
-					<LiteYouTubeEmbed
-						containerElement="div"
-						id={blok.YoutubeID}
-						adNetwork={true}
-						poster="maxresdefault"
-						title={blok.Title}
-						noCookie={true}
-					/>
 				</div>
 			)}
 
@@ -100,11 +112,7 @@ export default function Guia({
 					'Esperamos que gostes das nossas sugestões, elas foram selecionadas independentemente pelos nossos autores. Poderemos receber uma parte das vendas e/ou outros tipos de compensação através das ligações nesta página.'
 				}
 			</aside>
-			<Suspense fallback={<div className="mb-4 h-12" />}>
-				<div className="my-8 h-12">
-					<Share image={blok.Image.filename} />
-				</div>
-			</Suspense>
+
 			{blok.PerguntasFrequentes && blok.PerguntasFrequentes.length ? (
 				<section>
 					<h2 className="my-16 font-serif text-4xl text-colder sm:text-5xl">

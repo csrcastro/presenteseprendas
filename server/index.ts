@@ -133,6 +133,7 @@ app.use(
 					'*.storyblok.com',
 					'*.awin.com',
 					'*.awin1.com',
+					'i.ytimg.com'
 				],
 				'script-src': [
 					"'strict-dynamic'",

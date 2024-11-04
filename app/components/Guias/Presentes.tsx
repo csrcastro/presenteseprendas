@@ -19,9 +19,9 @@ export default function Presentes({
 		}[]
 }) {
 	return (
-		<div id="sugestoes">
+		<div id="ideias-de-presente">
 			<h2 className="my-16 font-serif text-4xl text-colder sm:text-5xl">
-				{'Sugestões de presente'}
+				{'Ideias de presente'}
 			</h2>
 			<ol className="present-list">
 				{presentes.map(
