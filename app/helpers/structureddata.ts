@@ -8,6 +8,54 @@ import striptags from 'striptags'
 
 import config from '../config'
 
+import monetizeLink from './monitizeLink'
+
+function generateAbout(topics: string[], keywords: string[]) {
+	if (topics.length < 1) {
+		return []
+	}
+	let topicsKeywords = topics.map((i: string) => i.split(',')[0])
+
+	const keywordTopics = keywords.reduce((acc: string[], current: string) => {
+		if (!topicsKeywords.includes(current)) {
+			acc.push(current)
+		}
+		return acc
+	}, [])
+	return [
+		...generateThings(topics),
+		...keywordTopics.map((keyword: string) => {
+			return {
+				'@type': 'Thing',
+				name: keyword,
+			}
+		}),
+	]
+}
+
+function generateKeywords(keywords: string) {
+	return keywords
+		? keywords.split(',')
+		: [
+				'presentes',
+				'prendas',
+				'guias de presentes',
+				'guias de prendas',
+				'presentes e prendas',
+			]
+}
+
+function generateThings(things: string[]) {
+	return things.map((mention: string) => {
+		const [name, sameAs] = mention.split(',')
+		return {
+			'@type': 'Thing',
+			name,
+			sameAs,
+		}
+	})
+}
+
 const { sd } = config
 
 function generateWebsite(collection: { stories: ISbStoryData[] }) {
@@ -147,8 +195,14 @@ function generateCollection(
 function generatePresentList(
 	presentList:
 		| {
+				ProductPrice: string
 				ProductName: string
+				ProductBrand: string
 				Images: { filename: string }[]
+				Link: {
+					cached_url: string
+				}
+				Loja: any
 		  }[]
 		| undefined,
 	url: string,
@@ -161,11 +215,21 @@ function generatePresentList(
 		itemListElement: presentList.map(
 			(
 				{
+					ProductPrice,
+					ProductBrand,
 					ProductName,
 					Images,
+					Link,
+					Loja,
 				}: {
+					ProductPrice: string
+					ProductBrand: string
 					ProductName: string
 					Images: { filename: string }[]
+					Link: {
+						cached_url: string
+					}
+					Loja: any
 				},
 				index: number,
 			) => {
@@ -180,6 +244,23 @@ function generatePresentList(
 						height: 216,
 					},
 					url: `${url}#presente-${index}`,
+					item: {
+						'@type': 'Product',
+						name: ProductName,
+						brand: ProductBrand,
+						offers: {
+							'@type': 'Offer',
+							price: ProductPrice,
+							priceCurrency: 'EUR',
+							availability: 'https://schema.org/InStock',
+							url: monetizeLink({ loja: Loja, to: Link.cached_url }),
+							seller: {
+								'@type': 'Organization',
+								name: Loja.name,
+								url: Loja.content.Link.cached_url,
+							},
+						},
+					},
 				}
 			},
 		),
@@ -193,12 +274,13 @@ function generateFaq(
 				Copy: StoryblokRichTextNode<string>
 		  }[]
 		| undefined,
+	story?: ISbStoryData | undefined,
 ) {
 	if (!faqList || faqList.length < 1) {
 		return null
 	}
 
-	return {
+	const faq: any = {
 		'@type': 'FAQPage',
 		mainEntity: faqList.map(
 			({
@@ -221,6 +303,22 @@ function generateFaq(
 			},
 		),
 	}
+
+	if (story) {
+		const about = story.content.Topics
+
+		if (about && about.length > 0) {
+			const keywords = generateKeywords(story.content.Keywords)
+			faq.about = generateAbout(about, keywords)
+		}
+		const mentions = story.content.Mentions
+
+		if (mentions && mentions.length > 0) {
+			faq.mentions = generateThings(mentions)
+		}
+	}
+
+	return faq
 }
 
 function generateVideo(
@@ -244,6 +342,12 @@ function generateArticle(url: string, story: ISbStoryData | undefined) {
 	if (!story) {
 		return null
 	}
+
+	const about = story.content.Topics || []
+	const mentions = story.content.Mentions || []
+
+	const keywords = generateKeywords(story.content.Keywords)
+
 	return {
 		'@type': 'Article',
 		isAccessibleForFree: true,
@@ -253,6 +357,11 @@ function generateArticle(url: string, story: ISbStoryData | undefined) {
 		headline: story.content.Title,
 		datePublished: story.first_published_at,
 		dateModified: story.published_at,
+		isPartOf: {
+			'@type': 'WebSite',
+			name: sd.name,
+			url: ENV.BASE_URL,
+		},
 		author: [
 			{
 				'@type': 'Person',
@@ -262,13 +371,7 @@ function generateArticle(url: string, story: ISbStoryData | undefined) {
 			},
 		],
 		articleSection: story.content.Categoria.content.Title,
-		keywords: [
-			'presentes',
-			'prendas',
-			'guias de presentes',
-			'guias de prendas',
-			'presentes e prendas',
-		],
+		keywords,
 		publisher: generateOrganization(),
 		image: {
 			'@type': 'ImageObject',
@@ -277,6 +380,8 @@ function generateArticle(url: string, story: ISbStoryData | undefined) {
 			height: 960,
 			representativeOfPage: true,
 		},
+		about: generateAbout(about, keywords),
+		mentions: generateThings(mentions),
 	}
 }
 
@@ -284,6 +389,12 @@ function generatePost(url: string, story: ISbStoryData | undefined) {
 	if (!story) {
 		return null
 	}
+
+	const about = story.content.Topics || []
+	const mentions = story.content.Mentions || []
+
+	const keywords = generateKeywords(story.content.Keywords)
+
 	return {
 		'@type': 'Article',
 		isAccessibleForFree: true,
@@ -293,6 +404,11 @@ function generatePost(url: string, story: ISbStoryData | undefined) {
 		headline: story.content.Title,
 		datePublished: story.first_published_at,
 		dateModified: story.published_at,
+		isPartOf: {
+			'@type': 'WebSite',
+			name: sd.name,
+			url: ENV.BASE_URL,
+		},
 		author: [
 			{
 				'@type': 'Person',
@@ -302,13 +418,7 @@ function generatePost(url: string, story: ISbStoryData | undefined) {
 			},
 		],
 
-		keywords: [
-			'presentes',
-			'prendas',
-			'guias de presentes',
-			'guias de prendas',
-			'presentes e prendas',
-		],
+		keywords,
 		publisher: generateOrganization(),
 		image: {
 			'@type': 'ImageObject',
@@ -317,6 +427,49 @@ function generatePost(url: string, story: ISbStoryData | undefined) {
 			height: 960,
 			representativeOfPage: true,
 		},
+		about: generateAbout(about, keywords),
+		mentions: generateThings(mentions),
+	}
+}
+
+function generateWebPage(url: string, story: ISbStoryData | undefined) {
+	if (!story) {
+		return null
+	}
+
+	const about = story.content.Topics || []
+	const mentions = story.content.Mentions || []
+
+	const keywords = generateKeywords(story.content.Keywords)
+
+	return {
+		'@type': 'WebPage',
+		inLanguage: 'pt-PT',
+		isAccessibleForFree: true,
+		url: url,
+		mainEntityOfPage: url,
+		headline: story.content.SeoTitle,
+		description: story.content.SeoDescription,
+		name: story.content.Title,
+		datePublished: story.first_published_at,
+		dateModified: story.published_at,
+		isPartOf: {
+			'@type': 'WebSite',
+			name: sd.name,
+			url: ENV.BASE_URL,
+		},
+
+		keywords,
+		publisher: generateOrganization(),
+		primaryImageOfPage: {
+			'@type': 'ImageObject',
+			url: `${story.content.Image?.filename}/m/1280x960/smart`,
+			width: 1280,
+			height: 960,
+			representativeOfPage: true,
+		},
+		about: generateAbout(about, keywords),
+		mentions: generateThings(mentions),
 	}
 }
 
@@ -329,6 +482,7 @@ export default function generatesd(
 		faq,
 		video = {},
 		post,
+		webpage,
 	}: {
 		breadcrumbs?: { name: string; item: string }[]
 		collection?: {
@@ -338,10 +492,17 @@ export default function generatesd(
 			stories: ISbStoryData[]
 		}
 		article?: ISbStoryData
+		webpage?: ISbStoryData
 		post?: ISbStoryData
 		presentList?: {
+			ProductPrice: string
 			ProductName: string
+			ProductBrand: string
 			Images: { filename: string }[]
+			Link: {
+				cached_url: string
+			}
+			Loja: any
 		}[]
 		faq?: {
 			Title: string
@@ -387,11 +548,14 @@ export default function generatesd(
 	if (post) {
 		result.push(generatePost(url, post))
 	}
+	if (webpage) {
+		result.push(generateWebPage(url, webpage))
+	}
 	if (presentList && url) {
 		result.push(generatePresentList(presentList, url))
 	}
 	if (faq) {
-		result.push(generateFaq(faq))
+		result.push(generateFaq(faq, article || post))
 	}
 	if (video.id && video.date) {
 		result.push(generateVideo(video, metadata))

@@ -1,8 +1,3 @@
-import {
-	Disclosure,
-	DisclosureButton,
-	DisclosurePanel,
-} from '@headlessui/react'
 import { type LoaderFunction, type MetaFunction, defer } from '@remix-run/node'
 import { Await, Link, useLoaderData, useLocation } from '@remix-run/react'
 import {
@@ -211,6 +206,7 @@ export const meta: MetaFunction<typeof loader> = ({ data: loaderData }) => {
 					{ name: 'Categorias', item: 'categorias' },
 					{ name: data.story.content.Title, item: url || '' },
 				],
+				webpage: data.story,
 			},
 			url || '',
 			metadata,
@@ -229,7 +225,7 @@ function CategoryTitlePage({
 		return null
 	}
 
-	return <span>{`Page # ${segmentOne}|${segmentTwo}: `}</span>
+	return <span>{`- Página ${segmentOne}|${segmentTwo}`}</span>
 }
 
 export default function Categoria() {
@@ -289,14 +285,14 @@ export default function Categoria() {
 								className="font-serif text-4xl text-background sm:text-6xl lg:text-8xl"
 								id="category-heading"
 							>
+								{story?.content?.Title}{' '}
 								<span className="sr-only">
+									{'na Presentes e Prendas'}{' '}
 									<CategoryTitlePage
 										segmentOne={guiasCurrentPage}
 										segmentTwo={promocoesCurrentPage}
 									/>
-									{'Presentes, prendas e promocões - '}
 								</span>
-								{story?.content?.Title}
 							</h1>
 						</div>
 					</div>
@@ -349,30 +345,43 @@ export default function Categoria() {
 						</div>
 					</div>
 				) : null}
-				<h2 className="sr-only">Categoria {story?.content?.Title}</h2>
 				<div className="mx-auto max-w-5xl px-8 py-4 lg:pb-16">
 					<p className="mb-6">
 						<RichContent document={story?.content.Intro} />
 					</p>
+				</div>
+				<Suspense
+					fallback={
+						<p className="pb-20 text-center">{'A carregar conteúdos'}</p>
+					}
+				>
+					<Await resolve={guiasPromise}>
+						{(state) => {
+							return state.data.stories.length > 0 ? (
+								<div className="mx-auto max-w-7xl px-8">
+									<h2 className="heading-large text-warm" id="guia-grid">
+										Guias de Presentes
+									</h2>
+									<PresentesGrid ideias={state.data.stories} alt={true} />
+									<PageNavigation
+										borderColor="warm"
+										containerClasses="px-4 py-3 sm:px-6"
+										current={parseInt(guiasCurrentPage, 10)}
+										hash="guia-grid"
+										searchParam="pagina-de-guias"
+										textColor="warmer"
+										total={Math.ceil(state.total / state.perPage)}
+										url={url}
+									/>
+								</div>
+							) : null
+						}}
+					</Await>
+				</Suspense>
+				<div className="mx-auto max-w-5xl px-8 py-4">
 					{story?.content.Content &&
 					story?.content.Content.content.length > 1 ? (
-						<Disclosure key={`${story?.content._uid}-content`}>
-							{({ open }) => (
-								<>
-									{open ? null : (
-										<div className="flex w-full items-center justify-center">
-											<DisclosureButton className="btn-medium btn-lermais bg-warm text-white hover:bg-warmer">
-												Ler mais
-											</DisclosureButton>
-										</div>
-									)}
-
-									<DisclosurePanel as="div" unmount={false}>
-										<RichContentGuia document={story?.content.Content} />
-									</DisclosurePanel>
-								</>
-							)}
-						</Disclosure>
+						<RichContentGuia document={story?.content.Content} />
 					) : null}
 				</div>
 			</article>
@@ -380,38 +389,11 @@ export default function Categoria() {
 				fallback={<p className="pb-20 text-center">{'A carregar conteúdos'}</p>}
 			>
 				<HomeGuiasDestaques
-					containerClasses="px-4 lg:px-16"
+					containerClasses="px-4 lg:px-16 lg:pb-16"
 					heading="Destaques"
 					headingClasses="heading-large text-warm"
 					ideias={featuredGuias}
 				/>
-			</Suspense>
-
-			<Suspense
-				fallback={<p className="pb-20 text-center">{'A carregar conteúdos'}</p>}
-			>
-				<Await resolve={guiasPromise}>
-					{(state) => {
-						return state.data.stories.length > 0 ? (
-							<section className="mx-auto max-w-7xl px-8">
-								<h3 className="heading-large text-warm" id="guia-grid">
-									Guias de Presentes
-								</h3>
-								<PresentesGrid ideias={state.data.stories} alt={true} />
-								<PageNavigation
-									borderColor="warm"
-									containerClasses="px-4 py-3 sm:px-6"
-									current={parseInt(guiasCurrentPage, 10)}
-									hash="guia-grid"
-									searchParam="pagina-de-guias"
-									textColor="warmer"
-									total={Math.ceil(state.total / state.perPage)}
-									url={url}
-								/>
-							</section>
-						) : null
-					}}
-				</Await>
 			</Suspense>
 
 			<Suspense
