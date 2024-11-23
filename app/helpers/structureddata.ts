@@ -236,18 +236,17 @@ function generatePresentList(
 				return {
 					'@type': 'ListItem',
 					position: index,
-					name: ProductName,
-					image: {
-						'@type': 'ImageObject',
-						url: `${Images[0]?.filename}/m/288x216/smart/filters:format(webp)`,
-						width: 288,
-						height: 216,
-					},
-					url: `${url}#presente-${index}`,
 					item: {
 						'@type': 'Product',
+						url: `${url}#presente-${index}`,
 						name: ProductName,
 						brand: ProductBrand,
+						image: {
+							'@type': 'ImageObject',
+							url: `${Images[0]?.filename}/m/288x216/smart/filters:format(webp)`,
+							width: 288,
+							height: 216,
+						},
 						offers: {
 							'@type': 'Offer',
 							price: ProductPrice,
