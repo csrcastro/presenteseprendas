@@ -19,11 +19,11 @@ export const action = async () => {
 				name: 'storyblok',
 			},
 			update: {
-				timestamp: version,
+				timestamp: `${version}`,
 			},
 			create: {
 				name: 'storyblok',
-				timestamp: version,
+				timestamp: `${version}`,
 			},
 		})
 	}
@@ -31,9 +31,11 @@ export const action = async () => {
 		.then(async () => {
 			await prisma.$disconnect()
 		})
-		.catch(async e => {
+		.catch(async (e) => {
 			console.error(e)
 			await prisma.$disconnect()
 			process.exit(1)
 		})
+
+	return null
 }
