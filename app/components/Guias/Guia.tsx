@@ -1,5 +1,6 @@
 import { Link } from '@remix-run/react'
 import {
+	type ISbStories,
 	type ISbStoryData,
 	type SbBlokData,
 	storyblokEditable,
@@ -20,10 +21,12 @@ export default function Guia({
 	blok,
 	autor,
 	publishedAt,
+	ads,
 }: {
 	blok: ISbStoryData['content']
 	autor: ISbStoryData
 	publishedAt: string
+	ads: ISbStories | null
 }) {
 	return (
 		<article {...storyblokEditable(blok)} key={blok._uid}>
@@ -99,7 +102,7 @@ export default function Guia({
 						<span className="p-separator-break" />
 					</span>
 
-					<RichContentGuia document={blok.V2_Content} />
+					<RichContentGuia document={blok.V2_Content} ads={ads} />
 				</div>
 			)}
 

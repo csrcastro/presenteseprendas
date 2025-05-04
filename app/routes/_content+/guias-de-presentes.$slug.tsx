@@ -143,6 +143,17 @@ export const loader: LoaderFunction = async ({ params: { slug } }) => {
 		throw new Response('Not Found', { status: 404 })
 	}
 
+	const ads = await getStoryblokApi()
+		.get(`cdn/stories`, {
+			starts_with: 'ads',
+			version: ENV.STORYBLOK_EXPLORE,
+			cv: ENV.CV,
+			per_page: 100,
+		})
+		.catch((_) => {
+			return null
+		})
+
 	const related =
 		!data.story.content.Related || data.story.content.Related.length < 1
 			? new Promise((resolve) => {
@@ -154,7 +165,7 @@ export const loader: LoaderFunction = async ({ params: { slug } }) => {
 					by_uuids: (data.story.content.Related || []).join(','),
 				})
 
-	return defer({ data, guiasInitialState, related, slug })
+	return defer({ data, ads, guiasInitialState, related, slug })
 }
 
 export const meta: MetaFunction<typeof loader> = ({ data: loaderData }) => {
@@ -215,10 +226,11 @@ export const meta: MetaFunction<typeof loader> = ({ data: loaderData }) => {
 }
 
 export default function GuiaDePresentesPagina() {
-	const { data, guiasInitialState, related, slug } = useLoaderData<
+	const { data, ads, guiasInitialState, related, slug } = useLoaderData<
 		typeof loader
 	>() as {
 		data: ISbStory['data']
+		ads: ISbStories | null
 		guiasInitialState: ISbStories
 		related: ISbStories
 		slug: string
@@ -234,11 +246,13 @@ export default function GuiaDePresentesPagina() {
 			<Suspense fallback={<div className="h-[17px]" />}>
 				<Breadcrumbs category={story?.content.Categoria} />
 			</Suspense>
+
 			<div className="mx-auto max-w-2xl">
 				<Guia
 					autor={story?.content?.Autor}
 					blok={story?.content}
 					publishedAt={story.published_at || ''}
+					ads={ads}
 				/>
 			</div>
 
