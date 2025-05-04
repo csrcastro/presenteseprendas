@@ -106,7 +106,7 @@ export default function RichContentGuia({
 							<>
 								<a
 									key={`guia-ad-${pos}`}
-									href={ads?.data?.stories[pos]?.content.Link}
+									href={ads?.data?.stories[pos]?.content.link}
 									target="_blank"
 									className="mb-20 mt-16 block cursor-pointer"
 									title={ads?.data?.stories[pos]?.content.alt}
