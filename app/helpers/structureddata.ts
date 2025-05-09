@@ -585,7 +585,6 @@ export default function generatesd(
 						? `${metadata.image}/m/320x240/smart`
 						: sd.logoPath,
 					description: metadata.description,
-					breadcrumb: { '@id': `${url}#breadcrumb` },
 					inLanguage: 'pt-PT',
 					...time,
 				},
